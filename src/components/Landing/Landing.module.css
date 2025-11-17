@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap');
+
+.h100 {
+    height: 92vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4)), url(../../assets/landing.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.h1s {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 500;
+    font-family: "Momo Trust Display", sans-serif;
+}
+p
+{
+    
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-size: 18px;
+}
+.homeContent
+{
+    width: 70%;
+}
+.homeBtn
+{
+    background-color: #2e4b34;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.homeBtn:hover
+{
+    background-color: #a3b899;
+}
+/* *********************** */
+@media (max-width:1200px) {
+    .homeContent
+    {
+        width: 80%;
+    }
+}
+@media (max-width:992px) {
+    .homeContent
+    {
+        width:90%;
+    }
+}
+@media (max-width:576px) {
+    .homeContent
+    {
+        width: 95%;
+    }
+}
