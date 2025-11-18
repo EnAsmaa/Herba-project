@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html::selection{
+     background-color: #4d7c5c5e;
+}
+
 :root {
     --main-color: #203825;
     --second-color: #4d7c5c;
