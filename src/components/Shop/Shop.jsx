@@ -36,11 +36,12 @@ export default function Shop() {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 4000,
     slidesToShow: 5,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 0,
+    cssEase: "linear",
     responsive: [
       {
         breakpoint: 1024,
@@ -87,9 +88,8 @@ export default function Shop() {
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`pointer cat ${
-                  activeCategory === cat ? "active" : ""
-                }`}
+                className={`pointer cat ${activeCategory === cat ? "active" : ""
+                  }`}
                 onClick={() => setActiveCategory(cat)}
               >
                 {cat}
@@ -126,7 +126,7 @@ export default function Shop() {
                 <p className="aboutIcone mt-1 ">{herb.category}</p>
                 <p className="mb-2 mt-1">{herb.name}</p>
                 <button className="btn cartBtn mx-auto rounded-5 w-75 d-flex align-items-center justify-content-center gap-2">
-                  <FaCartShopping className="fs-5"/>
+                  <FaCartShopping className="fs-5" />
                   Add To Cart
                 </button>
               </div>
