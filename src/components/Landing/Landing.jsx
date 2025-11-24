@@ -6,7 +6,7 @@ export default function Landing() {
   return (
     <div className={`${style.h100}`}>
         <video
-        className={style.videoBg}
+        className={`${style.videoBg}`}
         src={videoBg}
         autoPlay
         loop
@@ -14,16 +14,16 @@ export default function Landing() {
         playsInline
       ></video>
       <div className={`${style.homeContent} text-center`}>
-        <h1 className={`text-white ${style.h1s}`}>
+        <h1 className={`${style.h1s}`}>
           Rediscover Your <br /> Balance, Naturally.
         </h1>
-        <p className="text-light text-center ">
+        <p className="text-center ">
           Learn about the healing power of herbs, their benefits, and how to use
           them safely for a better lifestyle. At HerbaCare, we bring you closer
           to nature with trusted remedies that support your body, calm your
           mind, and inspire everyday wellness.
         </p>
-        <button className={`btn mt-3 py-2 px-3 ${style.homeBtn}`}>Get Started</button>
+        <button className={`px-5 py-2 bg-green-800 hover:bg-green-900 duration-200 rounded-sm cursor-pointer mt-3 ${style.homeBtn}`}>Get Started</button>
       </div>
     </div>
   );

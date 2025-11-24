@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
 export default function Login() {
