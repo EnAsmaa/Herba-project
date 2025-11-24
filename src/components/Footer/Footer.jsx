@@ -36,82 +36,84 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-bg-secondary-subtle border-top border-bottom text-dark px-lg-5 px-md-4 px-5 py-4">
-      <div className="container-fluid">
-        <div className="row g-4">
+    <footer className="shadow-2xl bg-gray-100 text-black dark:bg-gray-900 dark:text-gray-100 border-b border-t py-5">
+      <div className="container lg:px-7 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
           {/* Brand Section */}
-          <div className="col-12 col-lg-3">
-            <div>
-              <div className="d-flex align-items-center gap-2">
-                <FaLeaf className='active fs-2'/>
-                <h3 className="m-0 fw-bold">HerbalCare</h3>
-              </div>
-              <p className="mt-3 text-muted small">
-                Your Journey to Holistic Wellness
-              </p>
+          <div>
+            <div className="flex items-center gap-2">
+              <FaLeaf className="text-2xl" />
+              <h3 className="m-0 font-bold">HerbalCare</h3>
             </div>
+            <p className="mt-3 text-sm">
+              Your Journey to Holistic Wellness
+            </p>
           </div>
 
           {/* Dynamic Sections */}
           {sections.map((section, index) => (
-            <div key={index} className="col-12 col-lg-3">
-              <div className="footer-section">
-                <div
-                  className="d-flex justify-content-between align-items-center footer-title"
-                  onClick={() => toggleSection(index)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <h5 className="fw-semibold m-0">{section.title}</h5>
-                  <span className="d-lg-none fs-5">
-                    {openSection === index ? <FaAngleUp /> : <FaAngleDown />}
-                  </span>
-                </div>
+            <div key={index} className="footer-section">
 
-                <ul
-                  className={`list-unstyled mt-3 mb-0 ${
-                    openSection === index ? "d-block" : "d-none"
-                  } d-lg-block`}
-                >
-                  {section.links.map((link, i) => (
-                    <li key={i} className="my-1">
-                      {link.path ? (
-                        <Link
-                          to={link.path}
-                          className="text-decoration-none text-muted small"
-                        >
-                          {link.name}
-                        </Link>
-                      ) : (
-                        <span className="text-muted small">{link.name}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+              {/* Section Header */}
+              <div
+                className="flex justify-between items-center footer-title cursor-pointer md:cursor-default"
+                onClick={() => toggleSection(index)}
+              >
+                <h5 className="font-medium m-0">{section.title}</h5>
+
+                {/* Toggle Icon (mobile only) */}
+                <span className="md:hidden text-lg">
+                  {openSection === index ? <FaAngleUp /> : <FaAngleDown />}
+                </span>
               </div>
+
+              {/* Links */}
+              <ul
+                className={`list-none mt-3 space-y-2 
+              ${openSection === index ? "block" : "hidden"} 
+              md:block`}
+              >
+                {section.links.map((link, i) => (
+                  <li key={i}>
+                    {link.path ? (
+                      <Link
+                        to={link.path}
+                        className="text-sm hover:underline"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <span className="text-sm">{link.name}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
 
-          {/* App Download Section */}
-          <div className="col-12 col-lg-3 text-center text-lg-start">
-            <h5 className="fw-semibold">Download The App</h5>
-            <Link className="d-inline-block mt-3">
+          {/* App Download */}
+          <div>
+            <h5 className="font-medium">Download The App</h5>
+            <Link className="block mt-3">
               <img
                 src={playStore}
                 alt="Download from Play Store"
-                className="img-fluid"
-                style={{ maxWidth: "160px" }}
+                className="w-40"
               />
             </Link>
           </div>
+
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="border-top text-center mt-4 pt-4">
-        <p className="m-0 small text-muted">
+      <div className="border-t text-center mt-6 pt-4">
+        <p className="m-0 text-sm">
           &copy; 2026 HerbalCare. All Rights Reserved.
         </p>
       </div>
     </footer>
+
   );
 }

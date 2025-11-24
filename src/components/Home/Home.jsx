@@ -7,7 +7,7 @@ import Testmonials from '../Testmonials/Testmonials';
 
 export default function Home() {
   return (
-    <div className='d-flex flex-column gap-4'>
+    <div className='flex flex-col gap-15'>
       <Landing />
       <AboutUs />
       <OurVision />

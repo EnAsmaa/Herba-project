@@ -1,64 +1,74 @@
 import React, { useEffect, useState } from 'react'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Link, NavLink } from 'react-router-dom';
 import { IoNotifications } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
-import { Link, NavLink } from 'react-router-dom';
 import { MdDarkMode } from "react-icons/md";
-import profile from '../../assets/profile.jpg'
+import { MdLightMode } from "react-icons/md";
 import { FaLeaf } from "react-icons/fa6";
+import { IoMenu } from "react-icons/io5";
+import { FaXmark } from "react-icons/fa6";
+import profile from '../../assets/profile.jpg'
 
-export default function NavbarComponent() {
-  const [profileAppear, setProfileAppear] = useState(false);
-  useEffect(() => {
-  const handleClickOutside = (event) => {
-    const dropdown = document.querySelector('.profile-dropdown');
-    const icon = document.querySelector('.fa-user-circle'); 
+export default function NavbarComponent(props) {
+  const { toggleTheme, theme, profileToggle, setProfileToggle } = props
+  const [menuToggle, setMenuToggle] = useState(false)
 
-    if (dropdown && !dropdown.contains(event.target) && !icon.contains(event.target)) {
-      setProfileAppear(false);
-    }
-  };
+  return <>
+    <nav className='shadow-2xl bg-gray-100 text-black dark:bg-gray-900 dark:text-gray-100 relative'>
+      <div className="container lg:px-7 mx-auto py-5">
+        <div className='flex justify-between items-center'>
+          <div className='flex gap-1 items-center'>
+            <FaLeaf className='text-2xl text-green-800' />
+            <span className='text-2xl font-medium'>HerbalCare</span>
+          </div>
+          <div className='navLinks order-first lg:order-0'>
+            <ul className='hidden lg:flex items-center gap-6'>
+              <li><NavLink to={''}>Home</NavLink></li>
+              <li><NavLink to={'herbas'}>Herbas</NavLink></li>
+              <li><NavLink to={'activity'}>Activity</NavLink></li>
+              <li><NavLink to={'aitools'}>AI Tools</NavLink></li>
+              <li><NavLink to={'store'}>Store</NavLink></li>
+              <li><NavLink to={'consultation'}>Consultation</NavLink></li>
+            </ul>
+            <IoMenu onClick={() => { setMenuToggle(!menuToggle) }} className='lg:hidden text-2xl' />
+          </div>
+          <div className='flex items-center gap-5'>
 
-  document.addEventListener('click', handleClickOutside);
-  return () => document.removeEventListener('click', handleClickOutside);
-}, []);
-
-  return (
-    <>
-      <div className='container-fluid px-md-5 px-3 position-sticky nav-parent shadow-sm top-0  py-1 z-1'>
-        <Navbar collapseOnSelect expand="lg">
-          <NavLink to={'/'} className='fw-bold fs-3 logo'><FaLeaf className='active fs-2'/> HerbalCare</NavLink>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mx-auto mt-1 d-flex gap-4 fw-medium">
-              <NavLink className={'navLink'} to={'/'}>Home</NavLink>
-              <NavLink className={'navLink'} to={'herbas'}>Herbas</NavLink>
-              <NavLink className={'navLink'} to={'activity'}>Activity</NavLink>
-              <NavLink className={'navLink'} to={'features'}>AI Tool</NavLink>
-              <NavLink className={'navLink'} to={'store'}>Store</NavLink>
-              <NavLink className={'navLink'} to={'consultation'}>Consultation</NavLink>
-            </Nav>
-            <Nav className='d-flex gap-4 flex-row align-items-center position-relative z-0 mb-0 mt-md-0 mt-3'>
-              <MdDarkMode className='nav-icon pointer' />
-              <IoNotifications className='nav-icon pointer' />
-              <FaCartShopping className='nav-icon pointer' />
-              <FaUserCircle onClick={() => setProfileAppear(prev => !prev)}  className='nav-icon pointer' />
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar >
-        <div className={`p-5 profile-dropdown ${profileAppear?'profile-dropdown-appear':'profile-dropdown-disappear'}`}>
-          <img className='profile-image' src={profile} alt="" />
-            <p className='fw-medium'>welcome back!</p>
-          <div className='d-flex gap-2'>
-            <button className='btn profile-btn'><Link className='text-white' to={'/register'} onClick={()=>{setProfileAppear(false)}}>Register</Link></button>
-            <button className='btn profile-btn'><Link className='text-white' to={'/login'} onClick={()=>{setProfileAppear(false)}}>Login</Link></button>
+            {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
+            }
+            <IoNotifications className='text-xl' />
+            <FaCartShopping className='text-xl' />
+            <div className=''>
+              <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl' />
+              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} h-screen bg-gray-100 dark:bg-red-900 shadow-md w-max rounded-lg fixed top-0 z-50 flex flex-col gap-3 duration-400`}>
+                <div className="header flex justify-between items-center bg-gray-200 dark:bg-gray-500 p-2">
+                  <FaXmark onClick={() => { setProfileToggle(false) }} className='text-2xl cursor-pointer' />
+                  <p >profile</p>
+                </div>
+                <div className="content px-12 py-5">
+                  <div className='aspect-square w-15 mx-auto rounded-full bg-amber-400'></div>
+                  <p className='text-center'>Lorem, ipsum dolor.</p>
+                  <div className='grid grid-cols-2 gap-2'>
+                    <button className='px-5 py-1.5 bg-green-800 text-gray-100 hover:bg-green-900 duration-200 rounded-sm cursor-pointer'>Register</button>
+                    <button className='px-5 py-1.5 bg-green-800 text-gray-100 hover:bg-green-900 duration-200 rounded-sm cursor-pointer'>Login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        {menuToggle &&
+          <ul className='lg:hidden space-y-2 mt-2'>
+            <li><NavLink to={''}>Home</NavLink></li>
+            <li><NavLink to={'herbas'}>Herbas</NavLink></li>
+            <li><NavLink to={'activity'}>Activity</NavLink></li>
+            <li><NavLink to={'aitools'}>AI Tools</NavLink></li>
+            <li><NavLink to={'store'}>Store</NavLink></li>
+            <li><NavLink to={'consultation'}>Consultation</NavLink></li>
+          </ul>
+        }
       </div>
-
-    </>
-
-  );
+    </nav>
+  </>;
 }
