@@ -7,8 +7,7 @@ import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
 import { FaLeaf } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
-import { FaXmark } from "react-icons/fa6";
-import profile from '../../assets/profile.jpg'
+import ProfileSideBar from './ProfileSideBar';
 
 export default function NavbarComponent(props) {
   const { toggleTheme, theme, profileToggle, setProfileToggle } = props
@@ -35,26 +34,18 @@ export default function NavbarComponent(props) {
           </div>
           <div className='flex items-center gap-5'>
 
+            {/* theme mode */}
             {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
             }
             <IoNotifications className='text-xl cursor-pointer' />
             <FaCartShopping className='text-xl cursor-pointer' />
+
+            {/* profile */}
             <div >
               <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl cursor-pointer' />
-              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle`}>
-                <div className="header px-3 flex justify-between items-center dark:text-black bg-gray-200 dark:bg-[#F7F7F7] p-2">
-                  <FaXmark onClick={() => { setProfileToggle(false) }} className='text-2xl cursor-pointer' />
-                  <p className='font-semibold'>Profile</p>
-                </div>
-                <div className="content px-12 py-5">
-                  <div className='aspect-square w-15 mx-auto rounded-full bg-gray-300'></div>
-                  <p className='text-center'>Lorem, ipsum dolor.</p>
-                  <div className='grid grid-cols-2 gap-2'>
-                    <button className='btn'>Register</button>
-                    <button className='btn'>Login</button>
-                  </div>
-                </div>
-              </div>
+                
+              {/* profile toggle */}
+              <ProfileSideBar profileToggle={profileToggle} setProfileToggle={setProfileToggle} />
             </div>
           </div>
         </div>

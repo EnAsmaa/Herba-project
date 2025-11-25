@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Landing from './../Landing/Landing';
-import AboutUs from '../AboutUs/AboutUs';
-import OurVision from '../OurVision/OurVision';
-import Testmonials from '../Testmonials/Testmonials';
+import Landing from '../components/Landing/Landing';
+import AboutUs from '../components/AboutUs';
+import OurVision from '../components/OurVision';
+import Testmonials from '../components/Testmonials';
 
 
 export default function Home() {

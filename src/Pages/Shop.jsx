@@ -1,13 +1,12 @@
-
 import { useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import OurVision1 from "../../assets/OurVision.jpg";
-import OurVision2 from "../../assets/OurVision2.jpg";
-import OurVision3 from "../../assets/pexels-mareefe-672046.jpg";
-import { FaSearch } from "react-icons/fa";
+import OurVision1 from "../assets/OurVision.jpg";
+import OurVision2 from "../assets/OurVision2.jpg";
+import OurVision3 from "../assets/pexels-mareefe-672046.jpg";
 import { FaCartShopping } from "react-icons/fa6";
+import Search from './../components/Search';
 
 export default function Shop() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -71,17 +70,8 @@ export default function Shop() {
   return (
     <>
       <section className="container lg:px-7 px-4 mx-auto py-4">
-        {/* Search Section */}
-        <div className='search-wrapper bg-green-800/10 py-8 rounded-lg'>
-          <div className='search-box relative mx-auto w-2xs sm:w-sm md:w-md lg:w-lg'>
-            <FaSearch className='absolute text-gray-500 -translate-y-1/2 top-1/2 left-3 cursor-pointer fs-4' />
-            <input
-              type="search"
-              className='bg-gray-50 text-gray-900 border border-gray-300 dark:bg-gray-100 dark:text-black focus:outline-0 rounded-lg py-2 px-8 w-full '
-              placeholder='Search for herbs...'
-            />
-          </div>
-        </div>
+        {/* search */}
+        <Search />
 
         {/* Categories */}
         <div className="categories py-3 mt-2">

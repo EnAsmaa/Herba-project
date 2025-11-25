@@ -1,7 +1,7 @@
 import { FaRegStar } from "react-icons/fa";
-import person1 from "../../assets/person1.jpg";
-import person2 from "../../assets/person2.jpg";
-import person3 from "../../assets/person3.jpg";
+import person1 from "../assets/person1.jpg";
+import person2 from "../assets/person2.jpg";
+import person3 from "../assets/person3.jpg";
 export default function Testmonials() {
   return (
     <section className="pb-10 mb-10 container lg:px-7 px-4 mx-auto ">
