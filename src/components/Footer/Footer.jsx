@@ -36,31 +36,31 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="shadow-2xl bg-gray-100 text-black dark:bg-gray-900 dark:text-gray-100 border-b border-t py-5">
-      <div className="container lg:px-7 mx-auto">
+    <footer className="shadow-2xl bg-[#F4F7F5] dark:bg-[#0D161C] border-b border-[#adabab] dark:border-[#294353a6] border-t py-5">
+      <div className="container lg:px-7 px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-2xl" />
-              <h3 className="m-0 font-bold">HerbalCare</h3>
+              <FaLeaf className="text-2xl text-[#375a42]" />
+              <h3 className="m-0 text-xl font-bold dark:text-[#E9EDEF]">HerbalCare</h3>
             </div>
-            <p className="mt-3 text-sm">
+            <p className="mt-2 text-base  text-[#333333]  dark:text-[#C5CFD6]">
               Your Journey to Holistic Wellness
             </p>
           </div>
 
           {/* Dynamic Sections */}
           {sections.map((section, index) => (
-            <div key={index} className="footer-section">
+            <div key={index} className="footer-section text-[#333333]  dark:text-[#8696A0]">
 
               {/* Section Header */}
               <div
                 className="flex justify-between items-center footer-title cursor-pointer md:cursor-default"
                 onClick={() => toggleSection(index)}
               >
-                <h5 className="font-medium m-0">{section.title}</h5>
+                <h5 className="font-medium m-0 text-black dark:text-[#C5CFD6]">{section.title}</h5>
 
                 {/* Toggle Icon (mobile only) */}
                 <span className="md:hidden text-lg">
@@ -79,12 +79,12 @@ export default function Footer() {
                     {link.path ? (
                       <Link
                         to={link.path}
-                        className="text-sm hover:underline"
+                        className="text-base  hover:underline"
                       >
                         {link.name}
                       </Link>
                     ) : (
-                      <span className="text-sm">{link.name}</span>
+                      <span className="text-base">{link.name}</span>
                     )}
                   </li>
                 ))}
@@ -94,7 +94,7 @@ export default function Footer() {
 
           {/* App Download */}
           <div>
-            <h5 className="font-medium">Download The App</h5>
+            <h5 className="font-medium dark:text-[#C5CFD6]">Download The App</h5>
             <Link className="block mt-3">
               <img
                 src={playStore}
@@ -108,8 +108,8 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="border-t text-center mt-6 pt-4">
-        <p className="m-0 text-sm">
+      <div className="border-t border-[#adabab] dark:border-[#294353a6] text-center mt-6 pt-4">
+        <p className="m-0 text-base text-[#333333] dark:text-[#8696A0]">
           &copy; 2026 HerbalCare. All Rights Reserved.
         </p>
       </div>
