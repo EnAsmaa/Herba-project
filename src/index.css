@@ -16,8 +16,18 @@ body{
   scrollbar-width: none; /* Firefox */
 }
 
+.link.active
+{
+  color:  #4d7c5c;
+}
 
-
+.testimon-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    object-position: 50% 50%;
+    border-radius: 50%;
+}
 
 
 
