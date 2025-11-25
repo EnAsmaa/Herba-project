@@ -5,7 +5,7 @@ import { TbPlant2 } from "react-icons/tb";
 export default function AboutUs() {
   return (
     <section>
-      <div className=" container mx-auto px-4">
+      <div className="container lg:px-7 px-4 mx-auto">
         <h2 className="heading-Sections">About Us</h2>
         <p className="cap-sections">
           At HerbalCare, we believe in the healing power of nature. Our mission

@@ -36,14 +36,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="shadow-2xl bg-[#F4F7F5] dark:bg-[#0D161C] border-b border-[#adabab] dark:border-[#294353a6] border-t py-5">
+    <footer className="shadow-2xl bg-green-100/20 text-[#1A242A] dark:bg-[#1A242A]  border-b border-[#adabab] dark:border-[#294353a6] border-t py-5">
       <div className="container lg:px-7 px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-2xl text-[#335D39] dark:text-[#4d7c5c]" />
+              <FaLeaf className="text-2xl text-[#335D39] dark:text-[#6bb683]" />
               <h3 className="m-0 text-xl font-bold dark:text-[#E9EDEF]">HerbalCare</h3>
             </div>
             <p className="mt-2 text-base  text-[#333333]  dark:text-[#C5CFD6]">
@@ -60,7 +59,7 @@ export default function Footer() {
                 className="flex justify-between items-center footer-title cursor-pointer md:cursor-default"
                 onClick={() => toggleSection(index)}
               >
-                <h5 className="font-medium m-0 text-black dark:text-[#C5CFD6]">{section.title}</h5>
+                <h5 className="font-medium m-0 text-black dark:text-[#E9EDEF]">{section.title}</h5>
 
                 {/* Toggle Icon (mobile only) */}
                 <span className="md:hidden text-lg">
@@ -94,7 +93,7 @@ export default function Footer() {
 
           {/* App Download */}
           <div>
-            <h5 className="font-medium dark:text-[#C5CFD6]">Download The App</h5>
+            <h5 className="font-medium dark:text-[#E9EDEF]">Download The App</h5>
             <Link className="block mt-3">
               <img
                 src={playStore}
