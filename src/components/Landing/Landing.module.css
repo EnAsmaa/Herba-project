@@ -2,16 +2,18 @@
 
 .h100 {
     height: 92vh;
-    background-image:linear-gradient(rgba(0,0,0,0.4)), url(../../assets/landing.jpg);
-    background-position: center center;
+    background-image: linear-gradient(rgba(0, 0, 0, .6)), url('../../assets/landing.jpg');
+    background-position: center;
+    background-attachment: fixed;
     background-size: cover;
     position: relative;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;  
+    gap: 10px;
 }
+
 
 .h1s {
     font-size: clamp(2rem, 5vw, 4rem);

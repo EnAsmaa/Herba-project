@@ -36,10 +36,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="shadow-2xl bg-[#F4F7F5] dark:bg-[#0D161C] border-b border-[#adabab] dark:border-[#294353a6] border-t py-5">
+    <footer className="shadow-2xl bg-[#4d7c5c] text-white dark:bg-[#1A242A] border-b border-[#adabab] dark:border-[#294353a6] border-t py-5">
       <div className="container lg:px-7 px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2">

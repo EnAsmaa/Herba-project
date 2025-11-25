@@ -27,7 +27,7 @@ export default function Layout() {
           profileToggle={profileToggle}
           setProfileToggle={setProfileToggle}
         />
-        <div>
+        <div className="">
           <Outlet></Outlet>
         </div>
         <Footer />

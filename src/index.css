@@ -13,17 +13,12 @@
 {
   @apply grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5;
 }
-.profileBtn
-{
-  @apply px-5 py-1.5 hover:bg-[#203825] text-gray-100 bg-[#4d7c5c] duration-200 rounded-sm cursor-pointer;
-}
 .profileToggle
 {
   @apply h-screen bg-[#cedbd3] dark:bg-[#1A242A] shadow-md w-max  fixed top-0 z-50 flex flex-col gap-3 duration-400;
 }
-.landingBtn
-{
-  @apply px-6 mt-5 py-2.5 font-medium text-xl bg-[#335D39] dark:bg-[#203825] text-white hover:bg-[#4d7c5c] duration-200 rounded-xl cursor-pointer ;
+.btn{
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#203825] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 .aboutBox
 {
@@ -45,9 +40,12 @@
 {
   @apply text-[#203825] dark:text-[#4d805e] text-xl font-medium;
 }
+.cat-active{
+  @apply bg-green-900/50 text-black dark:text-white px-4 py-1.5 rounded-md
+}
 body{
     overflow-x: hidden;
-}
+} 
 
 /* Hide scrollbar but allow scroll */
 .scrollbar-hide::-webkit-scrollbar {
@@ -61,10 +59,8 @@ body{
 
 .link.active
 {
-  color:  #4d7c5c;
-}
-
-
+  @apply text-green-950  dark:text-[#4d7c5c]
+}   
 
 
 
