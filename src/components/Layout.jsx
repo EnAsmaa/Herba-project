@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import NavbarComponent from "./../Navbar/NavbarComponent";
-import Footer from "../Footer/Footer";
+import NavbarComponent from "./NavbarComponent";
+import Footer from "./Footer";
 
 export default function Layout() {
   const [profileToggle, setProfileToggle] = useState(false);

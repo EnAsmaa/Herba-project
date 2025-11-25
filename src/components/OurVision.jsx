@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import OurVision1 from "../../assets/OurVision.jpg";
-import OurVision2 from "../../assets/OurVision2.jpg";
-import OurVision3 from "../../assets/pexels-mareefe-672046.jpg";
+import OurVision1 from "../assets/OurVision.jpg";
+import OurVision2 from "../assets/OurVision2.jpg";
+import OurVision3 from "../assets/pexels-mareefe-672046.jpg";
 
 export default function OurVision() {
   return (

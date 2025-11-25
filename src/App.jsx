@@ -1,19 +1,21 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Aos from "aos";
-import Layout from './components/Layout/Layout';
-import Home from './components/Home/Home';
-import Herbas from './components/Herbas/Herbas';
-import Activity from './components/Activity/Activity';
-import ContactUs from './components/ContactUs/ContactUs';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import Cart from './components/Cart/Cart';
-import Profile from './components/Profile/Profile';
-import NotFound from './components/NotFound/NotFound';
-import Shop from './components/Shop/Shop';
-import Consultation from './components/Consultation/Consultation';
-import AiTools from './components/AiTools/AiTools';
+import Layout from './components/Layout';
+import Home from './Pages/Home';
+import Herbas from './Pages/Herbas';
+import Activity from './components/Activity';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Cart from './components/Cart';
+import Profile from './Pages/Profile';
+import NotFound from './Pages/NotFound';
+import Shop from './Pages/Shop';
+import Consultation from './Pages/Consultation';
+import AiTools from './components/AiTools';
+import Settings from './Pages/Settings';
+import Privacy from "./Pages/Privacy";
+import HelpSupport from "./Pages/HelpSupport";
 
 function App() {
 
@@ -40,7 +42,9 @@ function App() {
       { path: 'aitools', element: <AiTools /> },
       { path: 'store', element: <Shop /> },
       { path: 'consultation', element: <Consultation /> },
-      { path: 'contactus', element: <ContactUs /> },
+      { path: 'helpSupport', element: <HelpSupport /> },
+      { path: 'settings', element: <Settings /> },
+      { path: 'privacy', element: <Privacy /> },
       { path: '*', element: <NotFound /> },
     ]
   }])

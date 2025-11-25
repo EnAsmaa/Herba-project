@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaLeaf } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import playStore from "../../assets/PlayStore.png";
+import playStore from "../assets/PlayStore.png";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 export default function Footer() {
