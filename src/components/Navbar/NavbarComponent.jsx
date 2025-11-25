@@ -15,11 +15,11 @@ export default function NavbarComponent(props) {
   const [menuToggle, setMenuToggle] = useState(false)
 
   return <>
-    <nav className=' bg-[#4d7c5c] text-white dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
+    <nav className=' bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
       <div className="container lg:px-7 px-4 mx-auto py-5">
         <div className='flex justify-between items-center'>
           <div className='flex gap-1 items-center'>
-            <FaLeaf className='text-2xl text-[#335D39] dark:text-[#4d7c5c]' />
+            <FaLeaf className='text-2xl text-[#335D39] dark:text-[#6bb683]' />
             <span className='text-2xl font-medium'>HerbalCare</span>
           </div>
           <div className='navLinks order-first lg:order-0'>

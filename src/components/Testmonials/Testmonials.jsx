@@ -4,8 +4,8 @@ import person2 from "../../assets/person2.jpg";
 import person3 from "../../assets/person3.jpg";
 export default function Testmonials() {
   return (
-    <section className="pb-10 mb-10 container lg:px-7 px-4 mx-auto ">
-      <div className="">
+    <section className="pb-10 mb-10  mx-auto ">
+      <div className="container lg:px-7 px-4">
         <h2 className="heading-Sections">
           What Our Community Says
         </h2>
