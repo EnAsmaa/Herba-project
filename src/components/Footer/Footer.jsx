@@ -43,7 +43,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-2xl text-[#375a42]" />
+              <FaLeaf className="text-2xl text-[#335D39] dark:text-[#4d7c5c]" />
               <h3 className="m-0 text-xl font-bold dark:text-[#E9EDEF]">HerbalCare</h3>
             </div>
             <p className="mt-2 text-base  text-[#333333]  dark:text-[#C5CFD6]">
