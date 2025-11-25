@@ -5,8 +5,8 @@ import OurVision3 from "../assets/pexels-mareefe-672046.jpg";
 
 export default function OurVision() {
   return (
-    <section className="bg-[#e6f0ea] dark:bg-green-950/20 py-10 container lg:px-7 px-4 mx-auto">
-      <div className="">
+    <section className="bg-[#e6f0ea] dark:bg-green-950/20 py-10 ">
+      <div className="container lg:px-7 px-4 mx-auto">
         <h2 className="heading-Sections">Our Vision</h2>
         <p className="cap-sections">
           Our vision is to become a leading source of natural wellness,
