@@ -6,12 +6,12 @@ export default function Testmonials() {
   return (
     <section className="pb-10 mb-10 ">
       <div className="container mx-auto px-4">
-        <h2 className="text-center font-bold text-3xl mb-7 dark:text-[#E9EDEF]">
+        <h2 className="heading-Sections">
           What Our Community Says
         </h2>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5 mt-5">
-          <div className="testmonial-content border border-[#adabab] dark:border-[#294353a6] rounded-xl p-3 ps-4">
-            <div className="testmonial-person mb-3 flex items-center gap-5">
+        <div className="gridtemplet mt-8">
+          <div className="testimonialBox">
+            <div className="testmonial-person ">
               <img
                 src={person1}
                 className="aspect-square w-15 rounded-full object-cover"
@@ -19,7 +19,7 @@ export default function Testmonials() {
               />
               <div>
                 <span className="font-semibold text-[#4d7c5c]">Mariam S.</span>
-                <div className="star-icons flex gap-2 mt-2 items-center justify-center">
+                <div className="star-icons">
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />
@@ -33,8 +33,8 @@ export default function Testmonials() {
               complexion has never looked this healthy.”
             </p>
           </div>
-          <div className="testmonial-content border dark:border-[#294353a6] border-[#adabab] rounded-xl p-3 ps-4">
-            <div className="testmonial-person mb-3 flex items-center gap-3">
+          <div className="testimonialBox">
+            <div className="testmonial-person ">
               <img
                 src={person3}
                 className="aspect-square w-15 rounded-full object-cover"
@@ -42,7 +42,7 @@ export default function Testmonials() {
               />
               <div>
                 <span className="font-semibold text-[#4d7c5c]">Omar M.</span>
-                <div className="star-icons flex gap-2 mt-2 items-center justify-center">
+                <div className="star-icons ">
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />
@@ -56,8 +56,8 @@ export default function Testmonials() {
               how nature can make such a difference!”
             </p>
           </div>
-          <div className="testmonial-content border dark:border-[#294353a6] border-[#adabab] rounded-xl p-3 ps-4">
-            <div className="testmonial-person  mb-3 flex items-center gap-3">
+          <div className="testimonialBox">
+            <div className="testmonial-person ">
               <img
                 src={person2}
                 className="aspect-square w-15 rounded-full object-cover"
@@ -65,7 +65,7 @@ export default function Testmonials() {
               />
               <div>
                 <span className="font-semibold text-[#4d7c5c]">Nour H.</span>
-                <div className="star-icons flex gap-2 mt-2 items-center justify-center">
+                <div className="star-icons">
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />
                   <FaRegStar className="text-yellow-400" />

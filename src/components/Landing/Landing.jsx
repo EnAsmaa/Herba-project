@@ -14,7 +14,7 @@ export default function Landing() {
           to nature with trusted remedies that support your body, calm your
           mind, and inspire everyday wellness.
         </p>
-        <button className={`px-6 mt-5 py-2.5 font-medium text-xl bg-[#335D39] dark:bg-[#203825] text-white hover:bg-[#4d7c5c] duration-200 rounded-xl cursor-pointer `}>Get Started</button>
+        <button className={`landingBtn `}>Get Started</button>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function NavbarComponent(props) {
   const [menuToggle, setMenuToggle] = useState(false)
 
   return <>
-    <nav className='shadow  bg-[#F7F7F7] text-black dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
+    <nav className=' bg-[#F7F7F7] text-black dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
       <div className="container lg:px-7 px-4 mx-auto py-5">
         <div className='flex justify-between items-center'>
           <div className='flex gap-1 items-center'>
@@ -39,19 +39,19 @@ export default function NavbarComponent(props) {
             }
             <IoNotifications className='text-xl cursor-pointer' />
             <FaCartShopping className='text-xl cursor-pointer' />
-            <div className=''>
+            <div >
               <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl cursor-pointer' />
-              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} h-screen bg-gray-100 dark:bg-red-900 shadow-md w-max rounded-lg fixed top-0 z-50 flex flex-col gap-3 duration-400`}>
-                <div className="header flex justify-between items-center bg-gray-200 dark:bg-gray-500 p-2">
+              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle`}>
+                <div className="header px-3 flex justify-between items-center dark:text-black bg-gray-200 dark:bg-[#F7F7F7] p-2">
                   <FaXmark onClick={() => { setProfileToggle(false) }} className='text-2xl cursor-pointer' />
-                  <p >profile</p>
+                  <p className='font-semibold'>Profile</p>
                 </div>
                 <div className="content px-12 py-5">
-                  <div className='aspect-square w-15 mx-auto rounded-full bg-amber-400'></div>
+                  <div className='aspect-square w-15 mx-auto rounded-full bg-gray-300'></div>
                   <p className='text-center'>Lorem, ipsum dolor.</p>
                   <div className='grid grid-cols-2 gap-2'>
-                    <button className='px-5 py-1.5 hover:bg-[#203825] text-gray-100 bg-[#4d7c5c] duration-200 rounded-sm cursor-pointer'>Register</button>
-                    <button className='px-5 py-1.5 hover:bg-[#203825] text-gray-100 bg-[#4d7c5c] duration-200 rounded-sm cursor-pointer'>Login</button>
+                    <button className='profileBtn'>Register</button>
+                    <button className='profileBtn'>Login</button>
                   </div>
                 </div>
               </div>
