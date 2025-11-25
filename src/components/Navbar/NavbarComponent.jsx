@@ -15,43 +15,43 @@ export default function NavbarComponent(props) {
   const [menuToggle, setMenuToggle] = useState(false)
 
   return <>
-    <nav className='shadow-2xl bg-gray-100 text-black dark:bg-gray-900 dark:text-gray-100 relative'>
-      <div className="container lg:px-7 mx-auto py-5">
+    <nav className=' bg-[#4d7c5c] text-white dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
+      <div className="container lg:px-7 px-4 mx-auto py-5">
         <div className='flex justify-between items-center'>
           <div className='flex gap-1 items-center'>
-            <FaLeaf className='text-2xl text-green-800' />
+            <FaLeaf className='text-2xl text-[#335D39] dark:text-[#4d7c5c]' />
             <span className='text-2xl font-medium'>HerbalCare</span>
           </div>
           <div className='navLinks order-first lg:order-0'>
-            <ul className='hidden lg:flex items-center gap-6'>
-              <li><NavLink to={''}>Home</NavLink></li>
-              <li><NavLink to={'herbas'}>Herbas</NavLink></li>
-              <li><NavLink to={'activity'}>Activity</NavLink></li>
-              <li><NavLink to={'aitools'}>AI Tools</NavLink></li>
-              <li><NavLink to={'store'}>Store</NavLink></li>
-              <li><NavLink to={'consultation'}>Consultation</NavLink></li>
+            <ul className='hidden lg:flex items-center gap-6 font-medium'>
+              <li><NavLink className={'link'} to={''}>Home</NavLink></li>
+              <li><NavLink className={'link'} to={'herbas'}>Herbas</NavLink></li>
+              <li><NavLink className={'link'} to={'activity'}>Activity</NavLink></li>
+              <li><NavLink className={'link'} to={'aitools'}>AI Tools</NavLink></li>
+              <li><NavLink className={'link'} to={'store'}>Store</NavLink></li>
+              <li><NavLink className={'link'} to={'consultation'}>Consultation</NavLink></li>
             </ul>
-            <IoMenu onClick={() => { setMenuToggle(!menuToggle) }} className='lg:hidden text-2xl' />
+            <IoMenu onClick={() => { setMenuToggle(!menuToggle) }} className='lg:hidden text-2xl cursor-pointer' />
           </div>
           <div className='flex items-center gap-5'>
 
-            {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
+            {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
             }
-            <IoNotifications className='text-xl' />
-            <FaCartShopping className='text-xl' />
-            <div className=''>
-              <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl' />
-              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} h-screen bg-gray-100 dark:bg-red-900 shadow-md w-max rounded-lg fixed top-0 z-50 flex flex-col gap-3 duration-400`}>
-                <div className="header flex justify-between items-center bg-gray-200 dark:bg-gray-500 p-2">
+            <IoNotifications className='text-xl cursor-pointer' />
+            <FaCartShopping className='text-xl cursor-pointer' />
+            <div >
+              <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl cursor-pointer' />
+              <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle`}>
+                <div className="header px-3 flex justify-between items-center dark:text-black bg-gray-200 dark:bg-[#F7F7F7] p-2">
                   <FaXmark onClick={() => { setProfileToggle(false) }} className='text-2xl cursor-pointer' />
-                  <p >profile</p>
+                  <p className='font-semibold'>Profile</p>
                 </div>
                 <div className="content px-12 py-5">
-                  <div className='aspect-square w-15 mx-auto rounded-full bg-amber-400'></div>
+                  <div className='aspect-square w-15 mx-auto rounded-full bg-gray-300'></div>
                   <p className='text-center'>Lorem, ipsum dolor.</p>
                   <div className='grid grid-cols-2 gap-2'>
-                    <button className='px-5 py-1.5 bg-green-800 text-gray-100 hover:bg-green-900 duration-200 rounded-sm cursor-pointer'>Register</button>
-                    <button className='px-5 py-1.5 bg-green-800 text-gray-100 hover:bg-green-900 duration-200 rounded-sm cursor-pointer'>Login</button>
+                    <button className='btn'>Register</button>
+                    <button className='btn'>Login</button>
                   </div>
                 </div>
               </div>

@@ -35,6 +35,7 @@ export default function Shop() {
 
   const settings = {
     dots: false,
+    arrows: false,
     infinite: true,
     speed: 4000,
     slidesToShow: 5,
@@ -69,26 +70,26 @@ export default function Shop() {
 
   return (
     <>
-      {/* Search Section */}
-      <div className="search-wrapper py-5 px-4">
-        <div className="search-box position-relative mx-auto">
-          <FaSearch className="searchIcon fs-4" />
-          <input
-            type="search"
-            className="searchInput rounded-5 py-2 border-0 px-5 w-100"
-            placeholder="Search for herbs..."
-          />
+      <section className="container lg:px-7 px-4 mx-auto py-4">
+        {/* Search Section */}
+        <div className='search-wrapper bg-green-800/10 py-8 rounded-lg'>
+          <div className='search-box relative mx-auto w-2xs sm:w-sm md:w-md lg:w-lg'>
+            <FaSearch className='absolute text-gray-500 -translate-y-1/2 top-1/2 left-3 cursor-pointer fs-4' />
+            <input
+              type="search"
+              className='bg-gray-50 text-gray-900 border border-gray-300 dark:bg-gray-100 dark:text-black focus:outline-0 rounded-lg py-2 px-8 w-full '
+              placeholder='Search for herbs...'
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Categories */}
-      <div className="container-fluid px-lg-5 px-md-4 px-3">
-        <div className="categories py-3">
-          <ul className="list-unstyled d-flex gap-4 mb-0 justify-content-center overflow-x-auto flex-nowrap">
+        {/* Categories */}
+        <div className="categories py-3 mt-2">
+          <ul className="list-none flex gap-5 mb-0 justify-center overflow-x-auto flex-nowrap">
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`pointer cat ${activeCategory === cat ? "active" : ""
+                className={`cursor-pointer bg-green-200/10 text-black dark:text-white px-4 py-1.5 rounded-md ${activeCategory === cat ? "cat-active" : ""
                   }`}
                 onClick={() => setActiveCategory(cat)}
               >
@@ -97,43 +98,42 @@ export default function Shop() {
             ))}
           </ul>
         </div>
-      </div>
-      <div className="slider-wrapper px-lg-5 px-md-4 px-3 mb-4">
-        <Slider {...settings}>
-          {herbas.map((herb, id) => (
-            <div className="px-2 py-3" key={id}>
-              <div className=" pb-2 slider-images shadow-sm pointer">
-                <img
-                  className="w-100 img-slider"
-                  src={herb.img}
-                  alt={herb.name}
-                />
-                <p className="fw-semibold mt-2 text-center">{herb.category}</p>
-                <p className="fw-semibold mt-2 text-center">{herb.name}</p>
+
+        <div className="slider-wrapper mb-4">
+          <Slider {...settings}>
+            {herbas.map((herb, id) => (
+              <div className="p-3" key={id}>
+                <div className="pb-3 my-5 slider-images shadow-md pointer bg-green-200/10 rounded-lg overflow-hidden">
+                  <img
+                    className="w-full img-slider"
+                    src={herb.img}
+                    alt={herb.name}
+                  />
+                  <p className="font-medium mt-2 text-center">{herb.category}</p>
+                  <p className="font-medium mt-2 text-center">{herb.name}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-      {/* Herbas Grid */}
-      <div className="container-fluid px-lg-5 px-md-4 px-3 my-4">
-        <h2 className="active text-center fw-bold my-4">Herbas Types</h2>
-        <div className="herbas row g-4">
-          {herbas.map((herb, idx) => (
-            <div key={idx} className="col-6 col-sm-4 col-md-3 col-xxl-2">
-              <div className="col-content text-center shadow pb-4 pointer">
-                <img className="w-100 cat-img" src={herb.img} alt={herb.name} />
+            ))}
+          </Slider>
+        </div>
+        {/* Herbas Grid */}
+        <div className="my-4">
+          <h2 className="text-white active text-center font-bold text-3xl my-4">Herbas Types</h2>
+          <div className="herbas grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {herbas.map((herb, idx) => (
+              <div className="text-center shadow-md pb-4 cursor-pointer rounded-lg overflow-hidden bg-green-200/10">
+                <img className="w-full" src={herb.img} alt={herb.name} />
                 <p className="aboutIcone mt-1 ">{herb.category}</p>
                 <p className="mb-2 mt-1">{herb.name}</p>
-                <button className="btn cartBtn mx-auto rounded-5 w-75 d-flex align-items-center justify-content-center gap-2">
+                <button className="btn">
                   <FaCartShopping className="fs-5" />
                   Add To Cart
                 </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 
