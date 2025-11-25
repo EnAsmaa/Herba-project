@@ -15,10 +15,12 @@ export default function Layout() {
 
   return <main className={theme === 'dark' ? 'dark' : 'light'}>
     {profileToggle && <div className='fixed inset-0 bg-black opacity-40 z-20'></div>}
-    <NavbarComponent toggleTheme={toggleTheme} theme={theme} profileToggle={profileToggle} setProfileToggle={setProfileToggle} />
-    <div className='container mx-auto py-5 bg-gray-200 dark:bg-green-950 text-black dark:text-gray-100 lg:px-7'>
-      <Outlet></Outlet>
+    <div className="bg-gray-200 dark:bg-green-950 text-black dark:text-gray-100">
+      <NavbarComponent toggleTheme={toggleTheme} theme={theme} profileToggle={profileToggle} setProfileToggle={setProfileToggle} />
+      <div className='container mx-auto py-5 lg:px-7'>
+        <Outlet></Outlet>
+      </div>
+      <Footer/>
     </div>
-    <Footer />
   </main>
 }
