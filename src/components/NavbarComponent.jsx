@@ -14,7 +14,7 @@ export default function NavbarComponent(props) {
   const [menuToggle, setMenuToggle] = useState(false)
 
   return <>
-    <nav className=' bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
+    <nav className='shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
       <div className="container lg:px-7 px-4 mx-auto py-5">
         <div className='flex justify-between items-center'>
           <div className='flex gap-1 items-center'>
@@ -37,7 +37,7 @@ export default function NavbarComponent(props) {
             {/* theme mode */}
             {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
             }
-            <IoNotifications className='text-xl cursor-pointer' />
+            <NavLink to='notification'><IoNotifications className='text-xl cursor-pointer' /></NavLink>
             <FaCartShopping className='text-xl cursor-pointer' />
 
             {/* profile */}

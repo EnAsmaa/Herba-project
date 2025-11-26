@@ -14,8 +14,8 @@ export default function AboutUs() {
         </p>
         <div>
           <div className="gridtemplet mt-7">
-            <div className="aboutBox">
-              <div className="flex items-center gap-3 mb-3">
+            <div className="aboutBox bg-white dark:bg-[#111B21]">
+              <div className="flex items-center gap-3 mb-3 ">
                 <FiTarget className="block text-2xl text-[#4d7c5c]" />
                 <h3 className="mb-0 text-2xl ">Our Mission</h3>
               </div>
@@ -25,7 +25,7 @@ export default function AboutUs() {
                 through the power of plants
               </p>
             </div>
-            <div className="aboutBox">
+            <div className="aboutBox bg-white dark:bg-[#111B21]">
               <div className="flex items-center gap-3 mb-3">
                 <TbPlant2 className="block text-2xl text-[#4d7c5c]" />
                 <h3 className="mb-0 text-2xl">Our Philosophy</h3>
