@@ -24,7 +24,7 @@ export default function Herbas() {
     <>
       <section className='container lg:px-7 px-4 mx-auto py-4 mt-5'>
         {/* search */}
-        <Search />
+        <Search placehoder={'herbas'}/>
 
         <div className="categories">
           <ul className='list-none mt-2 flex gap-5 mb-0 overflow-x-auto flex-nowrap scrollbar-hide py-4'>

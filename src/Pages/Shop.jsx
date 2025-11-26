@@ -71,7 +71,7 @@ export default function Shop() {
     <>
       <section className="container lg:px-7 px-4 mx-auto py-4 mt-5">
         {/* search */}
-        <Search />
+        <Search placehoder={'herbas'}/>
 
         {/* Categories */}
         <div className="categories py-3 mt-2">
