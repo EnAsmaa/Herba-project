@@ -16,6 +16,7 @@ import AiTools from './components/AiTools';
 import Settings from './Pages/Settings';
 import Privacy from "./Pages/Privacy";
 import HelpSupport from "./Pages/HelpSupport";
+import Notification from "./Pages/Notification";
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
       { path: 'helpSupport', element: <HelpSupport /> },
       { path: 'settings', element: <Settings /> },
       { path: 'privacy', element: <Privacy /> },
+      {path:'notification',element: <Notification/>},
       { path: '*', element: <NotFound /> },
     ]
   }])

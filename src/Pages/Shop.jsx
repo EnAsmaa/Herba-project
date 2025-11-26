@@ -69,9 +69,9 @@ export default function Shop() {
 
   return (
     <>
-      <section className="container lg:px-7 px-4 mx-auto py-4">
+      <section className="container lg:px-7 px-4 mx-auto py-4 mt-5">
         {/* search */}
-        <Search />
+        <Search placehoder={'herbas'}/>
 
         {/* Categories */}
         <div className="categories py-3 mt-2">
@@ -79,7 +79,7 @@ export default function Shop() {
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer bg-green-200/10 text-black dark:text-white px-4 py-1.5 rounded-md ${activeCategory === cat ? "cat-active" : ""
+                className={`cursor-pointer bg-green-800/10 dark:bg-green-200/10 text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 ${activeCategory === cat ? "cat-active" : ""
                   }`}
                 onClick={() => setActiveCategory(cat)}
               >
@@ -108,7 +108,7 @@ export default function Shop() {
         </div>
         {/* Herbas Grid */}
         <div className="my-4">
-          <h2 className="text-white active text-center font-bold text-3xl my-4">Herbas Types</h2>
+          <h2 className="dark:text-white active text-center font-bold text-3xl my-4 mb-6">Herbas Types</h2>
           <div className="herbas grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {herbas.map((herb, idx) => (
               <div className="text-center shadow-md pb-4 cursor-pointer rounded-lg overflow-hidden bg-green-200/10">
