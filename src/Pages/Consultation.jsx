@@ -7,7 +7,7 @@ import Search from "../components/Search";
 export default function Consultation() {
   return (
     <section className="my-9">
-      <div className="container px-4  mx-auto">
+      <div className="container px-4 lg:px-7 mx-auto">
         <div className="consult-head my-3 mb-5">
           <h2 className="mb-1 text-center font-bold text-4xl dark:text-[#E9EDEF]">
             Mental Health Consultaion
@@ -20,9 +20,9 @@ export default function Consultation() {
         <Search placehoder={'doctors'}/>
 
       </div>
-      <div className="container mx-auto px-4 py-10 my-5">
+      <div className="container mx-auto px-4 lg:px-7 py-10 my-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5">
+          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
             <img
               src={person1}
               alt="doctor"
@@ -57,7 +57,7 @@ export default function Consultation() {
               </span>
             </div>
           </div>
-          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5">
+          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
             <img
               src={person2}
               alt="doctor"
@@ -92,7 +92,7 @@ export default function Consultation() {
               </span>
             </div>
           </div>
-          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5">
+          <div className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
             <img
               src={person3}
               alt="doctor"
@@ -127,7 +127,7 @@ export default function Consultation() {
               </span>
             </div>
           </div>
-          <div className="consult-content text-center shadow-lg dark:border bg-white dark:bg-[#1A242A] border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5">
+          <div className="consult-content text-center shadow-lg dark:border bg-white dark:bg-[#1A242A] border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
             <img
               src={person4}
               alt="doctor"

@@ -35,7 +35,7 @@ export default function NavbarComponent(props) {
           <div className='flex items-center gap-5'>
 
             {/* theme mode */}
-            {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl' />
+            {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer' />
             }
             <NavLink to='notification'><IoNotifications className='text-xl cursor-pointer' /></NavLink>
             <FaCartShopping className='text-xl cursor-pointer' />
