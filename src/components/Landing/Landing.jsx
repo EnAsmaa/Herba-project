@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import style from "../Landing/Landing.module.css";
-import vidbg from "../../assets/lavid.mp4"
 
 export default function Landing() {
   return (

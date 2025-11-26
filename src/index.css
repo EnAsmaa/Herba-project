@@ -15,7 +15,7 @@
 }
 
 .btn{
-  @apply mx-auto flex items-center justify-center gap-2 bg-[#203825] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543]  hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 .aboutBox
 {
@@ -42,7 +42,7 @@
   @apply text-[#203825] dark:text-[#4d805e] text-xl font-medium;
 }
 .cat-active{
-  @apply bg-green-900/50 text-black dark:text-white px-4 py-1.5 rounded-md
+  @apply bg-[#335D39] dark:bg-green-900/50 text-white dark:text-white px-4 py-1.5 rounded-full
 }
 body{
     overflow-x: hidden;
@@ -63,8 +63,13 @@ body{
   @apply text-[#4d7c5c] dark:text-[#6bb683];
 }   
 
-
-
-
+.span-time
+{
+  @apply cursor-pointer bg-green-800/50 dark:bg-green-200/25  text-white px-3 py-1.5 rounded-full border border-green-200/10;
+}
+.close-time
+{
+  @apply cursor-pointer bg-gray-800/30 dark:bg-green-200/10 text-white dark:text-white px-3 py-1.5 rounded-full border border-green-200/10;
+}
 
 /* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
