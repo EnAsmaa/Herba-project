@@ -17,6 +17,10 @@
 .btn{
   @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543]  hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
+.storeBtn{
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D]  hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+}
+
 .aboutBox
 {
   @apply border dark:border-[#294353a6] border-[#adabab] p-3 ps-4 rounded-xl;
