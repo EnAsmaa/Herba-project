@@ -79,7 +79,7 @@ export default function Shop() {
             {categories.map((cat) => (
               <li
                 key={cat}
-                className={`cursor-pointer bg-green-800/10 dark:bg-green-200/10 text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 ${activeCategory === cat ? "cat-active" : ""
+                className={`cursor-pointer bg-green-800/10 dark:bg-[#0C1A1A]  text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 ${activeCategory === cat ? "cat-active" : ""
                   }`}
                 onClick={() => setActiveCategory(cat)}
               >
@@ -115,7 +115,7 @@ export default function Shop() {
                 <img className="w-full" src={herb.img} alt={herb.name} />
                 <p className="aboutIcone mt-1 ">{herb.category}</p>
                 <p className="mb-2 mt-1">{herb.name}</p>
-                <button className="btn">
+                <button className="storeBtn">
                   <FaCartShopping className="fs-5" />
                   Add To Cart
                 </button>

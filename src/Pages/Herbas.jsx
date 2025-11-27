@@ -29,7 +29,7 @@ export default function Herbas() {
         <div className="categories">
           <ul className='list-none mt-2 flex gap-5 mb-0 overflow-x-auto flex-nowrap scrollbar-hide py-4'>
             {
-              categories.map(cat => <li key={cat} className={`cursor-pointer bg-green-800/10 dark:bg-green-200/10 text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 whitespace-nowrap ${activeCat === cat ? 'cat-active' : ''}`}
+              categories.map(cat => <li key={cat} className={`cursor-pointer bg-green-800/10 dark:bg-[#0C1A1A] text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 whitespace-nowrap ${activeCat === cat ? 'cat-active' : ''}`}
                 onClick={() => setActiveCat(cat)}>{cat}</li>)
             }
           </ul>

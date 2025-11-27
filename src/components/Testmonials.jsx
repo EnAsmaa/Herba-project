@@ -10,7 +10,7 @@ export default function Testmonials() {
           What Our Community Says
         </h2>
         <div className="gridtemplet mt-8">
-          <div className="testimonialBox bg-white dark:bg-[#111B21]">
+          <div className="testimonialBox bg-white  dark:bg-[#1A242A]">
             <div className="testmonial-person ">
               <img
                 src={person1}
@@ -33,7 +33,7 @@ export default function Testmonials() {
               complexion has never looked this healthy.”
             </p>
           </div>
-          <div className="testimonialBox bg-white dark:bg-[#111B21]">
+          <div className="testimonialBox bg-white dark:bg-[#1A242A]">
             <div className="testmonial-person ">
               <img
                 src={person3}
@@ -56,7 +56,7 @@ export default function Testmonials() {
               how nature can make such a difference!”
             </p>
           </div>
-          <div className="testimonialBox bg-white dark:bg-[#111B21]">
+          <div className="testimonialBox bg-white dark:bg-[#1A242A]">
             <div className="testmonial-person ">
               <img
                 src={person2}
