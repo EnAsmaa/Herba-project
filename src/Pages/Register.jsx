@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-
 export default function Register() {
   return <>
     <div className="container w-75 my-5 py-5">
