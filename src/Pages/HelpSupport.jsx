@@ -19,14 +19,14 @@ export default function HelpSupport() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen bg-main">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
           Help & Support
         </h1>
 
         {/* Container */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md space-y-8">
+        <div className="bg-main border border-black/50 dark:border-white/50 rounded-lg p-6 shadow-lg shadow-black/5 dark:shadow-amber-50/5">
 
           {/* Contact Info */}
           <div>
@@ -52,7 +52,7 @@ export default function HelpSupport() {
                 onChange={handleChange}
                 placeholder="Your full name"
                 className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+                bg-main text-gray-900 dark:text-gray-100 
                 focus:ring-green-600 focus:border-green-600"
               />
             </div>
@@ -68,7 +68,7 @@ export default function HelpSupport() {
                 onChange={handleChange}
                 placeholder="example@mail.com"
                 className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                bg-main text-gray-900 dark:text-gray-100
                 focus:ring-green-600 focus:border-green-600"
               />
             </div>
@@ -84,7 +84,7 @@ export default function HelpSupport() {
                 onChange={handleChange}
                 placeholder="How can we help you?"
                 className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                bg-main text-gray-900 dark:text-gray-100
                 focus:ring-green-600 focus:border-green-600"
               />
             </div>
@@ -100,7 +100,7 @@ export default function HelpSupport() {
                 onChange={handleChange}
                 placeholder="Describe your issue or message..."
                 className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100
+                bg-main text-gray-900 dark:text-gray-100
                 focus:ring-green-600 focus:border-green-600"
               ></textarea>
             </div>
