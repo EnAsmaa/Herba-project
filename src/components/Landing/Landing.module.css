@@ -2,7 +2,7 @@
 
 .h100 {
     height: 92vh;
-    background-image: linear-gradient(rgba(0, 0, 0, .6)), url('../../assets/landing.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, .6)), url(../../assets/landing.jpg);
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
