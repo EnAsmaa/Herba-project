@@ -15,8 +15,8 @@ export default function NavbarComponent(props) {
 
   return <>
     <nav className='shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
-      <div className="container lg:px-7 px-4 mx-auto py-5">
-        <div className='flex justify-between items-center'>
+      <div className="container lg:px-7 px-4 mx-auto py-3 lg:py-6">
+        <div className='flex justify-between items-center mt-3 lg:mt-0'>
           <div className='flex gap-1 items-center'>
             <FaLeaf className='text-2xl text-[#335D39] dark:text-[#6bb683]' />
             <span className='text-2xl font-medium'>HerbalCare</span>
@@ -43,22 +43,20 @@ export default function NavbarComponent(props) {
             {/* profile */}
             <div >
               <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl cursor-pointer' />
-                
+
               {/* profile toggle */}
               <ProfileSideBar profileToggle={profileToggle} setProfileToggle={setProfileToggle} />
             </div>
           </div>
         </div>
-        {menuToggle &&
-          <ul className='lg:hidden space-y-2 mt-2'>
-            <li><NavLink to={''}>Home</NavLink></li>
-            <li><NavLink to={'herbas'}>Herbas</NavLink></li>
-            <li><NavLink to={'activity'}>Activity</NavLink></li>
-            <li><NavLink to={'aitools'}>AI Tools</NavLink></li>
-            <li><NavLink to={'store'}>Store</NavLink></li>
-            <li><NavLink to={'consultation'}>Consultation</NavLink></li>
-          </ul>
-        }
+        <ul className={`lg:hidden space-y-3 text-md mt-2 overflow-hidden transition-all duration-700 ${menuToggle? 'max-h-96' : 'max-h-0'}`}>
+          <li><NavLink to={''}>Home</NavLink></li>
+          <li><NavLink to={'herbas'}>Herbas</NavLink></li>
+          <li><NavLink to={'activity'}>Activity</NavLink></li>
+          <li><NavLink to={'aitools'}>AI Tools</NavLink></li>
+          <li><NavLink to={'store'}>Store</NavLink></li>
+          <li><NavLink to={'consultation'}>Consultation</NavLink></li>
+        </ul>
       </div>
     </nav>
   </>;
