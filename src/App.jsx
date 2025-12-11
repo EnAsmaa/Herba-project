@@ -17,6 +17,7 @@ import Settings from './Pages/Settings';
 import Privacy from "./Pages/Privacy";
 import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
+import UserDashboard from "./Pages/UserDashboard";
 
 function App() {
 
@@ -43,9 +44,10 @@ function App() {
       { path: 'aitools', element: <AiTools /> },
       { path: 'store', element: <Shop /> },
       { path: 'consultation', element: <Consultation /> },
-      { path: 'helpSupport', element: <HelpSupport /> },
       { path: 'settings', element: <Settings /> },
+      { path: 'userDashboard', element: <UserDashboard /> },
       { path: 'privacy', element: <Privacy /> },
+      { path: 'helpSupport', element: <HelpSupport /> },
       {path:'notification',element: <Notification/>},
       { path: '*', element: <NotFound /> },
     ]

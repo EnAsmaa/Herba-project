@@ -24,7 +24,7 @@ export default function Herbas() {
     <>
       <section className='container lg:px-7 px-4 mx-auto py-4 mt-5'>
         {/* search */}
-        <Search placehoder={'herbas'}/>
+        <Search placehoder={'herbas'} />
 
         <div className="categories">
           <ul className='list-none mt-2 flex gap-5 mb-0 overflow-x-auto flex-nowrap scrollbar-hide py-4'>
@@ -41,7 +41,7 @@ export default function Herbas() {
               <img className='w-full cat-img' src={herb.img} alt={herb.name} />
               <p className='aboutIcone mt-1'>{herb.category}</p>
               <p className='mt-1'>{herb.name}</p>
-              <FaHeart className='text-red-800 hover:text-red-800 opacity-80 hover:opacity-100 text-xl absolute top-2 right-2 cursor-pointer hover:scale-110 duration-300'/>
+              <FaHeart className='text-red-800 hover:text-red-800 opacity-80 hover:opacity-100 text-xl absolute top-2 right-2 cursor-pointer hover:scale-110 duration-300' />
             </div>
           ))}
         </div>

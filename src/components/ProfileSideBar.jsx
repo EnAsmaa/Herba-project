@@ -3,7 +3,7 @@ import { FaXmark } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import { FaCrown } from "react-icons/fa";
-import { MdLanguage } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { MdContactSupport } from "react-icons/md";
 import profile from '../assets/profile.jpg'
@@ -31,6 +31,7 @@ export default function ProfileSideBar(props) {
             </div>
             <ul className='p-5 space-y-8 text-xl'>
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/settings'} className='flex items-center gap-3'><IoMdSettings />Settings</Link></li>
+                <li><Link onClick={()=>{setProfileToggle(false)}} to={'/userDashboard'} className='flex items-center gap-3'><MdDashboard />User Dashboard</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} className='flex items-center gap-3'><FaHeart />Favourite</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} className='flex items-center gap-3'><FaCrown />Premium</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/privacy'} className='flex items-center gap-3'><MdOutlinePrivacyTip />Privacy</Link></li>
