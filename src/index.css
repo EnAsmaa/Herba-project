@@ -1,56 +1,60 @@
-@import "tailwindcss";  
-@custom-variant dark (&:where(.dark, .dark *));
+@import "tailwindcss";
+@plugin './hero.js';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
 
-.heading-Sections
-{
+
+.heading-Sections {
   @apply text-center font-bold text-3xl mb-5 dark:text-[#E9EDEF];
 }
-.cap-sections
-{
+
+.cap-sections {
   @apply text-center text-lg text-[#333333] dark:text-[#C5CFD6] md:w-3/4 mx-auto;
 }
-.gridtemplet
-{
-  @apply grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5;
+
+.gridtemplet {
+  @apply grid grid-cols-[repeat(auto-fit, minmax(250px, 1fr))] gap-5;
 }
 
-.btn{
-  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543]  hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
-}
-.storeBtn{
-  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D]  hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+.btn {
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 
-.aboutBox
-{
+.storeBtn {
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+}
+
+.aboutBox {
   @apply border dark:border-[#294353a6] border-[#adabab] p-3 ps-4 rounded-xl;
 }
-.profileToggle
-{
-  @apply h-screen bg-[#cedbd3] dark:bg-[#1A242A] shadow-md w-max  fixed top-0 z-50 flex flex-col gap-3 duration-400;
+
+.profileToggle {
+  @apply h-screen bg-[#cedbd3] dark:bg-[#1A242A] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
 }
-.testimonialBox
-{
+
+.testimonialBox {
   @apply border border-[#adabab] dark:border-[#294353a6] rounded-xl p-3 ps-4;
 }
-.testmonial-person
-{
+
+.testmonial-person {
   @apply mb-3 flex items-center gap-3;
 }
-.star-icons
-{
+
+.star-icons {
   @apply flex gap-2 mt-2 items-center justify-center;
 }
-.h3-vision
-{
+
+.h3-vision {
   @apply text-[#203825] dark:text-[#4d805e] text-xl font-medium;
 }
-.cat-active{
+
+.cat-active {
   @apply bg-[#335D39] dark:bg-green-900/50 text-white dark:text-white px-4 py-1.5 rounded-full
 }
-body{
-    overflow-x: hidden;
-} 
+
+body {
+  overflow-x: hidden;
+}
 
 /* Hide scrollbar but allow scroll */
 .scrollbar-hide::-webkit-scrollbar {
@@ -58,21 +62,21 @@ body{
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE & Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
-.link.active
-{
+.link.active {
   @apply text-[#4d7c5c] dark:text-[#6bb683];
-}   
-
-.span-time
-{
-  @apply cursor-pointer bg-green-800/50 dark:bg-green-200/25  text-white px-3 py-1.5 rounded-full border border-green-200/10;
 }
-.close-time
-{
+
+.span-time {
+  @apply cursor-pointer bg-green-800/50 dark:bg-green-200/25 text-white px-3 py-1.5 rounded-full border border-green-200/10;
+}
+
+.close-time {
   @apply cursor-pointer bg-gray-800/30 dark:bg-green-200/10 text-white dark:text-white px-3 py-1.5 rounded-full border border-green-200/10;
 }
 
