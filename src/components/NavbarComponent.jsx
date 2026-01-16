@@ -8,10 +8,11 @@ import { MdLightMode } from "react-icons/md";
 import { FaLeaf } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import ProfileSideBar from './ProfileSideBar';
+import CartSideBar from './CartSideBar';
 
-export default function NavbarComponent(props) {
-  const { toggleTheme, theme, profileToggle, setProfileToggle } = props
+export default function NavbarComponent({ toggleTheme, theme, profileToggle, setProfileToggle, cartToggle, setCartToggle }) {
   const [menuToggle, setMenuToggle] = useState(false)
+
 
   return <>
     <nav className='shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
@@ -38,18 +39,21 @@ export default function NavbarComponent(props) {
             {theme === 'dark' ? <MdLightMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer hover:animate-spin' /> : <MdDarkMode onClick={() => { toggleTheme() }} className='text-xl cursor-pointer hover:animate-spin' />
             }
             <NavLink to='notification'><IoNotifications className='text-xl cursor-pointer' /></NavLink>
-            <FaCartShopping className='text-xl cursor-pointer' />
+
+            {/* cart */}
+            <FaCartShopping className='text-xl cursor-pointer' onClick={() => { setCartToggle(!cartToggle) }} />
+            {/* cart toggle */}
+            <CartSideBar cartToggle={cartToggle} setCartToggle={setCartToggle} />
 
             {/* profile */}
             <div >
               <FaUserCircle onClick={() => { setProfileToggle(!profileToggle) }} className='text-xl cursor-pointer' />
-
               {/* profile toggle */}
               <ProfileSideBar profileToggle={profileToggle} setProfileToggle={setProfileToggle} />
             </div>
           </div>
         </div>
-        <ul className={`lg:hidden space-y-3 text-md mt-2 overflow-hidden transition-all duration-700 ${menuToggle? 'max-h-96' : 'max-h-0'}`}>
+        <ul className={`lg:hidden space-y-3 text-md mt-2 overflow-hidden transition-all duration-700 ${menuToggle ? 'max-h-96' : 'max-h-0'}`}>
           <li><NavLink to={''}>Home</NavLink></li>
           <li><NavLink to={'herbas'}>Herbas</NavLink></li>
           <li><NavLink to={'activity'}>Activity</NavLink></li>

@@ -7,11 +7,12 @@ import { MdDashboard } from "react-icons/md";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { MdContactSupport } from "react-icons/md";
 import profile from '../assets/profile.jpg'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 
 
 export default function ProfileSideBar(props) {
+    const navigate = useNavigate()
     const {profileToggle, setProfileToggle} = props;
     return <>
         <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle`}>
@@ -23,13 +24,13 @@ export default function ProfileSideBar(props) {
                 <div className='aspect-square w-20 rounded-full bg-gray-50'>
                     <img className='w-full object-cover rounded-full' src={profile} alt="" />
                 </div>
-                <div className='user-info space-y-2'>
+                <div className='user-info flex flex-col gap-2'>
                     <p className='text-center'>Lorem, ipsum dolor.</p>
                     <p className='mb-5'>test@gmail.com</p>
-                    <NavLink className='bg-green-800 hover:bg-green-900 px-10 py-2 rounded-lg cursor-pointer duration-300' onClick={() => { setProfileToggle(false) }} to={'/profile'}>Update</NavLink>
+                    <button onClick={() => { setProfileToggle(false); navigate('/profile') }} className='bg-green-800 hover:bg-green-900 px-10 py-2 rounded-lg cursor-pointer duration-300'>Update</button>
                 </div>
             </div>
-            <ul className='p-5 space-y-8 text-xl'>
+            <ul className='p-5 space-y-8 text-lg font-medium'>
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/settings'} className='flex items-center gap-3'><IoMdSettings />Settings</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/userDashboard'} className='flex items-center gap-3'><MdDashboard />User Dashboard</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} className='flex items-center gap-3'><FaHeart />Favourite</Link></li>
