@@ -18,6 +18,7 @@ import Privacy from "./Pages/Privacy";
 import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
 import UserDashboard from "./Pages/UserDashboard";
+import HerbaDetails from "./Pages/HerbaDetails";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
     path: '', element: <Layout />, children: [
       { index: true, element: <Home /> },
       { path: 'herbas', element: <Herbas /> },
+      { path: 'herbas-details', element: <HerbaDetails /> },
       { path: 'cart', element: <Cart /> },
       { path: 'profile', element: <Profile /> },
       { path: 'activity', element: <Activity /> },
@@ -49,6 +51,7 @@ function App() {
       { path: 'privacy', element: <Privacy /> },
       { path: 'helpSupport', element: <HelpSupport /> },
       {path:'notification',element: <Notification/>},
+
       { path: '*', element: <NotFound /> },
     ]
   }])

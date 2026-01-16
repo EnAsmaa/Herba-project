@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import OurVision1 from "../assets/OurVision.jpg";
 import OurVision2 from "../assets/OurVision2.jpg";
 import OurVision3 from "../assets/pexels-mareefe-672046.jpg";
@@ -6,20 +7,21 @@ import Search from './../components/Search';
 import { FaHeart } from "react-icons/fa";
 
 
+const herbas = [
+  { img: OurVision1, category: "category", name: "Herb 1" },
+  { img: OurVision2, category: "category", name: "Herb 2" },
+  { img: OurVision3, category: "category", name: "Herb 3" },
+  { img: OurVision3, category: "category", name: "Herb 4" },
+  { img: OurVision1, category: "category", name: "Herb 5" },
+  { img: OurVision3, category: "category", name: "Herb 6" },
+];
+const categories = [
+  "All", "Anti-inflammatory herbs", "Antimicrobial / Antiseptic herbs", "Digestive herbs", "Detoxifying herbs",
+  "Calming / Sedative herbs", "Stimulant herbs", "Expectorant herbs", "Immunomodulating herbs"
+];
 export default function Herbas() {
   const [activeCat, setActiveCat] = useState('All');
-  const herbas = [
-    { img: OurVision1, category: "category", name: "Herb 1" },
-    { img: OurVision2, category: "category", name: "Herb 2" },
-    { img: OurVision3, category: "category", name: "Herb 3" },
-    { img: OurVision3, category: "category", name: "Herb 4" },
-    { img: OurVision1, category: "category", name: "Herb 5" },
-    { img: OurVision3, category: "category", name: "Herb 6" },
-  ];
-  const categories = [
-    "All", "Anti-inflammatory herbs", "Antimicrobial / Antiseptic herbs", "Digestive herbs", "Detoxifying herbs",
-    "Calming / Sedative herbs", "Stimulant herbs", "Expectorant herbs", "Immunomodulating herbs"
-  ];
+  const navigate = useNavigate();
   return (
     <>
       <section className='container lg:px-7 px-4 mx-auto py-4 mt-5'>
@@ -37,7 +39,7 @@ export default function Herbas() {
 
         <div className="herbas grid grid-cols-[repeat(auto-fit,minmax(150px,.5fr))] gap-4">
           {herbas.map((herb, idx) => (
-            <div key={idx} className="pb-2 slider-images shadow-md pointer bg-green-200/10 rounded-lg overflow-hidden text-center my-5 relative">
+            <div key={idx} className="pb-2 slider-images shadow-md pointer bg-green-200/10 rounded-lg overflow-hidden text-center my-5 relative" onClick={()=>{navigate('/herbas-details')}}>
               <img className='w-full cat-img' src={herb.img} alt={herb.name} />
               <p className='aboutIcone mt-1'>{herb.category}</p>
               <p className='mt-1'>{herb.name}</p>

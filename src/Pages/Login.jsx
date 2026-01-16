@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <>
       <div className="w-3/4 mx-auto my-12 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 rounded-xl border border-white/50">
+        <div className="grid grid-cols-1  md:grid-cols-2 rounded-xl border border-gray-400">
 
 
 
@@ -15,33 +15,33 @@ export default function Login() {
 
               {/* Email */}
               <div className="flex flex-col">
-                <label className="text-gray-700 font-medium mb-1">Email Address</label>
+                <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">Email Address</label>
                 <input
                   type="email"
-                  className="border rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-green-500"
+                  className="border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-green-500"
                   placeholder="name@example.com"
                 />
               </div>
 
               {/* Password */}
               <div className="flex flex-col">
-                <label className="text-gray-700 font-medium mb-1">Password</label>
+                <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">Password</label>
                 <input
                   type="password"
-                  className="border rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-green-500"
+                  className="border border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-green-500"
                   placeholder="Password"
                 />
               </div>
 
               {/* CTA */}
               <div className="flex items-center gap-2">
-                <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition">
+                <button className="bg-[#3a5543] hover:bg-green-800 text-white px-6 py-2 rounded-lg transition">
                   Login
                 </button>
 
                 <span className="dark:text-white text-gray-800">
                   Has no account?{" "}
-                  <Link className="text-green-700 font-semibold" to="/register">
+                  <Link className="text-[#2b7945] dark:text-[#538865] font-semibold" to="/register">
                     Register Now
                   </Link>
                 </span>
@@ -50,7 +50,7 @@ export default function Login() {
           </div>
 
           {/* Right side */}
-          <div className="bg-green-700/5 py-10 flex justify-center items-center rounded-l-xl">
+          <div className="bg-[#3a5543] py-10 flex justify-center items-center md:dark:rounded-tl-none md:dark:rounded-bl-none rounded-t-none rounded-xl md:rounded-r-xl">
             <p className="text-white font-bold text-3xl">Welcome Back</p>
           </div>
 
