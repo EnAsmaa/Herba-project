@@ -16,7 +16,7 @@ export default function UserDashboard() {
 
     return <>
         <section>
-            <div className='container lg:px-7 px-4 mx-auto bg-[#e6f0ea] dark:bg-green-950/20 py-10 flex flex-wrap xl:flex-nowrap gap-8 '>
+            <div className='container lg:px-7 px-4 mx-auto bg-[#e6f0ea] dark:bg-green-950/20 py-10 flex flex-wrap xl:flex-nowrap gap-5 '>
                 {/* sidebar info */}
                 <div className="sidebarNavigation w-full xl:w-1/5 bg-white dark:bg-gray-200 text-black rounded-lg p-4  lg:block">
                     <h2 className='text-xl font-bold mb-1 text-[#335D39]'>General Info</h2>

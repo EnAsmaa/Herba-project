@@ -60,6 +60,10 @@ body {
   overflow-x: hidden;
 }
 
+p{
+  margin: 0;
+}
+
 /* Hide scrollbar but allow scroll */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

@@ -19,6 +19,7 @@ import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
 import UserDashboard from "./Pages/UserDashboard";
 import HerbaDetails from "./Pages/HerbaDetails";
+import DoctorInfo from "./Pages/DoctorInfo";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
       { path: 'activity', element: <Activity /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
+      { path: 'DoctorInfo', element: <DoctorInfo /> },
       { path: 'aitools', element: <AiTools /> },
       { path: 'store', element: <Shop /> },
       { path: 'consultation', element: <Consultation /> },
