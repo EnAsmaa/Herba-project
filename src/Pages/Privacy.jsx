@@ -34,13 +34,13 @@ export default function Privacy() {
                                 type="checkbox"
                                 name="shareData"
                                 checked={privacy.shareData}
-                                className="h-5 w-5 accent-green-600"
+                                className="h-5 w-5 bg-[#3a5543]"
                             />
                         </div>
 
                         <button
                             type="submit"
-                            className="px-6 py-2 bg-green-700 hover:bg-green-800 text-white dark:text-black rounded-lg font-semibold transition-colors"
+                            className="px-6 py-2 btn text-white dark:text-black rounded-lg font-semibold transition-colors"
                         >
                             Save Privacy Settings
                         </button>

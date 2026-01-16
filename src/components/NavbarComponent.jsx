@@ -26,8 +26,8 @@ export default function NavbarComponent({ toggleTheme, theme, profileToggle, set
             <ul className='hidden lg:flex items-center gap-6 font-medium'>
               <li><NavLink className={'link'} to={''}>Home</NavLink></li>
               <li><NavLink className={'link'} to={'herbas'}>Herbas</NavLink></li>
-              <li><NavLink className={'link'} to={'activity'}>Activity</NavLink></li>
-              <li><NavLink className={'link'} to={'aitools'}>AI Tools</NavLink></li>
+              <li><NavLink className={'link'} to={'activity'}>My Activity</NavLink></li>
+              <li><NavLink className={'link'} to={'aitools'}>AI Asistant</NavLink></li>
               <li><NavLink className={'link'} to={'store'}>Store</NavLink></li>
               <li><NavLink className={'link'} to={'consultation'}>Consultation</NavLink></li>
             </ul>

@@ -18,6 +18,8 @@ import Privacy from "./Pages/Privacy";
 import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
 import UserDashboard from "./Pages/UserDashboard";
+import HerbaDetails from "./Pages/HerbaDetails";
+import DoctorInfo from "./Pages/DoctorInfo";
 
 function App() {
 
@@ -36,11 +38,13 @@ function App() {
     path: '', element: <Layout />, children: [
       { index: true, element: <Home /> },
       { path: 'herbas', element: <Herbas /> },
+      { path: 'herbas-details', element: <HerbaDetails /> },
       { path: 'cart', element: <Cart /> },
       { path: 'profile', element: <Profile /> },
       { path: 'activity', element: <Activity /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
+      { path: 'DoctorInfo', element: <DoctorInfo /> },
       { path: 'aitools', element: <AiTools /> },
       { path: 'store', element: <Shop /> },
       { path: 'consultation', element: <Consultation /> },
@@ -49,6 +53,7 @@ function App() {
       { path: 'privacy', element: <Privacy /> },
       { path: 'helpSupport', element: <HelpSupport /> },
       {path:'notification',element: <Notification/>},
+
       { path: '*', element: <NotFound /> },
     ]
   }])

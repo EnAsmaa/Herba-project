@@ -18,7 +18,7 @@ export default function Settings() {
                     Profile Settings
                 </h1>
                 {/* Preferences */}
-                <div className="bg-main border border-black/50 dark:border-white/50 rounded-lg p-6 shadow-lg shadow-black/5 dark:shadow-amber-50/5">
+                <div className="bg-main border bg-green-200/10 dark:bg-green-200/0 border-black/50 dark:border-white/50 rounded-lg p-6 shadow-lg shadow-black/5 dark:shadow-amber-50/5">
                     <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
                         Preferences
                     </h3>
@@ -62,7 +62,7 @@ export default function Settings() {
 
                         <button
                             type="submit"
-                            className="px-6 py-2 bg-green-700 hover:bg-green-800 text-white dark:text-black rounded-lg font-semibold transition-colors"
+                            className="px-6 py-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-white  rounded-lg font-semibold transition-colors"
                         >
                             Save Preferences
                         </button>
