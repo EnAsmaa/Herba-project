@@ -68,7 +68,7 @@ export default function HerbaDetails() {
           </h2>
           <div className=" flex flex-wrap">
             {relatedHerbas.map((el) => (
-              <div key={el.id} className=" w-full sm:w-1/2 md:w-1/4 space-y-2">
+              <div key={el.id} className=" w-full sm:w-1/2 md:w-1/4 lg:w-1/6 space-y-2">
                 <div className="m-3 rounded-lg shadow-md pointer bg-green-200/10 text-center">
                   <img
                     src={el.image}

@@ -21,7 +21,7 @@ export default function CartSideBar({ cartToggle, setCartToggle }) {
             prev.map(product => {
                 if (product.id === id) {
                     const newCount = product.count + value
-                    
+
                     if (newCount <= 10 && newCount >= 1) {
                         return { ...product, count: newCount }
                     }
@@ -38,9 +38,9 @@ export default function CartSideBar({ cartToggle, setCartToggle }) {
                 <FaXmark onClick={(e) => { setCartToggle(false); console.log(e) }} className='text-xl cursor-pointer' />
             </div>
             <div className="cart-content p-3">
-                <ul className='w-full space-y-3'>
+                <ul className='w-full space-y-5'>
                     {cartProducts.map(product =>
-                        <li key={product.id} className='flex justify-between items-center px-2 py-4 bg-gray-300 text-black rounded-md'>
+                        <li key={product.id} className='flex justify-between items-center px-2 py-4 bg-green-900/10 text-black rounded-md'>
                             <div className="productInfo space-y-2 w-2/3">
                                 <p className='text-[#335D39] font-semibold text-lg'>{product.productName}</p>
                                 <p className='text-nowrap'>Price: 55$</p>
@@ -53,7 +53,7 @@ export default function CartSideBar({ cartToggle, setCartToggle }) {
                         </li>
                     )}
                 </ul>
-                <Button className='w-full rounded-md mt-3 bg-[#335D39]' variant='flat'>View All</Button>
+                <Button className='w-full rounded-md mt-3 text-white bg-[#335D39]' variant='flat'>View All</Button>
             </div>
         </div>
     </>
