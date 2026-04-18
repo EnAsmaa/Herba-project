@@ -88,4 +88,9 @@ p{
   @apply cursor-pointer bg-gray-800/30 dark:bg-green-200/10 text-white dark:text-white px-3 py-1.5 rounded-full border border-green-200/10;
 }
 
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
 /* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap'); */

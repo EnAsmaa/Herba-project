@@ -50,7 +50,7 @@ export default function Login() {
           </div>
 
           {/* Right side */}
-          <div className="bg-[#3a5543] py-10 flex justify-center items-center md:dark:rounded-tl-none md:dark:rounded-bl-none rounded-t-none rounded-xl md:rounded-r-xl">
+          <div className="bg-[#3a5543] py-10 flex justify-center items-center md:dark:rounded-tl-none md:rounded-bl-none rounded-t-none rounded-xl md:rounded-r-xl">
             <p className="text-white font-bold text-3xl">Welcome Back</p>
           </div>
 

@@ -32,7 +32,7 @@ export default function CartSideBar({ cartToggle, setCartToggle }) {
     }
 
     return <>
-        <div className={` ${cartToggle ? 'pointer-events-auto right-0' : 'pointer-events-none -right-100'} w-80 h-screen fixed top-0 z-50 duration-400 flex flex-col bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] gap-1`}>
+        <div className={`overflow-y-auto no-scrollbar ${cartToggle ? 'pointer-events-auto right-0' : 'pointer-events-none -right-100'} w-80 h-screen fixed top-0 z-50 duration-400 flex flex-col bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] gap-1`}>
             <div className="header flex justify-between items-center dark:text-black bg-gray-200 dark:bg-[#F7F7F7] p-3 text-2xl">
                 <p className='font-semibold'>Cart</p>
                 <FaXmark onClick={(e) => { setCartToggle(false); console.log(e) }} className='text-xl cursor-pointer' />

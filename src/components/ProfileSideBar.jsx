@@ -15,7 +15,7 @@ export default function ProfileSideBar(props) {
     const navigate = useNavigate()
     const {profileToggle, setProfileToggle} = props;
     return <>
-        <div className={`${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle overflow-y-auto scrollbar-hide`}>
+        <div className={`overflow-auto no-scrollbar ${profileToggle ? 'right-0 pointer-events-auto' : '-right-100 pointer-events-none'} profileToggle `}>
             <div className="header flex justify-between items-center dark:text-black bg-gray-200 dark:bg-[#F7F7F7] px-2 py-3">
                 <p className='font-semibold text-2xl'>Profile</p>
                 <FaXmark onClick={() => { setProfileToggle(false) }} className='text-2xl cursor-pointer' />
@@ -38,7 +38,7 @@ export default function ProfileSideBar(props) {
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/privacy'} className='flex items-center gap-3'><MdOutlinePrivacyTip />Privacy</Link></li>
                 <li><Link onClick={()=>{setProfileToggle(false)}} to={'/helpSupport'} className='flex items-center gap-3'><MdContactSupport />Help & Support</Link></li>
             </ul>
-            <div className="px-5">
+            <div className="px-5 mb-3">
                 <button className='bg-red-800 hover:bg-red-900 px-6 py-1.5 rounded-lg cursor-pointer w-full duration-300 text-white'>Logout</button>
             </div>
         </div>
