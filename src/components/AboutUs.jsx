@@ -4,7 +4,7 @@ import { TbPlant2 } from "react-icons/tb";
 
 export default function AboutUs() {
   return (
-    <section>
+    <section data-aos="fade-up" data-aos-duration="2000">
       <div className="container lg:px-7 px-4 mx-auto">
         <h2 className="heading-Sections">About Us</h2>
         <p className="cap-sections">
@@ -14,7 +14,7 @@ export default function AboutUs() {
         </p>
         <div>
           <div className="gridtemplet mt-7">
-            <div className="aboutBox bg-white dark:bg-[#111B21]">
+            <div data-aos="zoom-in" data-aos-duration="3000" className="aboutBox bg-white dark:bg-[#111B21]">
               <div className="flex items-center gap-3 mb-3 ">
                 <FiTarget className="block text-2xl text-[#4d7c5c]" />
                 <h3 className="mb-0 text-2xl ">Our Mission</h3>
@@ -25,7 +25,7 @@ export default function AboutUs() {
                 through the power of plants
               </p>
             </div>
-            <div className="aboutBox bg-white dark:bg-[#111B21]">
+            <div data-aos="zoom-in" data-aos-duration="3000" className="aboutBox bg-white dark:bg-[#111B21]">
               <div className="flex items-center gap-3 mb-3">
                 <TbPlant2 className="block text-2xl text-[#4d7c5c]" />
                 <h3 className="mb-0 text-2xl">Our Philosophy</h3>
