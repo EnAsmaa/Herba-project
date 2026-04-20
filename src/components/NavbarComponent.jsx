@@ -16,7 +16,7 @@ export default function NavbarComponent({ toggleTheme, theme, profileToggle, set
 
   return <>
     <nav className=' shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
-      <div className="container lg:px-7 px-4 mx-auto py-3 lg:py-6">
+      <div className="container lg:px-7 px-4 mx-auto py-3   ">
         <div className='flex justify-between items-center mt-3 lg:mt-0'>
           <div className='flex gap-1 items-center'>
             <FaLeaf className='text-2xl text-[#335D39] dark:text-[#6bb683]' />

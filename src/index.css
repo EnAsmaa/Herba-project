@@ -33,7 +33,7 @@
 }
 
 .profileToggle {
-  @apply h-screen bg-[#cedbd3] dark:bg-[#1A242A] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
+  @apply h-screen bg-[#e0e7e3] dark:bg-[#1A242A] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
 }
 
 .testimonialBox {

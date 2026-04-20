@@ -14,12 +14,14 @@ import Shop from './Pages/Shop';
 import Consultation from './Pages/Consultation';
 import AiTools from './components/AiTools';
 import Settings from './Pages/Settings';
-import Privacy from "./Pages/Privacy";
 import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
 import UserDashboard from "./Pages/UserDashboard";
 import HerbaDetails from "./Pages/HerbaDetails";
 import DoctorInfo from "./Pages/DoctorInfo";
+import FavoritePage from "./components/FavoritePage";
+import PrivacyPage from "./Pages/PrivacyPage";
+import PremiumPage from "./Pages/PremiumPage";
 
 function App() {
 
@@ -50,9 +52,11 @@ function App() {
       { path: 'consultation', element: <Consultation /> },
       { path: 'settings', element: <Settings /> },
       { path: 'userDashboard', element: <UserDashboard /> },
-      { path: 'privacy', element: <Privacy /> },
+      { path: 'privacy', element: <PrivacyPage /> },
       { path: 'helpSupport', element: <HelpSupport /> },
       {path:'notification',element: <Notification/>},
+      {path:'favorites',element:<FavoritePage/>},
+      {path:'premium',element:<PremiumPage/>},
 
       { path: '*', element: <NotFound /> },
     ]
