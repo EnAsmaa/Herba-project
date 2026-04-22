@@ -6,15 +6,15 @@ import OurVision3 from "../assets/pexels-mareefe-672046.jpg";
 export default function OurVision() {
   return (
     <section className="bg-[#e6f0ea] dark:bg-green-950/20 py-10 ">
-      <div className="container lg:px-7 px-4 mx-auto">
+      <div className="container lg:px-7 px-4 mx-auto"  >
         <h2 className="heading-Sections">Our Vision</h2>
         <p className="cap-sections">
           Our vision is to become a leading source of natural wellness,
           empowering people to embrace a healthier lifestyle through the gentle
           power of herbs.
         </p>
-        <div className="gridtemplet mt-6">
-          <div className="vision-col-content text-center">
+        <div className="gridtemplet mt-6 ">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision1}
@@ -26,7 +26,7 @@ export default function OurVision() {
               and real health benefits.
             </p>
           </div>
-          <div className="vision-col-content text-center">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision3}
@@ -38,7 +38,7 @@ export default function OurVision() {
               sustainable and safe.
             </p>
           </div>
-          <div className="vision-col-content text-center">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision2}

@@ -4,7 +4,7 @@ import { TbPlant2 } from "react-icons/tb";
 
 export default function AboutUs() {
   return (
-    <section data-aos="fade-up" data-aos-duration="2000">
+    <section  >
       <div className="container lg:px-7 px-4 mx-auto">
         <h2 className="heading-Sections">About Us</h2>
         <p className="cap-sections">
