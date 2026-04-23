@@ -14,7 +14,7 @@ export default function OurVision() {
           power of herbs.
         </p>
         <div className="gridtemplet mt-6 ">
-          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3000">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision1}
@@ -26,7 +26,7 @@ export default function OurVision() {
               and real health benefits.
             </p>
           </div>
-          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3000">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision3}
@@ -38,7 +38,7 @@ export default function OurVision() {
               sustainable and safe.
             </p>
           </div>
-          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3">
+          <div className="vision-col-content text-center" data-aos="zoom-in" data-aos-duration="3000">
             <img
               className="w-full rounded-xl mb-3"
               src={OurVision2}

@@ -4,7 +4,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import ProgressStates from './ProgressStates';
 import MostUsedHerbasStates from './MostUsedHerbasStates';
 import QuizessStates from './QuizessStates';
-import ExcercicesStates from './ExcercicesStates';
 
 export default function DashboardRouting() {
     const navigate = useNavigate()
@@ -12,7 +11,6 @@ export default function DashboardRouting() {
         { id: 0, stateName: "Weakly Progress", component: <ProgressStates /> },
         { id: 1, stateName: "Most Used Herbas", component: <MostUsedHerbasStates /> },
         { id: 2, stateName: "Quizzes", component: <QuizessStates /> },
-        { id: 3, stateName: "Exercises", component: <ExcercicesStates /> },
     ])
     const [activeState, setActiveState] = useState('Weakly Progress')
     return <>

@@ -19,7 +19,7 @@ const herbas = [
 ];
 export default function FavoritePage() {
   const navigate = useNavigate();
-  const [favorites, setFavorites] = useState(true);
+  const [favorites, setFavorites] = useState(false);
 
   return (
     <>

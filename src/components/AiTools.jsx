@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import image1 from "../assets/OurVision.jpg";
 import image2 from "../assets/OurVision2.jpg";
 import image3 from "../assets/pexels-mareefe-672046.jpg";
@@ -5,6 +6,7 @@ import { FaCamera } from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 // import { MdKeyboardVoice } from "react-icons/md";
 export default function AiTools() {
+  const navigate = useNavigate();
   return (
     <section className="my-5 py-5 px-4 lg:px-7 container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -58,7 +60,7 @@ export default function AiTools() {
               Libero, et a? Ea.
             </p>
 
-            <button className="aiAsistBtn w-full mt-23">
+            <button className="aiAsistBtn w-full mt-23" onClick={()=>navigate("/image-analysis")}>
               <FaCamera />
               Analyze
             </button>

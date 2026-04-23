@@ -1,15 +1,5 @@
 import React from "react";
-// import {
-//   CheckCircle2,
-//   MessageSquare,
-//   ClipboardList,
-//   Camera,
-//   Headset,
-//   ShieldCheck,
-//   Star,
-//   Zap,
-//   Crown,
-// } from "react-icons/fa6";
+
 import { MdCheckCircle } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { LuClipboardList } from "react-icons/lu";
