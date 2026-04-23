@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { IoNotifications } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
@@ -8,12 +8,11 @@ import { MdLightMode } from "react-icons/md";
 import { FaLeaf } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import ProfileSideBar from './ProfileSideBar';
-import CartSideBar from './CartSideBar';
 
 export default function NavbarComponent({ toggleTheme, theme, profileToggle, setProfileToggle, cartToggle, setCartToggle }) {
   const [menuToggle, setMenuToggle] = useState(false)
 
-
+  const navigate = useNavigate();
   return <>
     <nav className=' shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative'>
       <div className="container lg:px-7 px-4 mx-auto py-3   ">
@@ -28,7 +27,7 @@ export default function NavbarComponent({ toggleTheme, theme, profileToggle, set
               <li><NavLink className={'link'} to={'herbas'}>Herbas</NavLink></li>
               <li><NavLink className={'link'} to={'activity'}>My Activity</NavLink></li>
               <li><NavLink className={'link'} to={'aitools'}>AI Asistant</NavLink></li>
-              <li><NavLink className={'link'} to={'store'}>Store</NavLink></li>
+              <li><NavLink className={'link'} to={'store'}>Market</NavLink></li>
               <li><NavLink className={'link'} to={'consultation'}>Consultation</NavLink></li>
             </ul>
             <IoMenu onClick={() => { setMenuToggle(!menuToggle) }} className='lg:hidden text-2xl cursor-pointer' />
@@ -41,9 +40,7 @@ export default function NavbarComponent({ toggleTheme, theme, profileToggle, set
             <NavLink to='notification'><IoNotifications className='text-xl cursor-pointer' /></NavLink>
 
             {/* cart */}
-            <FaCartShopping className='text-xl cursor-pointer' onClick={() => { setCartToggle(!cartToggle) }} />
-            {/* cart toggle */}
-            <CartSideBar cartToggle={cartToggle} setCartToggle={setCartToggle} />
+            <FaCartShopping className='text-xl cursor-pointer' onClick={()=>navigate('./cart')} />
 
             {/* profile */}
             <div >

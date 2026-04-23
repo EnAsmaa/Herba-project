@@ -95,19 +95,6 @@ export default function ProfileSideBar(props) {
             </Link>
             <FaAngleRight className="text-gray-500" />
           </li>
-          <li className="border-gray-300 border-b pb-2 flex items-center justify-between cursor-pointer ">
-            <Link
-              onClick={() => {
-                setProfileToggle(false);
-              }}
-              to={"/userDashboard"}
-              className="flex items-center gap-3"
-            >
-              <MdDashboard />
-              User Dashboard
-            </Link>
-            <FaAngleRight className="text-gray-500" />
-          </li>
 
           <li className="border-gray-300 border-b pb-2 flex items-center justify-between cursor-pointer ">
             <Link
