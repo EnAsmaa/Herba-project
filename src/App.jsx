@@ -27,8 +27,7 @@ import UserDashboard from "./Pages/UserDashboard"
 function App() {
 
 
-  Aos.init()
-
+    Aos.init();
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
       { index: true, element: <Home /> },

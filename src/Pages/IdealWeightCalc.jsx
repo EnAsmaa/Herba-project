@@ -176,7 +176,7 @@ export default function IdealWeightWeb() {
                       </span>
                       <span className="font-bold">{results.bmi || "--"}</span>
                     </div>
-                    <span className="bg-[#D1F7D6] text-[#4E7355] px-4 py-1 rounded-full text-sm font-semibold">
+                    <span className={`${results.status==='Normal weight'?'bg-[#D1F7D6]  text-[#4E7355]':results.status==='Obese'?'text-red-800 bg-red-600/20':results.status==='Underweight'?'bg-blue-200 text-blue-800':'text-yellow-700 bg-yellow-200'} px-4 py-1 rounded-full text-sm font-semibold`}>
                       {results.status}
                     </span>
                   </div>
