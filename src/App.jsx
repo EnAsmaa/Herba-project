@@ -27,10 +27,7 @@ import UserDashboard from "./Pages/UserDashboard"
 function App() {
 
 
-
     Aos.init();
-
-
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
       { index: true, element: <Home /> },
@@ -48,13 +45,13 @@ function App() {
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'herbas-details', element: <HerbaDetails /> },
       { path: 'premium', element: <PremiumPage /> },
-      {path:'notification',element: <Notification/>},
-      {path:'favorites',element: <FavoritePage/>},
-      {path:'doctorinfo',element: <DoctorInfo/>},
-      {path:'weight-calc',element: <IdealWeightCalc/>},
-      {path:'image-analysis',element: <ImageAnalysis/>},
-      {path:'user-dashboard',element: <UserDashboard/>},
-      
+      { path: 'notification', element: <Notification /> },
+      { path: 'favorites', element: <FavoritePage /> },
+      { path: 'doctorinfo', element: <DoctorInfo /> },
+      { path: 'weight-calc', element: <IdealWeightCalc /> },
+      { path: 'image-analysis', element: <ImageAnalysis /> },
+      { path: 'user-dashboard', element: <UserDashboard /> },
+
 
 
       { path: '*', element: <NotFound /> },
