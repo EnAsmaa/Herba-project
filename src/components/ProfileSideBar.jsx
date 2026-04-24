@@ -1,5 +1,5 @@
 import React from "react";
-import { FaXmark } from "react-icons/fa6";
+import { FaCalculator, FaXmark } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import {
   FaAngleRight,
@@ -60,7 +60,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/premium"}
-              className="flex items-center gap-3 "
+              className="flex items-center gap-3 w-full"
             >
               <FaCrown />
               Premium
@@ -74,7 +74,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/favorites"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <FaHeart />
               Favourite
@@ -87,8 +87,22 @@ export default function ProfileSideBar(props) {
               onClick={() => {
                 setProfileToggle(false);
               }}
+              to={"/weight-calc"}
+              className="flex items-center gap-3 w-full"
+            >
+              <FaCalculator />
+              BMI Calculation
+            </Link>
+            <FaAngleRight className="text-gray-500" />
+          </li>
+
+          <li className="border-gray-300 border-b pb-2 flex items-center justify-between cursor-pointer ">
+            <Link
+              onClick={() => {
+                setProfileToggle(false);
+              }}
               to={"/settings"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <IoMdSettings />
               Settings
@@ -102,7 +116,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/privacy"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <MdOutlinePrivacyTip />
               Privacy & Security

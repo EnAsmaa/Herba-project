@@ -27,15 +27,9 @@ import UserDashboard from "./Pages/UserDashboard"
 function App() {
 
 
-  useEffect(() => {
-    Aos.init({
-      duration: 3000,
-      offset: 100,
-      easing: 'ease-out-back',
-      once: false,
-      mirror: true
-    })
-  }, [])
+
+    Aos.init();
+
 
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
