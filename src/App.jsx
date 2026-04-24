@@ -27,15 +27,7 @@ import UserDashboard from "./Pages/UserDashboard"
 function App() {
 
 
-  useEffect(() => {
-    Aos.init({
-      duration: 3000,
-      offset: 100,
-      easing: 'ease-out-back',
-      once: false,
-      mirror: true
-    })
-  }, [])
+  Aos.init()
 
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
@@ -54,13 +46,13 @@ function App() {
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'herbas-details', element: <HerbaDetails /> },
       { path: 'premium', element: <PremiumPage /> },
-      {path:'notification',element: <Notification/>},
-      {path:'favorites',element: <FavoritePage/>},
-      {path:'doctorinfo',element: <DoctorInfo/>},
-      {path:'weight-calc',element: <IdealWeightCalc/>},
-      {path:'image-analysis',element: <ImageAnalysis/>},
-      {path:'user-dashboard',element: <UserDashboard/>},
-      
+      { path: 'notification', element: <Notification /> },
+      { path: 'favorites', element: <FavoritePage /> },
+      { path: 'doctorinfo', element: <DoctorInfo /> },
+      { path: 'weight-calc', element: <IdealWeightCalc /> },
+      { path: 'image-analysis', element: <ImageAnalysis /> },
+      { path: 'user-dashboard', element: <UserDashboard /> },
+
 
 
       { path: '*', element: <NotFound /> },

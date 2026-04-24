@@ -60,7 +60,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/premium"}
-              className="flex items-center gap-3 "
+              className="flex items-center gap-3 w-full w-full "
             >
               <FaCrown />
               Premium
@@ -74,7 +74,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/favorites"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <FaHeart />
               Favourite
@@ -88,7 +88,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/settings"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <IoMdSettings />
               Settings
@@ -102,7 +102,7 @@ export default function ProfileSideBar(props) {
                 setProfileToggle(false);
               }}
               to={"/privacy"}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 w-full"
             >
               <MdOutlinePrivacyTip />
               Privacy & Security
