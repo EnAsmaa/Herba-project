@@ -5,6 +5,7 @@ import person3 from "../assets/person3.jpg";
 import Search from "../components/Search";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const doctorTypes = [
   { id: 1, name: 'All' },
@@ -246,36 +247,38 @@ export default function Consultation() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
             {shownDoctors.map(doc =>
-              <div key={doc.id} className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
-                <img
-                  src={doc.img}
-                  alt="doctor"
-                  className="w-24 h-24 object-cover rounded-full mx-auto"
-                />
+              <Link to={`/consultation-details/${doc.id}`}>
+                <div key={doc.id} className="consult-content text-center shadow-lg bg-white dark:bg-[#1A242A] dark:border border-[#adabab] dark:border-[#294353a6]  rounded-lg py-5 p-5 hover:-translate-y-1.5 duration-500">
+                  <img
+                    src={doc.img}
+                    alt="doctor"
+                    className="w-24 h-24 object-cover rounded-full mx-auto"
+                  />
 
-                <h4 className="text-lg mt-2 font-semibold">{doc.name}</h4>
-                <p className="text-[#4d7c5c] my-2">{doc.title}</p>
+                  <h4 className="text-lg mt-2 font-semibold">{doc.name}</h4>
+                  <p className="text-[#4d7c5c] my-2">{doc.title}</p>
 
-                <div className="flex items-center justify-center gap-2 my-4">
-                  {Array.from({ length: doc.stars }).map((_, s) => (
-                    <FaStar key={s} className="text-yellow-400" />
-                  ))}
+                  <div className="flex items-center justify-center gap-2 my-4">
+                    {Array.from({ length: doc.stars }).map((_, s) => (
+                      <FaStar key={s} className="text-yellow-400" />
+                    ))}
+                  </div>
+
+                  <p className="text-[#333333c9] dark:text-[#8696A0] text-base my-2">
+                    ({doc.rateCount} Rate) {doc.rateAvg}
+                  </p>
+
+                  <p className="text-[#4d7c5c]">Available Times:</p>
+
+                  <div className="times mt-5 flex gap-2 justify-center ">
+                    {doc.avilableTime.map((time, index) =>
+                      <span key={index} className="span-time ">
+                        {time}
+                      </span>
+                    )}
+                  </div>
                 </div>
-
-                <p className="text-[#333333c9] dark:text-[#8696A0] text-base my-2">
-                  ({doc.rateCount} Rate) {doc.rateAvg}
-                </p>
-
-                <p className="text-[#4d7c5c]">Available Times:</p>
-
-                <div className="times mt-5 flex gap-2 justify-center ">
-                  {doc.avilableTime.map((time, index) =>
-                    <span key={index} className="span-time ">
-                      {time}
-                    </span>
-                  )}
-                </div>
-              </div>
+              </Link>
             )}
           </div>
         </div>

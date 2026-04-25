@@ -24,10 +24,11 @@ import DoctorInfo from "./Pages/DoctorInfo"
 import IdealWeightCalc from "./Pages/IdealWeightCalc"
 import ImageAnalysis from "./Pages/ImageAnalysis"
 import UserDashboard from "./Pages/UserDashboard"
+import ConsultationDetails from "./Pages/ConsultationDetails";
 function App() {
 
 
-    Aos.init();
+  Aos.init();
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
       { index: true, element: <Home /> },
@@ -51,8 +52,7 @@ function App() {
       { path: 'weight-calc', element: <IdealWeightCalc /> },
       { path: 'image-analysis', element: <ImageAnalysis /> },
       { path: 'user-dashboard', element: <UserDashboard /> },
-
-
+      { path: 'consultation-details/:id', element: <ConsultationDetails /> },
 
       { path: '*', element: <NotFound /> },
     ]
