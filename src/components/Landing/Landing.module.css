@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap');
+
+.h100 {
+    height: 92vh;
+    background-image: linear-gradient(rgba(0, 0, 0, .7),rgba(0, 0, 0, .7)), url(../../assets/bg2.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.h1s {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 600;
+    font-family: "Momo Trust Display", sans-serif;
+}
+
+
+/* *********************** */

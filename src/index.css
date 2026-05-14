@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@plugin './hero.js';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+
+.heading-Sections {
+  @apply text-center font-bold text-3xl mb-5 dark:text-[#E9EDEF];
+}
+
+.cap-sections {
+  @apply text-center text-lg text-[#333333] dark:text-[#C5CFD6] md:w-3/4 mx-auto;
+}
+
+.gridtemplet {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+  /* gap-5 */
+}
+
+.btn {
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+}
+
+.storeBtn {
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+}
+
+.aiAsistBtn {
+  @apply w-full flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 px-5 py-2 rounded-lg cursor-pointer duration-200;
+}
+
+.aboutBox {
+  @apply border dark:border-[#294353a6] border-[#adabab] p-3 ps-4 rounded-xl;
+}
+
+.profileToggle {
+  @apply h-screen bg-[#e0e7e3] dark:bg-[#1A242A] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
+}
+
+.testimonialBox {
+  @apply border border-[#adabab] dark:border-[#294353a6] rounded-xl p-3 ps-4;
+}
+
+.testmonial-person {
+  @apply mb-3 flex items-center gap-3;
+}
+
+.star-icons {
+  @apply flex gap-2 mt-2 items-center justify-center;
+}
+
+.h3-vision {
+  @apply text-[#203825] dark:text-[#4d805e] text-xl font-medium;
+}
+
+.cat-active {
+  @apply bg-[#335D39] dark:bg-green-900/50 text-white dark:text-white px-4 py-1.5 rounded-full
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+}
+
+p {
+  margin: 0;
+}
+
+/* Hide scrollbar but allow scroll */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE & Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.link.active {
+  @apply text-[#4d7c5c] dark:text-[#6bb683];
+}
+
+.span-time {
+  @apply cursor-pointer bg-green-800/50 dark:bg-green-200/25 text-white px-3 py-1.5 rounded-full border border-green-200/10;
+}
+
+.close-time {
+  @apply cursor-pointer bg-gray-800/30 dark:bg-green-200/10 text-white dark:text-white px-3 py-1.5 rounded-full border border-green-200/10;
+}
+
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE & Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+.loader {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      position: relative;
+      animation: rotate 1s linear infinite
+    }
+    .loader::before {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      inset: 0px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      animation: prixClipFix 2s linear infinite ;
+      
+    }
+
+    @keyframes rotate {
+      100%   {transform: rotate(360deg)}
+    }
+
+    @keyframes prixClipFix {
+        0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+        25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+        50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+        75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+        100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+    }
+/* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
