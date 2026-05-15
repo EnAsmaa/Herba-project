@@ -4,5 +4,6 @@ import { AuthContext } from "../Context/AuthContext";
 
 export default function ProtectedRoot({ children }) {
   const {isLogin} = useContext(AuthContext);
-  return isLogin ? children : <Navigate to={"/login"} />;
+  // return isLogin ? children : <Navigate to={"/login"} />;
+  return children;
 }

@@ -2,19 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import herbImage from "../assets/Dashboard_835_Herbs_9_23.jpeg";
 import Search from "./../components/Search";
-import { FaHeart, FaSpider } from "react-icons/fa";
-import {
-  getAllCategory,
-  getAllHerbas,
-  getHerbId,
-  PostFavHerbas,
-} from "../Services/Herb";
+import { FaHeart } from "react-icons/fa";
+import { getAllCategory, PostFavHerbas } from "../Services/Herb";
 import { HerbasContex } from "../Context/HerbasContext";
 
 export default function Herbas() {
   const [activeCat, setActiveCat] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 25;
+
   const savedFavs = JSON.parse(localStorage.getItem("favHerbs")) || [];
   const [favoriteHerb, setFavoritHerb] = useState(savedFavs);
+
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const { herbas } = useContext(HerbasContex);
@@ -22,113 +22,235 @@ export default function Herbas() {
   const getCategories = async () => {
     const response = await getAllCategory();
     setCategories(response);
-    console.log(response);
   };
 
+  // FILTER
   const filteredHerbas =
     activeCat === 0
       ? herbas
       : herbas.filter((herb) => herb.categoryId === activeCat);
+
+  // PAGINATION
+  const totalPages = Math.ceil(filteredHerbas?.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const currentItems = filteredHerbas?.slice(startIndex, endIndex);
+
+  // reset page on category change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCat]);
 
   const toggleFav = (e, herbId) => {
     e.stopPropagation();
     setFavoritHerb((prev) =>
       prev.includes(herbId)
         ? prev.filter((id) => id !== herbId)
-        : [...prev, herbId],
+        : [...prev, herbId]
     );
   };
 
   const sendFavHerbas = async (herbId) => {
-    const response = await PostFavHerbas(herbId);
-    console.log(response);
+    await PostFavHerbas(herbId);
   };
 
   useEffect(() => {
     getCategories();
   }, []);
+
   useEffect(() => {
     localStorage.setItem("favHerbs", JSON.stringify(favoriteHerb));
   }, [favoriteHerb]);
+
   return (
-    <>
-      <section className="container lg:px-7 px-4 mx-auto py-4 mt-5">
-        {/* search */}
+    <section className="container mx-auto px-4 lg:px-10 py-10">
+
+      {/* HEADER */}
+      <div className="text-center py-5">
+        <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
+          Discover Natural Herbs 🌿
+        </h1>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
+          Explore natural herbs & organic healing products
+        </p>
+
+      </div>
         <Search placehoder={"herbas"} />
 
-        <div className="categories">
-          <ul className="list-none mt-2 flex justify-center gap-5 mb-0 overflow-x-auto flex-nowrap scrollbar-hide py-4">
-            <li
-              className={`cursor-pointer bg-green-800/10 dark:bg-[#0C1A1A] text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 whitespace-nowrap ${activeCat === 0 ? "cat-active" : ""} `}
-              onClick={() => {
-                setActiveCat(0);
-              }}
-            >
-              All
-            </li>
-            {categories?.map((cat) => (
-              <li
-                key={cat.categoryId}
-                className={`cursor-pointer bg-green-800/10 dark:bg-[#0C1A1A] text-black dark:text-white px-4 py-1.5 rounded-full border border-green-200/10 whitespace-nowrap ${activeCat === cat.categoryId ? "cat-active" : ""}`}
-                onClick={() => {
-                  setActiveCat(cat.categoryId);
-                }}
-              >
-                {cat.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* CATEGORIES */}
+      <div className="my-8">
+        <ul className="flex gap-3 overflow-x-auto scrollbar-hide py-2 justify-center">
+          <li
+            onClick={() => setActiveCat(0)}
+            className={`px-5 py-2 rounded-full cursor-pointer transition
+              ${
+                activeCat === 0
+                  ? "bg-green-800 text-white shadow-md"
+                  : "dark:bg-[#0C1A1A] bg-green-800/10"
+              }`}
+          >
+            All
+          </li>
 
-        {filteredHerbas?.length > 0 ? (
-          <div className="herbas grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {filteredHerbas?.map((herb) => (
-              <div
-                key={herb.herbId}
-                className="slider-images shadow-md cursor-pointer bg-green-200/10 dark:bg-[#1A242A] rounded-lg overflow-hidden text-center my-5 relative flex flex-col h-full hover:shadow-lg transition-shadow duration-300"
-                onClick={() => {
-                  navigate(`/herbas-details/${herb.herbId}`);
-                }}
-              >
-                <div className="w-full h-48 group overflow-hidden relative">
-                  <div
-                    className={`absolute inset-0 flex justify-end items-start  ${favoriteHerb.includes(herb.herbId) ? "opacity-100" : "opacity-0 bg-gray-300/30 group-hover:opacity-100 transition-opacity duration-500 ease"} `}
-                  >
-                    <FaHeart
-                      onClick={(e) => {
-                        toggleFav(e, herb.herbId);
-                        sendFavHerbas(herb.herbId);
-                      }}
-                      className={`text-2xl m-3 cursor-pointer ${favoriteHerb.includes(herb.herbId) ? "text-red-700" : "text-white"}   transition-colors`}
-                    />
-                  </div>
-                  <img
-                    className="w-full h-full object-cover"
-                    src={herb.imageLink}
-                    alt={herb.description}
-                    onError={(e) => {
-                      e.target.src = herbImage;
+          {categories?.map((cat) => (
+            <li
+              key={cat.categoryId}
+              onClick={() => setActiveCat(cat.categoryId)}
+              className={`px-5 py-2 rounded-full cursor-pointer transition whitespace-nowrap
+                ${
+                  activeCat === cat.categoryId
+                    ? "bg-green-800 text-white shadow-md"
+                    : "dark:bg-[#0C1A1A] bg-green-800/10"
+                }`}
+            >
+              {cat.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* GRID */}
+      {currentItems?.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[180px]">
+
+          {currentItems.map((herb, index) => (
+            <div
+              key={herb.herbId}
+              onClick={() => navigate(`/herbas-details/${herb.herbId}`)}
+              className={`group cursor-pointer rounded-2xl overflow-hidden
+              bg-[#1A242A]/70 border border-white/10
+              shadow-md hover:shadow-2xl
+              transition-all duration-500 hover:-translate-y-2
+              ${index === 0 ? "col-span-2 row-span-2" : ""}`}
+            >
+
+              {/* IMAGE */}
+              <div className="relative w-full h-full">
+
+                <img
+                  src={herb.imageLink}
+                  onError={(e) => (e.target.src = herbImage)}
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                />
+
+                {/* overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                {/* heart */}
+                <div className="absolute top-3 right-3">
+                  <FaHeart
+                    onClick={(e) => {
+                      toggleFav(e, herb.herbId);
+                      sendFavHerbas(herb.herbId);
                     }}
+                    className={`text-xl transition ${
+                      favoriteHerb.includes(herb.herbId)
+                        ? "text-red-600"
+                        : "text-white opacity-70 group-hover:opacity-100"
+                    }`}
                   />
                 </div>
 
-                <div className="p-2 flex-grow flex flex-col justify-center">
-                  <p className="mt-1 font-medium text-gray-800 dark:text-gray-200">
+                {/* text */}
+                <div className="absolute bottom-3 left-3 right-3">
+                  <h3 className="text-white font-semibold text-sm md:text-base">
                     {herb.name}
-                  </p>
-                  <p className="mt-1 text-green-700 font-bold">
-                    Price: {herb.price}
+                  </h3>
+
+                  <p className="text-green-300 font-bold text-sm">
+                    ${herb.price}
                   </p>
                 </div>
+
               </div>
-            ))}
+            </div>
+          ))}
+
+        </div>
+      ) : (
+        <div className="flex justify-center items-center py-20">
+          <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
+
+      {/* PAGINATION */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-10">
+          <div className="flex items-center gap-2 bg-white/5 dark:bg-[#0C1A1A] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
+
+            {/* Prev */}
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20"
+            >
+              Prev
+            </button>
+
+            {/* SMART PAGES */}
+            {(() => {
+              const pages = [];
+
+              const addPage = (p) => {
+                pages.push(
+                  <button
+                    key={p}
+                    onClick={() => setCurrentPage(p)}
+                    className={`w-8 h-8 rounded-full text-sm transition
+                      ${
+                        currentPage === p
+                          ? "bg-green-700 text-white shadow-md scale-110"
+                          : "hover:bg-green-700/20"
+                      }`}
+                  >
+                    {p}
+                  </button>
+                );
+              };
+
+              const addDots = (key) => {
+                pages.push(
+                  <span key={key} className="px-2 text-gray-400">
+                    ...
+                  </span>
+                );
+              };
+
+              addPage(1);
+
+              if (currentPage > 3) addDots("start");
+
+              for (
+                let i = Math.max(2, currentPage - 1);
+                i <= Math.min(totalPages - 1, currentPage + 1);
+                i++
+              ) {
+                addPage(i);
+              }
+
+              if (currentPage < totalPages - 2) addDots("end");
+
+              if (totalPages > 1) addPage(totalPages);
+
+              return pages;
+            })()}
+
+            {/* Next */}
+            <button
+              onClick={() =>
+                setCurrentPage((p) => Math.min(p + 1, totalPages))
+              }
+              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20"
+            >
+              Next
+            </button>
+
           </div>
-        ) : (
-          <div className=" flex justify-center items-center py-20 my-20">
-            <span className="loader text-9xl border border-black" />
-          </div>
-        )}
-      </section>
-    </>
+        </div>
+      )}
+
+    </section>
   );
 }

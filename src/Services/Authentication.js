@@ -4,7 +4,7 @@ import axios from "axios";
 export const loginRequest = async (userData) => {
   try {
     const { data } = await axios.post(
-      "https://localhost:7190/api/Auth/login",
+      "http://herbs.runasp.net/api/Auth/login",
       userData
     );
     return data.data;
@@ -18,7 +18,7 @@ export const loginRequest = async (userData) => {
 export const registerRequest = async (userData) => {
   try {
     const { data } = await axios.post(
-      "https://localhost:7190/api/Auth/register",
+      "http://herbs.runasp.net/api/Auth/register",
       userData,
     );
     return data.data;
