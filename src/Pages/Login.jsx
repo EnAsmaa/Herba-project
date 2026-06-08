@@ -8,12 +8,16 @@ import { schema } from "../Schema/LoginSchema";
 import axios from "axios";
 import { loginRequest } from "../Services/Authentication";
 import { AuthContext } from "../Context/AuthContext";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 
 export default function Login() {
   const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
+  const [shownPasswrd, setShownPassword] = useState(false)
   const [apiError, setApiError] = useState(null);
-  const {setIslogin} = useContext(AuthContext);
+  const { setIslogin } = useContext(AuthContext);
+  const { setRole } = useContext(AuthContext);
   const {
     handleSubmit,
     register,
@@ -24,8 +28,8 @@ export default function Login() {
       password: "",
     },
     resolver: zodResolver(schema),
-    mode: "onBlur",
-    reValidateMode: "onBlur",
+    // mode: "onBlur",
+    // reValidateMode: "onBlur",
   });
 
   const login = async (userData) => {
@@ -33,15 +37,16 @@ export default function Login() {
     const response = await loginRequest(userData);
     setIsLoading(false);
     if (response.isSuccess) {
-      localStorage.setItem('loginToken',response.token);
-      setIslogin(response.token);
+      localStorage.setItem('loginToken', response.token);
+      setIslogin(true);
+      const role = response.userType === 0 ? 'user' : 'doctor'
+      localStorage.setItem('role', role);
+      setRole(role)
       navigate("/");
     }
-    else
-    {
+    else {
       setApiError(response.message);
     }
-    
   };
   return (
     <>
@@ -69,11 +74,15 @@ export default function Login() {
 
               {/* Password */}
               <div className="flex flex-col">
-                <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
+                <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
                   Password
+                  {
+                    shownPasswrd === true ? <IoEyeOffOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" /> : <IoEyeOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" />
+                  }
+
                 </label>
                 <Input
-                  type="password"
+                  type={shownPasswrd === true ? 'text' : 'password'}
                   placeholder="Password"
                   variant="bordered"
                   {...register("password")}
@@ -102,7 +111,7 @@ export default function Login() {
                   </Link>
                 </span>
               </div>
-              {apiError&& <span className=" flex items-center justify-center text-red-500 text-sm">{apiError}</span>}
+              {apiError && <span className=" flex items-center justify-center text-red-500 text-sm">{apiError}</span>}
             </form>
           </div>
         </div>

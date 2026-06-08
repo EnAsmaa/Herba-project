@@ -9,7 +9,6 @@ export default function HerbasContexProvider({ children }) {
   const getHerbas = async () => {
     const response = await getAllHerbas();
     setHerbas(response);
-    console.log(response);
   };
   useEffect(() => {
     getHerbas();

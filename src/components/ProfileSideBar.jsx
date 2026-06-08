@@ -14,11 +14,14 @@ import { AuthContext } from "../Context/AuthContext";
 export default function ProfileSideBar(props) {
   const navigate = useNavigate();
   const { profileToggle, setProfileToggle } = props;
-  const {setIslogin} = useContext(AuthContext);
+  const { setIslogin } = useContext(AuthContext);
+  const { setRole } = useContext(AuthContext);
 
   const logOut = () => {
     localStorage.removeItem("loginToken");
+    localStorage.removeItem("userType");
     setIslogin(false);
+    setRole(null);
     navigate("/login");
     setProfileToggle(false);
   };

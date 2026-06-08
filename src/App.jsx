@@ -12,7 +12,7 @@ import Cart from './components/Cart';
 import Profile from './Pages/Profile';
 import NotFound from './Pages/NotFound';
 import Market from './Pages/Market';
-import Consultation from './Pages/Consultation';
+import Consultation from './Pages/Consultation/Consultation';
 import AiTools from './components/AiTools';
 // import Settings from './Pages/Settings';
 import PrivacyPage from "./Pages/PrivacyPage";
@@ -25,9 +25,12 @@ import IdealWeightCalc from "./Pages/IdealWeightCalc"
 import ImageAnalysis from "./Pages/ImageAnalysis"
 import UserDashboard from "./Pages/UserDashboard"
 import NutritionCalculator from "./Pages/NutritionCalculator"
-import ConsultationDetails from "./Pages/ConsultationDetails";
+import ConsultationDetails from "./Pages/Consultation/AskConsultation";
+import ReplyConsultation from "./Pages/Consultation/ReplyConsultation";
 import { useTranslation } from "react-i18next";
 import ProtectedRoot from "./components/ProtectedRoot";
+import AskConsultation from "./Pages/Consultation/AskConsultation";
+import MyConsultations from "./Pages/Consultation/MyConsultations";
 function App() {
   const { i18n } = useTranslation();
 
@@ -39,28 +42,30 @@ function App() {
   Aos.init();
   const router = createBrowserRouter([{
     path: '', element: <Layout />, children: [
-      { index: true, element: <ProtectedRoot><Home /></ProtectedRoot> },
-      { path: 'herbas', element: <ProtectedRoot><Herbas /></ProtectedRoot> },
-      { path: 'cart', element:<ProtectedRoot><Cart /></ProtectedRoot> },
-      { path: 'profile', element: <ProtectedRoot><Profile /></ProtectedRoot>},
-      { path: 'activity', element: <ProtectedRoot><Activity /></ProtectedRoot>},
-      { path: 'login', element:<Login/> },
-      { path: 'register', element:<Register />},
-      { path: 'aitools', element: <ProtectedRoot><AiTools /></ProtectedRoot> },
-      { path: 'market', element: <ProtectedRoot><Market /></ProtectedRoot> },
-      { path: 'consultation', element:<ProtectedRoot> <Consultation /></ProtectedRoot> },
-      { path: 'helpSupport', element: <ProtectedRoot><HelpSupport /></ProtectedRoot> },
-      { path: 'privacy', element: <ProtectedRoot><PrivacyPage /></ProtectedRoot> },
-      { path: 'herbas-details/:id', element: <ProtectedRoot><HerbaDetails /></ProtectedRoot> },
-      { path: 'premium', element: <ProtectedRoot><PremiumPage /></ProtectedRoot> },
-      { path: 'notification', element: <ProtectedRoot><Notification /></ProtectedRoot> },
-      { path: 'favorites', element: <ProtectedRoot><FavoritePage /></ProtectedRoot> },
-      { path: 'doctorinfo', element: <ProtectedRoot><DoctorInfo /></ProtectedRoot> },
-      { path: 'weight-calc', element: <ProtectedRoot><IdealWeightCalc /></ProtectedRoot> },
-      { path: 'image-analysis', element: <ProtectedRoot><ImageAnalysis /></ProtectedRoot> },
-      { path: 'user-dashboard', element: <ProtectedRoot><UserDashboard /></ProtectedRoot> },
-      { path: 'nutrition', element: <ProtectedRoot><NutritionCalculator /></ProtectedRoot> },
-      { path: 'consultation-details/:id', element: <ProtectedRoot><ConsultationDetails /></ProtectedRoot> },
+      { index: true, element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Home /></ProtectedRoot> },
+      { path: 'herbas', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Herbas /></ProtectedRoot> },
+      { path: 'cart', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Cart /></ProtectedRoot> },
+      { path: 'profile', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Profile /></ProtectedRoot> },
+      { path: 'activity', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Activity /></ProtectedRoot> },
+      { path: 'login', element: <Login /> },
+      { path: 'register', element: <Register /> },
+      { path: 'aitools', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><AiTools /></ProtectedRoot> },
+      { path: 'market', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Market /></ProtectedRoot> },
+      { path: 'consultation', element: <ProtectedRoot allowedRoles={['user', 'doctor']}> <Consultation /></ProtectedRoot> },
+      { path: 'helpSupport', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><HelpSupport /></ProtectedRoot> },
+      { path: 'privacy', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><PrivacyPage /></ProtectedRoot> },
+      { path: 'herbas-details/:id', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><HerbaDetails /></ProtectedRoot> },
+      { path: 'premium', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><PremiumPage /></ProtectedRoot> },
+      { path: 'notification', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Notification /></ProtectedRoot> },
+      { path: 'favorites', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><FavoritePage /></ProtectedRoot> },
+      { path: 'doctorinfo', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><DoctorInfo /></ProtectedRoot> },
+      { path: 'weight-calc', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><IdealWeightCalc /></ProtectedRoot> },
+      { path: 'image-analysis', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><ImageAnalysis /></ProtectedRoot> },
+      { path: 'user-dashboard', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><UserDashboard /></ProtectedRoot> },
+      { path: 'nutrition', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><NutritionCalculator /></ProtectedRoot> },
+      { path: 'ask-consultation/:id', element: <ProtectedRoot allowedRoles={['user']}><AskConsultation /></ProtectedRoot> },
+      { path: 'reply-consultation', element: <ProtectedRoot allowedRoles={['doctor']}><ReplyConsultation /></ProtectedRoot> },
+      { path: 'my-consultation', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><MyConsultations /></ProtectedRoot> },
 
 
       { path: '*', element: <NotFound /> },

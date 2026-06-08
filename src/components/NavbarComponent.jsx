@@ -18,8 +18,10 @@ export default function NavbarComponent({
   setProfileToggle,
 }) {
   const { t } = useTranslation("home");
-  const {isLogin} = useContext(AuthContext);
+  const { isLogin, role } = useContext(AuthContext);
   const [menuToggle, setMenuToggle] = useState(false);
+
+  console.log(role)
 
   const navigate = useNavigate();
   return (
@@ -59,7 +61,7 @@ export default function NavbarComponent({
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink className={"link"} to={"consultation"}>
+                  <NavLink className={"link"} to={role === 'user' ? '/consultation' : '/reply-consultation/'}>
                     {t("consultation")}
                   </NavLink>
                 </li>
@@ -137,32 +139,32 @@ export default function NavbarComponent({
             className={`lg:hidden space-y-3 text-md mt-2 overflow-hidden transition-all duration-700 ${menuToggle ? "max-h-96" : "max-h-0"}`}
           >
             <li>
-              <NavLink className={"link"} to={""}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={""}>
                 {t("home")}
               </NavLink>
             </li>
             <li>
-              <NavLink className={"link"} to={"herbas"}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={"herbas"}>
                 {t("herbas")}
               </NavLink>
             </li>
             <li>
-              <NavLink className={"link"} to={"activity"}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={"activity"}>
                 {t("activity")}
               </NavLink>
             </li>
             <li>
-              <NavLink className={"link"} to={"aitools"}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={"aitools"}>
                 {t("aiTools")}
               </NavLink>
             </li>
             <li>
-              <NavLink className={"link"} to={"market"}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={"market"}>
                 {t("market")}
               </NavLink>
             </li>
             <li>
-              <NavLink className={"link"} to={"consultation"}>
+              <NavLink className={"link"} onClick={() => { setMenuToggle(false) }} to={role === 'user' ? '/consultation' : '/reply-consultation'}>
                 {t("consultation")}
               </NavLink>
             </li>

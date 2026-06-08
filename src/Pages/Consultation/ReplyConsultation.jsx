@@ -1,0 +1,165 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+export default function ReplyConsultation() {
+    const [token] = useState(localStorage.getItem("loginToken") || null);
+    const [consultations, setConsultations] = useState([]);
+    const [replies, setReplies] = useState({});
+
+    // get doctor consultations
+    const getConsultations = async () => {
+        try {
+            const { data } = await axios.get(
+                "http://herbs.runasp.net/api/Consultation/my-consultations",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (data.success) {
+                setConsultations(data.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getConsultations();
+    }, []);
+
+    // send reply
+    const replyQuestion = async (conId) => {
+        try {
+            const { data } = await axios.post(
+                "http://herbs.runasp.net/api/Consultation/reply",
+                {
+                    conId,
+                    reply: replies[conId], // fixed field name
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (data.success) {
+                await getConsultations();
+
+                setReplies((prev) => ({
+                    ...prev,
+                    [conId]: "",
+                }));
+            }
+        } catch (err) {
+            console.log(err.response?.data || err);
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] p-6">
+            <div className="max-w-5xl mx-auto">
+                <h1 className="text-3xl font-bold text-center mb-8 text-green-700 dark:text-green-400">
+                    Patient Consultations
+                </h1>
+
+                <div className="space-y-6">
+                    {consultations?.map((consultation) => {
+                        const isUnread = !consultation.reply;
+
+                        return (
+                            <div
+                                key={consultation.conId}
+                                className={`rounded-2xl shadow-lg p-6 border transition-all duration-300
+                                ${isUnread
+                                        ? "bg-red-50 border-red-300 dark:bg-red-950"
+                                        : "bg-white dark:bg-[#1e293b] border-gray-100 dark:border-slate-700"
+                                    }`}
+                            >
+                                {/* Header */}
+                                <div className="flex items-center gap-3 mb-4">
+                                    {isUnread && (
+                                        <span className="px-3 py-1 text-xs font-bold bg-red-500 text-white rounded-full">
+                                            NEW
+                                        </span>
+                                    )}
+
+                                    <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-lg">
+                                        {consultation.userName
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                            consultation.userName
+                                                .charAt(1)
+                                                .toLowerCase()}
+                                    </div>
+
+                                    <div>
+                                        <h2 className="font-semibold text-lg text-gray-800 dark:text-white">
+                                            {consultation.userName}
+                                        </h2>
+                                        <p className="text-sm text-gray-500">
+                                            Patient Consultation
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Question */}
+                                <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 mb-4">
+                                    <p className="font-medium text-gray-700 dark:text-gray-200">
+                                        Question:
+                                    </p>
+
+                                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                        {consultation.message}
+                                    </p>
+                                </div>
+
+                                {/* Reply if exists */}
+                                {consultation.reply && (
+                                    <div className="bg-green-50 border-l-4 border-green-500 rounded-lg p-4 mb-4">
+                                        <p className="font-semibold text-green-700">
+                                            Doctor Reply
+                                        </p>
+
+                                        <p className="text-green-800 mt-1">
+                                            {consultation.reply}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Reply input */}
+                                <textarea
+                                    value={
+                                        replies[consultation.conId] || ""
+                                    }
+                                    onChange={(e) =>
+                                        setReplies({
+                                            ...replies,
+                                            [consultation.conId]:
+                                                e.target.value,
+                                        })
+                                    }
+                                    placeholder="Write your reply..."
+                                    className="w-full border border-gray-300 dark:border-slate-600 rounded-xl p-3 outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:text-white resize-none"
+                                    rows="4"
+                                />
+
+                                <button
+                                    onClick={() =>
+                                        replyQuestion(consultation.conId)
+                                    }
+                                    className="mt-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition"
+                                >
+                                    Send Reply
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+}
