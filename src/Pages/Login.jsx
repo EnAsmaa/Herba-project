@@ -60,7 +60,7 @@ export default function Login() {
               {/* Email */}
               <div className="flex flex-col">
                 <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-                  Email Address
+                  Email Address*
                 </label>
                 <Input
                   type="email"
@@ -75,7 +75,7 @@ export default function Login() {
               {/* Password */}
               <div className="flex flex-col">
                 <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
-                  Password
+                  Password*
                   {
                     shownPasswrd === true ? <IoEyeOffOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" /> : <IoEyeOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" />
                   }

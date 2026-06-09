@@ -6,10 +6,13 @@ import * as zod from "zod";
 import { Select, SelectItem, Input, Button } from "@heroui/react";
 import { schema } from "../Schema/RegisterSchema";
 import { registerRequest } from "../Services/Authentication";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 
 export default function Register() {
   const [loading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
+  const [shownPasswrd, setShownPassword] = useState(false)
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -42,12 +45,10 @@ export default function Register() {
 
     const response = await registerRequest(formattedData);
     console.log(response);
-    if(response.isSuccess)
-    {
+    if (response.isSuccess) {
       navigate('/login');
     }
-    else
-    {
+    else {
       setApiError(response.message)
     }
     setIsLoading(false);
@@ -110,51 +111,20 @@ export default function Register() {
 
           {/* Password */}
           <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
+            <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
               Password*
+              {
+                shownPasswrd === true ? <IoEyeOffOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" /> : <IoEyeOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" />
+              }
             </label>
             <Input
-              type="password"
+              type={shownPasswrd === true ? 'text' : 'password'}
               variant="bordered"
               className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
               {...register("password")}
               isInvalid={Boolean(errors.password) && touchedFields.password}
               errorMessage={errors.password?.message}
             />
-          </div>
-
-          {/* BirthDate */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              BirthDate*
-            </label>
-            <Input
-              type="date"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("birthDate")}
-              isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
-              errorMessage={errors.birthDate?.message}
-            />
-          </div>
-
-          {/* Account Type */}
-          <div className="flex flex-col">
-            <Select
-              label="Account Type*"
-              variant="bordered"
-              defaultSelectedKeys={["0"]}
-              {...register("userType")}
-              isInvalid={Boolean(errors.userType)}
-              errorMessage={errors.userType?.message}
-            >
-              <SelectItem key="1" textValue="Doctor">
-                Doctor
-              </SelectItem>
-              <SelectItem key="0" textValue="User">
-                User
-              </SelectItem>
-            </Select>
           </div>
 
           {/* Gender */}
@@ -176,6 +146,25 @@ export default function Register() {
             </Select>
           </div>
 
+          {/* Account Type */}
+          <div className="flex flex-col">
+            <Select
+              label="Account Type*"
+              variant="bordered"
+              defaultSelectedKeys={["0"]}
+              {...register("userType")}
+              isInvalid={Boolean(errors.userType)}
+              errorMessage={errors.userType?.message}
+            >
+              <SelectItem key="1" textValue="Doctor">
+                Doctor
+              </SelectItem>
+              <SelectItem key="0" textValue="User">
+                User
+              </SelectItem>
+            </Select>
+          </div>
+
           {/* Phone */}
           <div className="flex flex-col">
             <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
@@ -188,6 +177,21 @@ export default function Register() {
               {...register("phone")}
               isInvalid={Boolean(errors.phone) && touchedFields.phone}
               errorMessage={errors.phone?.message}
+            />
+          </div>
+
+          {/* BirthDate */}
+          <div className="flex flex-col">
+            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
+              BirthDate*
+            </label>
+            <Input
+              type="date"
+              variant="bordered"
+              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
+              {...register("birthDate")}
+              isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
+              errorMessage={errors.birthDate?.message}
             />
           </div>
 
@@ -234,7 +238,7 @@ export default function Register() {
             <span>
               Already have an account?{" "}
               <Link className="text-green-700 dark:text-[#57d88a] " to="/login">
-                Login 
+                Login
               </Link>
             </span>
           </div>
