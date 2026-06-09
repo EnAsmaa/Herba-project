@@ -76,7 +76,7 @@ export const PostFavHerbas = async (herbId) => {
   }
 };
 
-export const postDelHerb = async (herbId) => {
+export const DeleteFavHerb = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.delete(`http://herbs.runasp.net/api/Favorite/${herbId}`, {

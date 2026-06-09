@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 import herbImage from "../assets/Dashboard_835_Herbs_9_23.jpeg";
 import Search from "./../components/Search";
 import { FaHeart } from "react-icons/fa";
-import { getAllCategory, PostFavHerbas } from "../Services/Herb";
+import { CiHeart } from "react-icons/ci";
+import { DeleteFavHerb, getAllCategory, getFavHerbas, PostFavHerbas } from "../Services/Herb";
 import { HerbasContex } from "../Context/HerbasContext";
+import axios from "axios";
+
 
 export default function Herbas() {
+  const [token] = useState(localStorage.getItem("loginToken") || null);
   const [activeCat, setActiveCat] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 25;
-
-  const savedFavs = JSON.parse(localStorage.getItem("favHerbs")) || [];
-  const [favoriteHerb, setFavoritHerb] = useState(savedFavs);
+  const [favoriteHerb, setFavoritHerb] = useState([]);
 
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -23,6 +25,34 @@ export default function Herbas() {
     const response = await getAllCategory();
     setCategories(response);
   };
+
+  // get favourite
+  const getFav = async () => {
+    const response = await getFavHerbas()
+    if (response.success) {
+      setFavoritHerb(response.data)
+    }
+  }
+
+  useEffect(() => {
+    getFav()
+  }, [])
+
+  // add to favourite
+  const addToFav = async (herbId) => {
+    const response = await PostFavHerbas(herbId)
+    if (response.success) {
+      setFavoritHerb(response.data)
+    }
+  }
+
+  // remove from favourite
+  const removeFromFav = async (herbId) => {
+    const response = await DeleteFavHerb(herbId)
+    if (response.success) {
+      setFavoritHerb(response.data)
+    }
+  }
 
   // FILTER
   const filteredHerbas =
@@ -78,7 +108,7 @@ export default function Herbas() {
         </p>
 
       </div>
-        <Search placehoder={"herbas"} />
+      <Search placehoder={"herbas"} />
 
       {/* CATEGORIES */}
       <div className="my-8">
@@ -86,10 +116,9 @@ export default function Herbas() {
           <li
             onClick={() => setActiveCat(0)}
             className={`px-5 py-2 rounded-full cursor-pointer transition
-              ${
-                activeCat === 0
-                  ? "bg-green-800 text-white shadow-md"
-                  : "dark:bg-[#0C1A1A] bg-green-800/10"
+              ${activeCat === 0
+                ? "bg-green-800 text-white shadow-md"
+                : "dark:bg-[#0C1A1A] bg-green-800/10"
               }`}
           >
             All
@@ -100,10 +129,9 @@ export default function Herbas() {
               key={cat.categoryId}
               onClick={() => setActiveCat(cat.categoryId)}
               className={`px-5 py-2 rounded-full cursor-pointer transition whitespace-nowrap
-                ${
-                  activeCat === cat.categoryId
-                    ? "bg-green-800 text-white shadow-md"
-                    : "dark:bg-[#0C1A1A] bg-green-800/10"
+                ${activeCat === cat.categoryId
+                  ? "bg-green-800 text-white shadow-md"
+                  : "dark:bg-[#0C1A1A] bg-green-800/10"
                 }`}
             >
               {cat.name}
@@ -116,58 +144,68 @@ export default function Herbas() {
       {currentItems?.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[180px]">
 
-          {currentItems.map((herb, index) => (
-            <div
-              key={herb.herbId}
-              onClick={() => navigate(`/herbas-details/${herb.herbId}`)}
-              className={`group cursor-pointer rounded-2xl overflow-hidden
+          {currentItems.map((herb, index) => {
+            const isFavorite = favoriteHerb.some(
+              item => item.herbId === herb.herbId
+            );
+
+            return (
+              <div
+                key={herb.herbId}
+                onClick={() => navigate(`/herbas-details/${herb.herbId}`)}
+                className={`group cursor-pointer rounded-2xl overflow-hidden
               bg-[#1A242A]/70 border border-white/10
               shadow-md hover:shadow-2xl
               transition-all duration-500 hover:-translate-y-2
               ${index === 0 ? "col-span-2 row-span-2" : ""}`}
-            >
+              >
 
-              {/* IMAGE */}
-              <div className="relative w-full h-full">
+                {/* IMAGE */}
+                <div className="relative w-full h-full">
 
-                <img
-                  src={herb.imageLink}
-                  onError={(e) => (e.target.src = herbImage)}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                />
-
-                {/* overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-                {/* heart */}
-                <div className="absolute top-3 right-3">
-                  <FaHeart
-                    onClick={(e) => {
-                      toggleFav(e, herb.herbId);
-                      sendFavHerbas(herb.herbId);
-                    }}
-                    className={`text-xl transition ${
-                      favoriteHerb.includes(herb.herbId)
-                        ? "text-red-600"
-                        : "text-white opacity-70 group-hover:opacity-100"
-                    }`}
+                  <img
+                    src={herb.imageLink}
+                    onError={(e) => (e.target.src = herbImage)}
+                    className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                   />
+
+                  {/* overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                  {/* heart */}
+                  <div className="absolute top-3 right-3">
+                    {isFavorite ?
+                      <FaHeart
+                        onClick={(e) => {
+                          removeFromFav(herb.herbId);
+                          e.stopPropagation()
+                        }}
+                        className={`text-2xl transition text-red-500`} /> :
+                      <FaHeart
+                        onClick={(e) => {
+                          addToFav(herb.herbId);
+                          e.stopPropagation()
+                        }}
+                        className={`text-2xl transition text-white`} />
+
+                    }
+                  </div>
+
+                  {/* text */}
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <h3 className="text-white font-semibold text-sm md:text-base">
+                      {herb.name}
+                    </h3>
+
+                    <p className="text-green-300 font-bold text-sm">
+                      ${herb.price}
+                    </p>
+                  </div>
+
                 </div>
-
-                {/* text */}
-                <div className="absolute bottom-3 left-3 right-3">
-                  <h3 className="text-white font-semibold text-sm md:text-base">
-                    {herb.name}
-                  </h3>
-
-                  <p className="text-green-300 font-bold text-sm">
-                    ${herb.price}
-                  </p>
-                </div>
-
               </div>
-            </div>
-          ))}
+            )
+          })}
 
         </div>
       ) : (
@@ -199,10 +237,9 @@ export default function Herbas() {
                     key={p}
                     onClick={() => setCurrentPage(p)}
                     className={`w-8 h-8 rounded-full text-sm transition
-                      ${
-                        currentPage === p
-                          ? "bg-green-700 text-white shadow-md scale-110"
-                          : "hover:bg-green-700/20"
+                      ${currentPage === p
+                        ? "bg-green-700 text-white shadow-md scale-110"
+                        : "hover:bg-green-700/20"
                       }`}
                   >
                     {p}

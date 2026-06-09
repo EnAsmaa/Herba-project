@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaCalculator, FaXmark } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { FaAngleRight, FaHeart, FaPen } from "react-icons/fa6";
@@ -10,12 +10,15 @@ import profile from "../assets/profile.jpg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { AuthContext } from "../Context/AuthContext";
+import { getProfileDataAPI } from './../Services/Authentication';
 
 export default function ProfileSideBar(props) {
   const navigate = useNavigate();
   const { profileToggle, setProfileToggle } = props;
   const { setIslogin } = useContext(AuthContext);
   const { setRole } = useContext(AuthContext);
+  const [userData, setUserData] = useState()
+
 
   const logOut = () => {
     localStorage.removeItem("loginToken");
@@ -25,6 +28,17 @@ export default function ProfileSideBar(props) {
     navigate("/login");
     setProfileToggle(false);
   };
+
+  const getProfileData = async () => {
+    const response = await getProfileDataAPI()
+    if (response.success) {
+      setUserData(response.data)
+    }
+  }
+
+  useEffect(() => {
+    getProfileData()
+  }, [])
 
   return (
     <>
@@ -46,16 +60,12 @@ export default function ProfileSideBar(props) {
           />
         </div>
         <div className="content w-75 p-5 m-2 flex items-center gap-5 shadow bg-white rounded-xl">
-          <div className="aspect-square w-15 rounded-full ">
-            <img
-              className="w-full object-cover rounded-full"
-              src={profile}
-              alt=""
-            />
+          <div className="aspect-square w-15 rounded-full bg-green-900 flex items-center justify-center text-white font-semibold ">
+              {userData?.firstName.charAt(0).toUpperCase() + userData?.lastName.charAt(0).toUpperCase()}
           </div>
           <div className="user-info">
-            <p className="text-black">Asmaa Elnagar</p>
-            <p className="text-gray-500 text-sm">asmaa@gmail.com</p>
+            <p className="text-black whitespace-nowrap">{userData?.firstName.toUpperCase() + ' ' + userData?.lastName.toUpperCase()}</p>
+            <p className="text-gray-500 text-sm">{userData?.email}</p>
           </div>
           <NavLink
             className=" text-green-800 py-2 rounded-lg cursor-pointer duration-300"
