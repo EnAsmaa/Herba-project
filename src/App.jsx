@@ -8,7 +8,6 @@ import HerbaDetails from './Pages/HerbaDetails';
 import Activity from './components/Activity';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import Cart from './components/Cart';
 import Profile from './Pages/Profile';
 import NotFound from './Pages/NotFound';
 import Market from './Pages/Market';
@@ -31,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import ProtectedRoot from "./components/ProtectedRoot";
 import AskConsultation from "./Pages/Consultation/AskConsultation";
 import MyConsultations from "./Pages/Consultation/MyConsultations";
+import Cart from "./components/Cart";
 function App() {
   const { i18n } = useTranslation();
 

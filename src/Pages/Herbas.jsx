@@ -4,8 +4,7 @@ import herbImage from "../assets/Dashboard_835_Herbs_9_23.jpeg";
 import Search from "./../components/Search";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
-import { DeleteFavHerb, getAllCategory, getFavHerbas, PostFavHerbas } from "../Services/Herb";
-import { HerbasContex } from "../Context/HerbasContext";
+import { DeleteFavHerb, getAllCategory, getAllHerbas, getFavHerbas, PostFavHerbas } from "../Services/Herb";
 import axios from "axios";
 
 
@@ -19,8 +18,16 @@ export default function Herbas() {
 
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const { herbas } = useContext(HerbasContex);
+  const [herbs, setHerbs] = useState([]);
 
+  // get cats
+  const getHerbs = async () => {
+    const response = await getAllHerbas();
+    console.log(response)
+    setHerbs(response);
+  };
+
+  // get cats
   const getCategories = async () => {
     const response = await getAllCategory();
     setCategories(response);
@@ -36,6 +43,8 @@ export default function Herbas() {
 
   useEffect(() => {
     getFav()
+    getHerbs()
+    getCategories();
   }, [])
 
   // add to favourite
@@ -57,8 +66,8 @@ export default function Herbas() {
   // FILTER
   const filteredHerbas =
     activeCat === 0
-      ? herbas
-      : herbas.filter((herb) => herb.categoryId === activeCat);
+      ? herbs
+      : herbs.filter((herb) => herb.categoryId === activeCat);
 
   // PAGINATION
   const totalPages = Math.ceil(filteredHerbas?.length / itemsPerPage);
@@ -85,10 +94,6 @@ export default function Herbas() {
   const sendFavHerbas = async (herbId) => {
     await PostFavHerbas(herbId);
   };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("favHerbs", JSON.stringify(favoriteHerb));
