@@ -5,6 +5,11 @@ export default function ReplyConsultation() {
     const [token] = useState(localStorage.getItem("loginToken") || null);
     const [consultations, setConsultations] = useState([]);
     const [replies, setReplies] = useState({});
+    const [questionexpanded, setQuestionExpanded] = useState(null)
+    const [replyExpanded, setReplyExpanded] = useState(null)
+    const [shownConsultationslabel, setShownConsultationslabel] = useState('all')
+    const [shownConsultations, setShownConsultations] = useState([])
+
 
     // get doctor consultations
     const getConsultations = async () => {
@@ -29,6 +34,18 @@ export default function ReplyConsultation() {
     useEffect(() => {
         getConsultations();
     }, []);
+
+    useEffect(() => {
+        if (shownConsultationslabel === 'notAnswered') {
+            setShownConsultations(consultations.filter(c => c.reply === null));
+        }
+        else if (shownConsultationslabel === 'Answered') {
+            setShownConsultations(consultations.filter(c => c.reply !== null));
+        }
+        else {
+            setShownConsultations(consultations);
+        }
+    }, [shownConsultationslabel, consultations]);
 
     // send reply
     const replyQuestion = async (conId) => {
@@ -62,14 +79,34 @@ export default function ReplyConsultation() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] p-6">
             <div className="max-w-5xl mx-auto">
-                <h1 className="text-3xl font-bold text-center mb-8 text-green-700 dark:text-green-400">
+                <h1 className="text-4xl font-bold text-center mt-8 mb-10 text-green-700 dark:text-green-400">
                     Patient Consultations
                 </h1>
 
-                <div className="space-y-6">
-                    {consultations?.map((consultation) => {
-                        const isUnread = !consultation.reply;
+                <div className="flex justify-center mb-6 gap-4">
+                    <button
+                        onClick={() => setShownConsultationslabel('all')}
+                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'all' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
+                    >
+                        All Consultations
+                    </button>
+                    <button
+                        onClick={() => setShownConsultationslabel('notAnswered')}
+                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'notAnswered' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
+                    >
+                        Not Answered
+                    </button>
+                    <button
+                        onClick={() => setShownConsultationslabel('Answered')}
+                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'Answered' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
+                    >
+                        Answered
+                    </button>
+                </div>
 
+                <div className="space-y-6">
+                    {shownConsultations?.map((consultation) => {
+                        const isUnread = !consultation.reply;
                         return (
                             <div
                                 key={consultation.conId}
@@ -112,7 +149,7 @@ export default function ReplyConsultation() {
                                         Question:
                                     </p>
 
-                                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                                    <p onClick={() => { setQuestionExpanded(consultation.conId === questionexpanded ? null : consultation.conId) }} className={`mt-2 text-gray-600 dark:text-gray-300 w-full! ${consultation.conId === questionexpanded ? 'whitespace-pre-wrap break-all' : 'truncate cursor-pointer'}`}>
                                         {consultation.message}
                                     </p>
                                 </div>
@@ -124,7 +161,7 @@ export default function ReplyConsultation() {
                                             Doctor Reply
                                         </p>
 
-                                        <p className="text-green-800 mt-1">
+                                        <p onClick={() => { setReplyExpanded(consultation.conId === replyExpanded ? null : consultation.conId) }} className={`text-green-800 mt-1 w-full! ${consultation.conId === replyExpanded ? 'whitespace-pre-wrap break-all' : 'truncate cursor-pointer'}`}>
                                             {consultation.reply}
                                         </p>
                                     </div>
