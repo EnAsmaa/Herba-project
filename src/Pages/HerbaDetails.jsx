@@ -32,11 +32,9 @@ export default function HerbaDetails() {
   // add to cart
   const addToCart = async () => {
     const response = await sendAddToCart(id);
-    console.log(response);
-
-    // if (response.success) {
-    //   console.log(response.data);
-    // }
+    if (response && response.success) {
+      navigate("/cart");
+    }
   };
 
   useEffect(() => {
@@ -119,7 +117,6 @@ export default function HerbaDetails() {
                   // to={"/cart"}
                   onClick={() => {
                     addToCart();
-                    navigate('/cart')
                   }}
                   className="rounded-lg text-white bg-green-800 dark:bg-green-600 p-4 py-2 cursor-pointer"
                 >

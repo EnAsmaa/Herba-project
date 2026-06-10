@@ -97,12 +97,12 @@ export default function Herbas() {
     <section className="container mx-auto px-4 lg:px-10 py-10">
 
       {/* HEADER */}
-      <div className="text-center py-5">
+      <div className=" py-5">
         <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
           Discover Natural Herbs 🌿
         </h1>
 
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
+        <p className="text-base text-gray-500 dark:text-gray-400 mb-5">
           Explore natural herbs & organic healing products
         </p>
 

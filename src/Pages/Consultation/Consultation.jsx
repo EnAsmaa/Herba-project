@@ -44,15 +44,15 @@ export default function Consultation() {
         <div className="container px-4 lg:px-7 mx-auto">
           <div className="flex justify-between items-center">
             <div className="consult-head my-3 mb-5">
-              <h2 className="mb-1 font-bold text-4xl dark:text-[#E9EDEF]">
+              <h2 className="mb-1 font-bold text-4xl text-green-700 dark:text-green-400">
                 Mental Health Consultaion
               </h2>
               <p className="text-base text-[#333333] dark:text-[#C5CFD6]">
                 Book your session with the best certified consultants
               </p>
             </div>
-            <NavLink to={'/my-consultation'} className="px-4 py-2 bg-green-950/60 w-fit text-white rounded-lg cursor-pointer flex gap-3 items-center">My Questions
-              <div className="size-2 rounded-full bg-green-900 animate-ping"></div>
+            <NavLink to={'/my-consultation'} className="px-4 py-2 bg-green-950/80 w-fit text-white rounded-lg cursor-pointer flex gap-3 items-center">My Questions
+              <div className="size-2 rounded-full bg-green-100 animate-ping"></div>
             </NavLink>
           </div>
           {/* search */}
