@@ -9,14 +9,15 @@ import { ImCheckboxChecked } from "react-icons/im";
 import { IoIosWarning } from "react-icons/io";
 import herbImage from "../assets/Dashboard_835_Herbs_9_23.jpeg";
 import { sendAddToCart } from "../Services/CartServices";
+import { HerbasContext } from "../Context/HerbasContext";
 
 export default function HerbaDetails() {
   const { id } = useParams();
   const [herb, setHerb] = useState(null);
-  const [filteredHerbs, setFilteredHerbs] = useState();
+  const { herbas } = useContext(HerbasContext);
   const navigate = useNavigate();
 
-
+  // get herb
   const getHerbDetails = async () => {
     const response = await getHerbId(id);
     if (response.success) {
@@ -24,34 +25,27 @@ export default function HerbaDetails() {
     }
   };
 
-  const getHerbs = async () => {
-    const herbs = await getAllHerbas();
-    if (herbs && herbs.length > 0) {
-      setFilteredHerbs(herbs?.filter(
-        (item) => item.categoryName === herb?.categoryName)
-      );
-      console.log(filteredHerbs)
-    }
-  };
+  const filteredHerbs = herbas?.filter(
+    (item) => item.categoryName === herb?.categoryName,
+  );
 
-  useEffect(() => { getHerbs() }, [])
+  // add to cart
+  const addToCart = async () => {
+    const response = await sendAddToCart(id);
+    console.log(response);
+
+    // if (response.success) {
+    //   console.log(response.data);
+    // }
+  };
 
   useEffect(() => {
     getHerbDetails();
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   }, [id]);
-
-  // add to cart
-  const addToCart = async () => {
-    const response = await sendAddToCart(id, 1);
-    if (response.success) {
-      console.log(response.data)
-    }
-  };
-
 
   return (
     <>
@@ -62,13 +56,12 @@ export default function HerbaDetails() {
       ) : (
         <section className="my-5 py-5 px-4 lg:px-7 container mx-auto">
           <div className="w-4/5 mx-auto sm:w-full flex flex-col lg:flex-row gap-10 ">
-            {/* images  */}
-            <div className="herba-image w-full flex gap-1">
-              <div className="rounded-lg shadow shadow-gray-500">
+            <div className="herba-image w-full max-w-[500px]">
+              <div className="aspect-square overflow-hidden rounded-lg shadow shadow-gray-500">
                 <img
                   src={herb?.imageLink}
-                  className="h-full w-full object-cover rounded-lg"
-                  alt="herb.description"
+                  alt={herb?.description}
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -122,7 +115,14 @@ export default function HerbaDetails() {
                 </div>
               </div>
               <div className="w-fit my-4">
-                <Link to={'/cart'} onClick={() => { addToCart() }} className="rounded-lg text-white bg-green-800 dark:bg-green-600 p-4 py-2 cursor-pointer">
+                <Link
+                  // to={"/cart"}
+                  onClick={() => {
+                    addToCart();
+                    navigate('/cart')
+                  }}
+                  className="rounded-lg text-white bg-green-800 dark:bg-green-600 p-4 py-2 cursor-pointer"
+                >
                   Add To Cart
                 </Link>
               </div>

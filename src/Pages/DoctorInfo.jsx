@@ -29,7 +29,7 @@ export default function DoctorInfo() {
                   className="w-full"
                   classNames={{
                     trigger:
-                      "dark:bg-transparent  border border-gray-400 data-[focus=true]:border-green-500   hover:bg-transparent data-[hover=true]:bg-transparent data-[focus=true]:bg-transparent",
+                      "dark:bg-transparent  data-[focus=true]:border-green-500   hover:bg-transparent data-[hover=true]:bg-transparent data-[focus=true]:bg-transparent",
                     value: "text-gray-900",
                     label: "text-gray-500",
                   }}
@@ -46,7 +46,7 @@ export default function DoctorInfo() {
                   Years of Experiance
                 </label>
                 <NumberInput
-                  className="border border-gray-400  rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-green-500"
+                  className=" rounded-lg  py-2 focus:outline-none focus:ring focus:ring-green-500"
                   label="Enter Years of Experiance"
                 />
               </div>
@@ -74,7 +74,7 @@ export default function DoctorInfo() {
                   Available Hours
                 </label>
                 <Input
-                  className="w-full"
+                  className="w-full  space-y-10"
                   placeholder="EX: 9AM - 5PM"
                   type="text"
                 />

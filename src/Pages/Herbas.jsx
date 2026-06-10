@@ -6,6 +6,7 @@ import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { DeleteFavHerb, getAllCategory, getAllHerbas, getFavHerbas, PostFavHerbas } from "../Services/Herb";
 import axios from "axios";
+import { HerbasContext } from "../Context/HerbasContext";
 
 
 export default function Herbas() {
@@ -18,14 +19,8 @@ export default function Herbas() {
 
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [herbs, setHerbs] = useState([]);
+  const {herbas}= useContext(HerbasContext);
 
-  // get cats
-  const getHerbs = async () => {
-    const response = await getAllHerbas();
-    console.log(response)
-    setHerbs(response);
-  };
 
   // get cats
   const getCategories = async () => {
@@ -43,7 +38,6 @@ export default function Herbas() {
 
   useEffect(() => {
     getFav()
-    getHerbs()
     getCategories();
   }, [])
 
@@ -66,8 +60,8 @@ export default function Herbas() {
   // FILTER
   const filteredHerbas =
     activeCat === 0
-      ? herbs
-      : herbs.filter((herb) => herb.categoryId === activeCat);
+      ? herbas
+      : herbas.filter((herb) => herb.categoryId === activeCat);
 
   // PAGINATION
   const totalPages = Math.ceil(filteredHerbas?.length / itemsPerPage);
@@ -227,7 +221,7 @@ export default function Herbas() {
             {/* Prev */}
             <button
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20"
+              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20 cursor-pointer"
             >
               Prev
             </button>
@@ -241,7 +235,7 @@ export default function Herbas() {
                   <button
                     key={p}
                     onClick={() => setCurrentPage(p)}
-                    className={`w-8 h-8 rounded-full text-sm transition
+                    className={`w-8 h-8 rounded-full text-sm transition cursor-pointer
                       ${currentPage === p
                         ? "bg-green-700 text-white shadow-md scale-110"
                         : "hover:bg-green-700/20"
@@ -254,7 +248,7 @@ export default function Herbas() {
 
               const addDots = (key) => {
                 pages.push(
-                  <span key={key} className="px-2 text-gray-400">
+                  <span key={key} className="px-2 text-gray-400 cursor-pointer">
                     ...
                   </span>
                 );
@@ -284,7 +278,7 @@ export default function Herbas() {
               onClick={() =>
                 setCurrentPage((p) => Math.min(p + 1, totalPages))
               }
-              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20"
+              className="px-3 py-1 text-sm rounded-full cursor-pointer hover:bg-green-700/20"
             >
               Next
             </button>
