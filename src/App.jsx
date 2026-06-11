@@ -13,13 +13,11 @@ import NotFound from './Pages/NotFound';
 import Market from './Pages/Market';
 import Consultation from './Pages/Consultation/Consultation';
 import AiTools from './components/AiTools';
-// import Settings from './Pages/Settings';
 import PrivacyPage from "./Pages/PrivacyPage";
 import HelpSupport from "./Pages/HelpSupport";
 import Notification from "./Pages/Notification";
 import PremiumPage from "./Pages/PremiumPage";
 import FavoritePage from "./components/FavoritePage";
-import DoctorInfo from "./Pages/DoctorInfo"
 import IdealWeightCalc from "./Pages/IdealWeightCalc"
 import ImageAnalysis from "./Pages/ImageAnalysis"
 import UserDashboard from "./Pages/UserDashboard"
@@ -59,7 +57,6 @@ function App() {
       { path: 'premium', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><PremiumPage /></ProtectedRoot> },
       { path: 'notification', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><Notification /></ProtectedRoot> },
       { path: 'favorites', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><FavoritePage /></ProtectedRoot> },
-      { path: 'doctorinfo', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><DoctorInfo /></ProtectedRoot> },
       { path: 'weight-calc', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><IdealWeightCalc /></ProtectedRoot> },
       { path: 'image-analysis', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><ImageAnalysis /></ProtectedRoot> },
       { path: 'user-dashboard', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><UserDashboard /></ProtectedRoot> },

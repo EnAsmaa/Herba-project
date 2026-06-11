@@ -27,22 +27,3 @@ export const registerRequest = async (userData) => {
   }
 };
 
-
-// get profile data
-export const getProfileDataAPI = async () => {
-  const token = localStorage.getItem("loginToken");
-  try {
-    const { data } = await axios.get(
-      "http://herbs.runasp.net/api/User/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return data;
-
-  } catch (err) {
-    return err.response.data;
-  }
-};
