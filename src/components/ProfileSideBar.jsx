@@ -28,16 +28,7 @@ export default function ProfileSideBar(props) {
     setProfileToggle(false);
   };
 
-  // const getProfileData = async () => {
-  //   const response = await getProfileDataAPI()
-  //   if (response.success) {
-  //     setUserData(response.data)
-  //   }
-  // }
 
-  // useEffect(() => {
-  //   getProfileData()
-  // }, [])
 
   return (
     <>

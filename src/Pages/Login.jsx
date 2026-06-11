@@ -10,6 +10,7 @@ import { loginRequest } from "../Services/Authentication";
 import { AuthContext } from "../Context/AuthContext";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
+import { getProfileDataAPI } from "../Services/UserProfile";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ export default function Login() {
       setIslogin(true);
       const role = response.userType === 0 ? 'user' : 'doctor'
       localStorage.setItem('role', role);
-      setRole(role)
+      setRole(role);
+      // await getProfileDataAPI();
       navigate("/");
     }
     else {
