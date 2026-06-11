@@ -31,6 +31,7 @@ import ProtectedRoot from "./components/ProtectedRoot";
 import AskConsultation from "./Pages/Consultation/AskConsultation";
 import MyConsultations from "./Pages/Consultation/MyConsultations";
 import Cart from "./components/Cart";
+import OrderSuccess from "./Pages/OrderSuccess";
 function App() {
   const { i18n } = useTranslation();
 
@@ -66,7 +67,7 @@ function App() {
       { path: 'ask-consultation/:id', element: <ProtectedRoot allowedRoles={['user']}><AskConsultation /></ProtectedRoot> },
       { path: 'reply-consultation', element: <ProtectedRoot allowedRoles={['doctor']}><ReplyConsultation /></ProtectedRoot> },
       { path: 'my-consultation', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><MyConsultations /></ProtectedRoot> },
-
+      { path: 'order-success', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><OrderSuccess /></ProtectedRoot> },
 
       { path: '*', element: <NotFound /> },
     ]
