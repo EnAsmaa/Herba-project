@@ -1,15 +1,20 @@
 // ProfileSettings.jsx
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input, SelectItem, Select,Button } from "@heroui/react";
 import axios from "axios";
-import { updateUserData } from "../Services/UserProfile";
+import { getProfileDataAPI, updateUserData } from "../Services/UserProfile";
 import { profileSchema } from "../Schema/UserProfileSchema";
-import { getProfileDataAPI } from "../Services/Authentication";
+import { UserContext } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Profile() {
   const [isloading, setIsLoading] = useState(false);
+  const {setUserProfileData}= useContext(UserContext);
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -36,8 +41,10 @@ export default function Profile() {
       birthDate: new Date(userData.birthDate).toISOString(),
     };
     const res = await updateUserData(formattedData);
+    setIsLoading(false);
     const getuserData = await getProfileDataAPI();
-    console.log(getuserData);
+    setUserProfileData(getuserData.data);
+    navigate('/');
     
   };
 

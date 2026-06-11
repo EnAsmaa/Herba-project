@@ -10,15 +10,14 @@ import profile from "../assets/profile.jpg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { AuthContext } from "../Context/AuthContext";
-import { getProfileDataAPI } from './../Services/Authentication';
+import { UserContext } from "../Context/UserContext";
 
 export default function ProfileSideBar(props) {
   const navigate = useNavigate();
   const { profileToggle, setProfileToggle } = props;
   const { setIslogin } = useContext(AuthContext);
   const { setRole } = useContext(AuthContext);
-  const [userData, setUserData] = useState()
-
+  const {userProfileData,setuserProfileData}=useContext(UserContext);
 
   const logOut = () => {
     localStorage.removeItem("loginToken");
@@ -29,16 +28,16 @@ export default function ProfileSideBar(props) {
     setProfileToggle(false);
   };
 
-  const getProfileData = async () => {
-    const response = await getProfileDataAPI()
-    if (response.success) {
-      setUserData(response.data)
-    }
-  }
+  // const getProfileData = async () => {
+  //   const response = await getProfileDataAPI()
+  //   if (response.success) {
+  //     setUserData(response.data)
+  //   }
+  // }
 
-  useEffect(() => {
-    getProfileData()
-  }, [])
+  // useEffect(() => {
+  //   getProfileData()
+  // }, [])
 
   return (
     <>
@@ -61,11 +60,11 @@ export default function ProfileSideBar(props) {
         </div>
         <div className="content w-75 p-5 m-2 flex items-center gap-5 shadow bg-white rounded-xl">
           <div className="aspect-square w-15 rounded-full bg-green-900 flex items-center justify-center text-white font-semibold ">
-              {userData?.firstName.charAt(0).toUpperCase() + userData?.lastName.charAt(0).toUpperCase()}
+              {userProfileData?.firstName.charAt(0).toUpperCase() + userProfileData?.lastName.charAt(0).toUpperCase()}
           </div>
           <div className="user-info">
-            <p className="text-black whitespace-nowrap">{userData?.firstName.toUpperCase() + ' ' + userData?.lastName.toUpperCase()}</p>
-            <p className="text-gray-500 text-sm">{userData?.email}</p>
+            <p className="text-black whitespace-nowrap">{userProfileData?.firstName.toUpperCase() + ' ' + userProfileData?.lastName.toUpperCase()}</p>
+            <p className="text-gray-500 text-sm">{userProfileData?.email}</p>
           </div>
           <NavLink
             className=" text-green-800 py-2 rounded-lg cursor-pointer duration-300"
