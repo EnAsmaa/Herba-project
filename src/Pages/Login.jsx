@@ -11,6 +11,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { getProfileDataAPI } from "../Services/UserProfile";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function Login() {
       const role = response.userType === 0 ? 'user' : 'doctor'
       localStorage.setItem('role', role);
       setRole(role);
-      // await getProfileDataAPI();
+      toast.success("Login Successfully")
       navigate("/");
     }
     else {

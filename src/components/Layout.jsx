@@ -78,7 +78,7 @@ export default function Layout() {
           }}
         ></div>
       )}
-      <div className="bg-[#F7F7F7] dark:bg-[#111B21] text-black dark:text-[#C5CFD6] ">
+      <div className=" bg-[#F0F2F1] dark:bg-[#111B21] text-black dark:text-[#C5CFD6] ">
         <NavbarComponent
           toggleTheme={toggleTheme}
           theme={theme}

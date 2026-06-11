@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -6,7 +6,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import ProgressStates from "./ProgressStates";
 import MostUsedHerbasStates from "./MostUsedHerbasStates";
-import QuizessStates from "./QuizessStates";
+import QuizessStates from "./QuizessStates"; // الـ Dashboard بالعمودين
+import QuizPlay from "./AnswerQuize"; // مكون حل الأسئلة
+import { getMyQuizResults } from "../Services/QuizeServices";
 
 const ActivityPage = () => {
   // State to handle which tab is active
@@ -14,6 +16,42 @@ const ActivityPage = () => {
   // State to handle drilling down into a specific exercise
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [value, setValue] = useState(dayjs());
+
+  // المتغير الخاص بتتبع الكويز النشط بداخل الـ Tab
+  const [activeQuizId, setActiveQuizId] = useState(null);
+
+  // --- التعديل الذهبي: تخزين مصفوفة النتائج الكاملة بدلاً من مجرد رقم ---
+  const [completedQuizzesList, setCompletedQuizzesList] = useState([]); 
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  // دالة جلب بيانات الكويزات المكتملة من الـ API
+  const fetchQuizStats = async () => {
+    try {
+      const res = await getMyQuizResults();
+      // التحقق من أن الاستجابة تحتوي على المصفوفة مباشرة في res.data
+      if (res?.data && Array.isArray(res.data)) {
+        // حفظ المصفوفة الكاملة لاستخدامها في الـ Sidebar والتعطيل معاً
+        setCompletedQuizzesList(res.data);
+                console.log(res);
+
+      }
+    } catch (err) {
+      console.error("Failed to fetch quiz statistics from API:", err);
+    } finally {
+      setLoadingStats(false);
+    }
+  };
+
+  // جلب البيانات تلقائياً بمجرد فتح الصفحة
+  useEffect(() => {
+    fetchQuizStats();
+  }, []);
+
+  // دالة تُنفذ عند إنهاء الكويز أو الضغط على خروج لتحديث العداد فوراً في الـ Sidebar
+  const handleQuizStatsUpdate = () => {
+    setActiveQuizId(null);
+    fetchQuizStats(); // إعادة استدعاء الـ API لتحديث الرقم تلقائياً
+  };
 
   // Mock data based on your screens
   const exercises = [
@@ -36,34 +74,44 @@ const ActivityPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F0F2F1] p-6 lg:p-10 font-sans text-slate-800">
+    <div className="min-h-screen p-6 lg:p-10 font-sans text-slate-800">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
         {/* LEFT SIDEBAR: General Stats & Calendar */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-[#4E7355] font-bold text-xl mb-6">
+          <div className="bg-white dark:bg-green-900/10 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-green-900/30">
+            <h2 className="text-[#4E7355] dark:text-[#64bb74] font-bold text-xl mb-6">
               General Info
             </h2>
-            <div className="space-y-4 text-gray-500 text-sm">
+            <div className="space-y-4 text-gray-500 dark:text-gray-200 text-sm">
               <div className="flex justify-between items-center">
                 <span>New Herbas</span>
-                <span className="font-bold text-[#4E7355]">12</span>
+                <span className="font-bold text-[#4E7355] dark:text-[#76db89]">12</span>
               </div>
+              
+              {/* تحديث خانة الـ Sidebar لتقرأ طول مصفوفة الكويزات المكتملة حياً */}
               <div className="flex justify-between items-center">
                 <span>Quizzes Completed</span>
-                <span className="font-bold text-[#4E7355]">192</span>
+                <span className="font-bold text-[#4E7355] dark:text-[#76db89]">
+                  {loadingStats ? (
+                    <span className="inline-block w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></span>
+                  ) : (
+                    completedQuizzesList.length
+                  )}
+                </span>
               </div>
+              
               <div className="flex justify-between items-center">
                 <span>Exercises Completed</span>
-                <span className="font-bold text-[#4E7355]">192</span>
+                <span className="font-bold text-[#4E7355] dark:text-[#76db89]">192</span>
               </div>
               <div className="flex justify-between items-center">
                 <span>Assigned Tasks Completed</span>
-                <span className="font-bold text-[#4E7355]">192</span>
+                <span className="font-bold text-[#4E7355] dark:text-[#76db89]">192</span>
               </div>
               <div className="flex justify-between items-center">
                 <span>Growth Rate:</span>
-                <span className="font-bold text-[#4E7355]">+18%</span>
+                <span className="font-bold text-[#4E7355] dark:text-[#76db89]">+18%</span>
               </div>
               <div className="flex justify-between items-center border-t pt-4">
                 <span>Points Earned</span>
@@ -72,27 +120,7 @@ const ActivityPage = () => {
             </div>
           </div>
 
-          {/* Calendar Widget */}
-          {/* <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <h3 className="font-bold mb-4 text-sm">February 2026</h3>
-            <div className="grid grid-cols-7 gap-1 text-center text-[10px] text-gray-400">
-              {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-                <div key={d} className="font-bold">
-                  {d}
-                </div>
-              ))}
-              {[...Array(28)].map((_, i) => (
-                <div
-                  key={i}
-                  className={`p-1 rounded-full cursor-pointer hover:bg-emerald-50 ${i + 1 === 4 ? "bg-[#4E7355] text-white" : ""}`}
-                >
-                  {i + 1}
-                </div>
-              ))}
-            </div>
-          </div> */}
-
-          <div className="w-full bg-white dark:bg-gray-200 text-black rounded-xl">
+          <div className="w-full bg-white dark:bg-green-900/10 text-black border-gray-100 dark:text-gray-200 rounded-xl border dark:border-green-900/30">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DateCalendar", "DateCalendar"]}>
                 <DemoItem>
@@ -120,7 +148,8 @@ const ActivityPage = () => {
         </div>
 
         {/* MAIN PANEL: Content Switcher */}
-        <div className="lg:col-span-9 bg-white rounded-xl p-8 shadow-sm border border-gray-100 min-h-[600px]">
+        <div className="lg:col-span-9 bg-white dark:bg-green-900/10 dark:border-green-900/30 rounded-xl p-8 shadow-sm border border-gray-100 min-h-[600px]">
+          
           {/* Dashboard Navigation Tabs */}
           <div className="flex flex-wrap gap-4 mb-10 border-b pb-6">
             {[
@@ -133,12 +162,13 @@ const ActivityPage = () => {
                 key={tab}
                 onClick={() => {
                   setActiveTab(tab);
-                  setSelectedExercise(null); // Reset drill-down if switching tabs
+                  setSelectedExercise(null); 
+                  setActiveQuizId(null);
                 }}
                 className={`px-6 py-2 cursor-pointer rounded-xl font-semibold transition-all ${
                   activeTab === tab
-                    ? "bg-[#4E7355] text-white shadow-lg translate-y-[-2px]"
-                    : "bg-[#F3F5F4] text-gray-400 hover:bg-gray-200"
+                    ? "bg-[#4E7355] text-white dark:bg-[#64bb74] shadow-lg translate-y-[-2px]"
+                    : "bg-[#F3F5F4] text-gray-400 dark:bg-gray-700/50 dark:text-white hover:bg-gray-200"
                 }`}
               >
                 {tab}
@@ -151,7 +181,7 @@ const ActivityPage = () => {
             {activeTab === "Weekly Progress" && (
               <div className="flex flex-col items-center justify-center py-16 animate-in fade-in slide-in-from-bottom-4">
                 <ProgressStates />
-                <h4 className="text-xl font-bold text-slate-700">
+                <h4 className="text-xl font-bold text-slate-700 mt-4">
                   Great job! Keep up the good work.
                 </h4>
               </div>
@@ -236,8 +266,7 @@ const ActivityPage = () => {
                         Start in Mountain Pose (Tadasana)
                       </h5>
                       <p className="text-gray-500 leading-relaxed mb-8">
-                        Hold for 1 minute while focusing on deep, rhythmic
-                        breathing.
+                        Hold for 1 minute while focusing on deep, rhythmic breathing.
                       </p>
                       <button className="w-full cursor-pointer bg-[#4E7355] text-white py-3 mt-3 rounded-xl font-bold shadow-lg hover:shadow-emerald-200 transition-all">
                         Complete Step
@@ -248,10 +277,25 @@ const ActivityPage = () => {
               </div>
             )}
 
-            {activeTab === "Quizzes" &&<QuizessStates/> }
-            {(activeTab === "Most Used Herbas")&& <MostUsedHerbasStates />}
+            {activeTab === "Quizzes" && (
+              activeQuizId ? (
+                <QuizPlay 
+                  quizId={activeQuizId} 
+                  onExit={handleQuizStatsUpdate} 
+                />
+              ) : (
+                /* تمرير المصفوفة الحية لتعطيل الكويزات المكتملة داخل المكون */
+                <QuizessStates 
+                  onStartQuiz={(id) => setActiveQuizId(id)} 
+                  completedQuizzes={completedQuizzesList} 
+                />
+              )
+            )}
+
+            {activeTab === "Most Used Herbas" && <MostUsedHerbasStates />}
           </div>
         </div>
+
       </div>
     </div>
   );

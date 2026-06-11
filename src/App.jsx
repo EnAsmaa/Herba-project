@@ -21,7 +21,6 @@ import PremiumPage from "./Pages/PremiumPage";
 import FavoritePage from "./components/FavoritePage";
 import IdealWeightCalc from "./Pages/IdealWeightCalc"
 import ImageAnalysis from "./Pages/ImageAnalysis"
-import UserDashboard from "./Pages/UserDashboard"
 import NutritionCalculator from "./Pages/NutritionCalculator"
 import ConsultationDetails from "./Pages/Consultation/AskConsultation";
 import ReplyConsultation from "./Pages/Consultation/ReplyConsultation";
@@ -31,6 +30,7 @@ import AskConsultation from "./Pages/Consultation/AskConsultation";
 import MyConsultations from "./Pages/Consultation/MyConsultations";
 import Cart from "./components/Cart";
 import OrderSuccess from "./Pages/OrderSuccess";
+import QuizPlay from "./components/AnswerQuize"
 function App() {
   const { i18n } = useTranslation();
 
@@ -60,7 +60,6 @@ function App() {
       { path: 'favorites', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><FavoritePage /></ProtectedRoot> },
       { path: 'weight-calc', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><IdealWeightCalc /></ProtectedRoot> },
       { path: 'image-analysis', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><ImageAnalysis /></ProtectedRoot> },
-      { path: 'user-dashboard', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><UserDashboard /></ProtectedRoot> },
       { path: 'nutrition', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><NutritionCalculator /></ProtectedRoot> },
       { path: 'ask-consultation/:id', element: <ProtectedRoot allowedRoles={['user']}><AskConsultation /></ProtectedRoot> },
       { path: 'reply-consultation', element: <ProtectedRoot allowedRoles={['doctor']}><ReplyConsultation /></ProtectedRoot> },

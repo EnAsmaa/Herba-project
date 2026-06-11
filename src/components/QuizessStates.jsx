@@ -1,136 +1,113 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { MdOutlineAssignment } from "react-icons/md"; 
+import { getAllQuizes } from "../Services/QuizeServices";
 
-const ActivityPage = () => {
-  const [activeTab, setActiveTab] = useState('Quizzes');
-  const [quizView, setQuizView] = useState('list'); // 'list' or 'active'
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
+export default function QuizessStates({ onStartQuiz, completedQuizzes = [] }) {
+  const [quizes, setQuizes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Quiz Data based on your uploaded screens
-  const quizzes = [
-    {
-      id: 1,
-      title: "Beginner's Herbal Guide",
-      description: "Learn the basics of medicinal herbs",
-      questionsCount: 10,
-      level: "Easy",
-      image: "https://images.unsplash.com/photo-1515446134809-993c501ca304?q=80&w=200",
-      questions: [
-        {
-          q: "Which herb is known for improving sleep quality?",
-          options: ["Ginger", "Lavender", "Basil", "Thyme"],
-          correct: "Lavender"
-        }
-      ]
-    }
-  ];
-
-  const handleStartQuiz = () => {
-    setQuizView('active');
-    setCurrentQuestion(0);
-    setScore(0);
-  };
-
-  const handleAnswer = (option) => {
-    if (option === quizzes[0].questions[currentQuestion].correct) {
-      setScore(score + 1);
-    }
-    
-    if (currentQuestion < quizzes[0].questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      alert(`Quiz Complete! You scored ${score + 1}/${quizzes[0].questions.length}`);
-      setQuizView('list');
+  // جلب الكويزات المتاحة من الـ API
+  const getQuizes = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllQuizes();
+      if (res && res.success) {
+        setQuizes(res.data || []);
+        
+      }
+    } catch (err) {
+      console.error("Failed to load quizzes:", err);
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getQuizes();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-center py-12 text-gray-400 dark:text-gray-200 font-medium animate-pulse">
+        Loading available quizzes...
+      </div>
+    );
+  }
 
   return (
-    <div className="p-8 ">
+    <div className="space-y-4">
+      <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-2">Available Quizzes</h3>
+      
+      {quizes.length === 0 ? (
+        <div className="text-center py-10 text-gray-400 dark:text-gray-200 border-2 border-dashed border-gray-200 rounded-2xl">
+          No quizzes available at the moment.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {quizes.map((quiz) => {
+            // الفحص الذهبي: التحقق إذا كان الـ quizId الخاص بهذا الكارت موجود في قائمة المكتملين
+            const isCompleted = completedQuizzes.some(
+              (cq) => cq.quizId === quiz.quizId || cq.quizId == quiz.quizId
+            );
 
-      {/* QUIZ LIST VIEW */}
-      {activeTab === 'Quizzes' && quizView === 'list' && (
-        <div className="space-y-8 animate-in fade-in">
-          {/* Header Stats */}
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-[#F3F5F4] p-6 rounded-xl text-center border border-gray-100">
-              <span className="block text-2xl font-black text-[#4E7355]">8</span>
-              <span className="text-gray-400 text-xs font-bold uppercase">Completed</span>
-            </div>
-            <div className="bg-[#F3F5F4] p-6 rounded-xl text-center border border-gray-100">
-              <span className="block text-2xl font-black text-[#4E7355]">85%</span>
-              <span className="text-gray-400 text-xs font-bold uppercase">Avg Score</span>
-            </div>
-          </div>
-
-          <h3 className="text-xl font-bold text-slate-700">Available Quizzes</h3>
-          
-          {/* Quiz Cards */}
-          {quizzes.map(quiz => (
-            <div key={quiz.id} className="bg-white border-2 border-gray-50 rounded-xl p-6 flex items-center justify-between shadow-md transition-shadow">
-              <div className="flex items-center gap-6">
-                <img src={quiz.image} className="w-20 h-20 rounded-2xl object-cover" alt="Quiz thumb" />
-                <div>
-                  <h4 className="font-bold text-lg">{quiz.title}</h4>
-                  <p className="text-gray-400 text-sm mb-2">{quiz.description}</p>
-                  <div className="flex gap-2">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">{quiz.questionsCount} Questions</span>
-                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 rounded-md uppercase">{quiz.level}</span>
+            return (
+              <div 
+                key={quiz.quizId} 
+                className={`p-5 rounded-2xl border flex flex-col justify-between gap-4 shadow-sm transition-all duration-200 ${
+                  isCompleted 
+                    ? "bg-gray-50/70 dark:bg-zinc-800/20 border-gray-200 dark:border-zinc-800 opacity-75" 
+                    : "bg-white dark:bg-gray-800/10 border-gray-100 dark:border-gray-700 hover:shadow-md"
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 ${
+                    isCompleted 
+                      ? "bg-gray-200 text-gray-400 dark:bg-zinc-700/50 dark:text-zinc-500" 
+                      : "bg-[#E8EFEA] dark:bg-gray-600/30 text-[#4E7355] dark:text-[#64bb74]"
+                  }`}>
+                    <MdOutlineAssignment />
+                  </div>
+                  
+                  <div className="space-y-2 flex-1">
+                    <h4 className={`font-bold text-base capitalize tracking-wide line-clamp-1 ${
+                      isCompleted ? "text-gray-450 dark:text-gray-500 line-through" : "text-gray-880 dark:text-gray-200"
+                    }`}>
+                      {quiz.title}
+                    </h4>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <span className="bg-gray-100 dark:bg-gray-600/30 dark:text-gray-50 text-gray-600 px-3 py-0.5 rounded-full text-xs font-medium">
+                        {quiz.questions?.length || 0} Questions
+                      </span>
+                      <span className={`px-3 py-0.5 rounded-full text-xs font-semibold ${
+                        isCompleted 
+                          ? "bg-gray-200/60 text-gray-500 dark:bg-zinc-700/40 dark:text-zinc-400" 
+                          : "bg-emerald-50 dark:bg-[#64bb744d] dark:text-emerald-50 text-[#4E7355]"
+                      }`}>
+                        {quiz.totalPoints} Points
+                      </span>
+                    </div>
                   </div>
                 </div>
+                
+                {/* قسم الزر السفلي مع التعطيل التلقائي والديناميكي */}
+                <div className="pt-2 border-t border-gray-55 dark:border-gray-700">
+                  <button 
+                    disabled={isCompleted} // تعطيل الضغط ومنع فتح الكويز نهائياً
+                    onClick={() => onStartQuiz(quiz.quizId)}
+                    className={`px-6 py-2.5 w-full rounded-xl font-semibold text-sm transition-all text-center block ${
+                      isCompleted
+                        ? "bg-gray-200 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed select-none"
+                        : "bg-[#4E7355] dark:bg-[#64bb74] text-white hover:bg-[#3d5a42] dark:hover:bg-[#52a362] cursor-pointer"
+                    }`}
+                  >
+                    {isCompleted ? "✓ Completed" : "Start Quiz"}
+                  </button>
+                </div>
               </div>
-              <button 
-                onClick={handleStartQuiz}
-                className="bg-[#4E7355] text-white px-10 py-3 cursor-pointer rounded-xl font-bold hover:bg-[#3d5a42] transition-colors"
-              >
-                Start Quiz
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ACTIVE QUIZ VIEW */}
-      {quizView === 'active' && (
-        <div className="max-w-3xl mx-auto animate-in slide-in-from-bottom-10">
-          <div className="flex justify-between items-center mb-12">
-            <button onClick={() => setQuizView('list')} className="text-gray-400 font-bold cursor-pointer">← Exit</button>
-            <div className="bg-emerald-50 text-[#4E7355] px-4 py-2 rounded-xl font-bold text-sm">
-              Question {currentQuestion + 1}/{quizzes[0].questions.length}
-            </div>
-          </div>
-
-          <div className="text-center space-y-12">
-            <h2 className="text-3xl font-black text-slate-800 leading-tight">
-              {quizzes[0].questions[currentQuestion].q}
-            </h2>
-
-            {/* Answer Options Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {quizzes[0].questions[currentQuestion].options.map(option => (
-                <button 
-                  key={option}
-                  onClick={() => handleAnswer(option)}
-                  className="w-full py-3 px-8 border-2 cursor-pointer border-gray-100 rounded-xl font-bold text-lg text-gray-600 hover:border-[#4E7355] hover:bg-emerald-50 hover:text-[#4E7355] transition-all active:scale-95"
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-
-            {/* Progress Bar */}
-            <div className="pt-8">
-              <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                <div 
-                  className="bg-[#84B38E] h-full transition-all duration-500" 
-                  style={{ width: `${((currentQuestion + 1) / quizzes[0].questions.length) * 100}%` }}
-                ></div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       )}
     </div>
   );
-};
-
-export default ActivityPage;
+}
