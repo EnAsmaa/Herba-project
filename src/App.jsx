@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Aos from "aos";
+import { Toaster } from "react-hot-toast";
 import Layout from './components/Layout';
 import Home from './Pages/Home';
 import Herbas from './Pages/Herbas';
@@ -72,6 +73,7 @@ function App() {
 
 
   return <>
+  <div><Toaster/></div> 
     <RouterProvider router={router}></RouterProvider>
   </>
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoPerson } from "react-icons/io5";
 import { getWeightBmi, postWeightCalc } from "../Services/IdealWeightCalc";
 import { Button } from "@heroui/react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function IdealWeightWeb() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,9 +31,7 @@ export default function IdealWeightWeb() {
     const a = parseInt(inputs.age);
 
     if (!h || h <= 0 || !w || w <= 0 || !a || a <= 0) {
-      return alert(
-        "Please enter valid positive numbers for height, weight, and age.",
-      );
+      return toast.error("Please enter valid positive numbers for height, weight, and age.")
     }
 
     setIsLoading(true);
@@ -49,7 +48,7 @@ export default function IdealWeightWeb() {
       setIdealData(res.data);
     }
     await getBmi(w, h);
-
+    toast.success("IdealWeight calculated successfully! 🎉");
     setIsLoading(false);
   };
 
