@@ -1,150 +1,174 @@
 // ProfileSettings.jsx
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Input, SelectItem, Select,Button } from "@heroui/react";
+import axios from "axios";
+import { updateUserData } from "../Services/UserProfile";
+import { profileSchema } from "../Schema/UserProfileSchema";
 
 export default function Profile() {
-  const [personal, setPersonal] = useState({
-    fullName: "",
-    username: "",
-    email: "",
-    bio: "",
+  const [isloading, setIsLoading] = useState(false);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, touchedFields },
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      birthDate: "",
+      gender: "male",
+      userType: "",
+      address: "",
+      idealWeight:0
+    },
+    resolver: zodResolver(profileSchema),
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
-  const [security, setSecurity] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-
+  const submit = async (userData) => {
+    setIsLoading(true);
+    const formattedData = {
+      ...userData,
+      birthDate: new Date(userData.birthDate).toISOString(),
+    };
+    const res = await updateUserData(formattedData);
+    console.log(res);
+    
+  };
 
 
   return (
-      <div className="min-h-screen">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-            Profile Settings
-          </h1>
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-8">
-            {/* Personal Info */}
-            <div className="bg-main border border-black/50 dark:border-white/50 rounded-lg p-6 shadow-lg shadow-black/5 dark:shadow-amber-50/5">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                Personal Information
-              </h3>
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={personal.fullName}
-                    placeholder="John Doe"
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
+    <div className="min-h-screen py-10 px-4">
+      <div className="sm:w-3/4 md:w-1/2  mx-auto">
+        <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
+          Profile Settings
+        </h1>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    name="username"
-                    value={personal.username}
-                    placeholder="johndoe"
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
+        <div className="bg-main border border-black/20 dark:border-white/20 rounded-xl p-8 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-center">
+            Personal Information
+          </h3>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={personal.email}
-                    placeholder="john@example.com"
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Bio
-                  </label>
-                  <textarea
-                    name="bio"
-                    rows="3"
-                    value={personal.bio}
-                    placeholder="Tell us about yourself..."
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-green-700 hover:bg-green-800 text-white dark:text-black rounded-lg font-semibold transition-colors"
-                >
-                  Save Personal Info
-                </button>
-              </form>
+          <form
+            onSubmit={handleSubmit(submit)}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {/* First Name */}
+            <div>
+              <label className="block mb-2 font-medium">First Name*</label>
+              <Input
+                type="text"
+                variant="bordered"
+                {...register("firstName")}
+                isInvalid={Boolean(errors.firstName) && touchedFields.firstName}
+                errorMessage={errors.firstName?.message}
+              />
             </div>
 
-            {/* Security */}
-            <div className="bg-main border border-black/50 dark:border-white/50 rounded-lg p-6 shadow-lg shadow-black/5 dark:shadow-amber-50/5">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                Security
-              </h3>
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Current Password
-                  </label>
-                  <input
-                    type="password"
-                    name="oldPassword"
-                    value={security.oldPassword}
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={security.newPassword}
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={security.confirmPassword}
-                    className="mt-1 block w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-main text-gray-900 dark:text-gray-100 focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-green-700 hover:bg-green-800 text-white dark:text-black rounded-lg font-semibold transition-colors"
-                >
-                  Update Password
-                </button>
-              </form>
+            {/* Last Name */}
+            <div>
+              <label className="block mb-2 font-medium">Last Name*</label>
+              <Input
+                type="text"
+                variant="bordered"
+                {...register("lastName")}
+                isInvalid={Boolean(errors.lastName) && touchedFields.lastName}
+                errorMessage={errors.lastName?.message}
+              />
             </div>
-          </div>
+
+            {/* Birth Date */}
+            <div>
+              <label className="block mb-2 font-medium">Birth Date*</label>
+              <Input
+                type="date"
+                variant="bordered"
+                {...register("birthDate")}
+                isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
+                errorMessage={errors.birthDate?.message}
+              />
+            </div>
+
+            {/* Address */}
+            <div className="flex flex-col">
+              <label className="block mb-2 font-medium">Address*</label>
+              <Input
+                type="text"
+                variant="bordered"
+                {...register("address")}
+                isInvalid={Boolean(errors.address) && touchedFields.address}
+                errorMessage={errors.address?.message}
+              />
+            </div>
+
+            {/* Gender */}
+            <div className="flex flex-col mt-3">
+              <Select
+                label="Gender*"
+                variant="bordered"
+                defaultSelectedKeys={["Male"]}
+                {...register("gender")}
+                isInvalid={Boolean(errors.gender)}
+                errorMessage={errors.gender?.message}
+              >
+                <SelectItem key="Male" textValue="Male">
+                  Male
+                </SelectItem>
+                <SelectItem key="Female" textValue="Female">
+                  Female
+                </SelectItem>
+              </Select>
+            </div>
+
+            {/* Account Type */}
+            <div className="flex flex-col mt-3">
+              <Select
+                label="Account Type*"
+                variant="bordered"
+                defaultSelectedKeys={["0"]}
+                {...register("userType")}
+                isInvalid={Boolean(errors.userType)}
+                errorMessage={errors.userType?.message}
+              >
+                <SelectItem key="1" textValue="Doctor">
+                  Doctor
+                </SelectItem>
+                <SelectItem key="0" textValue="User">
+                  User
+                </SelectItem>
+              </Select>
+            </div>
+
+            {/* IdealWeight */}
+            <div className="flex flex-col col-span-2">
+              <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
+                IdealWeight*
+              </label>
+              <Input
+                type="number"
+                variant="bordered"
+                className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
+                {...register("idealWeight")}
+                isInvalid={Boolean(errors.idealWeight) && touchedFields.idealWeight}
+                errorMessage={errors.idealWeight?.message}
+              />
+            </div>
+            {/* Save Button */}
+            <div className="md:col-span-2 flex flex-col md:flex-row items-start md:items-center gap-3 ">
+            <Button
+              type="submit"
+              className="bg-[#3a5543] dark:bg-[#26804a] hover:bg-green-800 text-white px-6 py-2 rounded-lg"
+              isLoading={isloading}
+            >
+              Save Info
+            </Button>
+            </div>
+          </form>
         </div>
       </div>
+    </div>
   );
 }

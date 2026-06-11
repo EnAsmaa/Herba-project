@@ -12,7 +12,7 @@ import { IoEyeOffOutline } from "react-icons/io5";
 export default function Register() {
   const [loading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
-  const [shownPasswrd, setShownPassword] = useState(false)
+  const [shownPasswrd, setShownPassword] = useState(false);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -40,16 +40,15 @@ export default function Register() {
     setIsLoading(true);
     const formattedData = {
       ...userData,
-      birthDate: userData.birthDate.toISOString(),
+      birthDate: new Date(userData.birthDate).toISOString(),
     };
 
     const response = await registerRequest(formattedData);
     console.log(response);
     if (response.isSuccess) {
-      navigate('/login');
-    }
-    else {
-      setApiError(response.message)
+      navigate("/login");
+    } else {
+      setApiError(response.message);
     }
     setIsLoading(false);
   };
@@ -113,12 +112,26 @@ export default function Register() {
           <div className="flex flex-col">
             <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
               Password*
-              {
-                shownPasswrd === true ? <IoEyeOffOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" /> : <IoEyeOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" />
-              }
+              {shownPasswrd === true ? (
+                <IoEyeOffOutline
+                  onClick={() => {
+                    setShownPassword(!shownPasswrd);
+                  }}
+                  size={20}
+                  className="absolute -bottom-9 end-4 cursor-pointer z-50"
+                />
+              ) : (
+                <IoEyeOutline
+                  onClick={() => {
+                    setShownPassword(!shownPasswrd);
+                  }}
+                  size={20}
+                  className="absolute -bottom-9 end-4 cursor-pointer z-50"
+                />
+              )}
             </label>
             <Input
-              type={shownPasswrd === true ? 'text' : 'password'}
+              type={shownPasswrd === true ? "text" : "password"}
               variant="bordered"
               className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
               {...register("password")}
