@@ -6,6 +6,7 @@ import { Input, SelectItem, Select,Button } from "@heroui/react";
 import axios from "axios";
 import { updateUserData } from "../Services/UserProfile";
 import { profileSchema } from "../Schema/UserProfileSchema";
+import { getProfileDataAPI } from "../Services/Authentication";
 
 export default function Profile() {
   const [isloading, setIsLoading] = useState(false);
@@ -35,7 +36,8 @@ export default function Profile() {
       birthDate: new Date(userData.birthDate).toISOString(),
     };
     const res = await updateUserData(formattedData);
-    console.log(res);
+    const getuserData = await getProfileDataAPI();
+    console.log(getuserData);
     
   };
 

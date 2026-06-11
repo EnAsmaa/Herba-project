@@ -20,12 +20,6 @@ export const profileSchema = zod.object({
     .string()
     .nonempty("Address is required")
     .min(5, "Address is too short"),
-
-  userType: zod.preprocess(
-    (val) => Number(val),
-    zod.number({ required_error: "UserType is required" }).min(0).max(1)
-  ),
-  idealWeight: zod.coerce
-    .number()
-    .positive("Weight must be greater than 0"),
+  idealWeight: zod.coerce.number().positive("Weight must be greater than 0"),
+  gender: zod.string().nonempty("Gender is required"),
 });
