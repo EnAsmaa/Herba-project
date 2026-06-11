@@ -1,51 +1,30 @@
 import React, { useState } from "react";
 import { IoPerson } from "react-icons/io5";
+import { postWeightCalc } from "../Services/IdealWeightCalc";
+import { Button } from "@heroui/react";
 
 export default function IdealWeightWeb() {
-
+  const [isLoading,setIsLoading]=useState(false);
+  const [idealData,setIdealData]=useState();
   const [inputs, setInputs] = useState({
-    gender: "Male",
-    height: "",
-    age: "",
-    weight: "",
+    gender: "",
+    height: 0,
+    age: 0,
+    currentWeight: 0,
   });
 
-  const [results, setResults] = useState(null);
-
-  // 2. CALCULATION LOGIC
-  const calculateMetrics = () => {
-    const { gender, height, age, weight } = inputs;
-
-    if (!height || !age) return alert("Please enter height and age");
-
-    const hCm = parseFloat(height);
-    const wKg = parseFloat(weight) || 0;
-    const ageY = parseFloat(age);
-
-    // --- Ideal Weight (Devine Formula) ---
-    const heightInches = hCm / 2.54;
-    const inchesOver5ft = Math.max(0, heightInches - 60);
-    const baseWeight = gender === "Male" ? 50 : 45.5;
-    const idealW = (baseWeight + 2.3 * inchesOver5ft).toFixed(1);
-
-    // --- Healthy Range (BMI 18.5 - 24.9) ---
-    const hMeters = hCm / 100;
-    const minW = (18.5 * (hMeters * hMeters)).toFixed(1);
-    const maxW = (24.9 * (hMeters * hMeters)).toFixed(1);
-
-    // --- BMI (Only if current weight is provided) ---
-    let bmi = null;
-    let status = "Enter weight to see BMI";
-    if (wKg > 0) {
-      bmi = (wKg / (hMeters * hMeters)).toFixed(1);
-      if (bmi < 18.5) status = "Underweight";
-      else if (bmi < 25) status = "Normal weight";
-      else if (bmi < 30) status = "Overweight";
-      else status = "Obese";
+  const idealWeightCalc=async()=>{
+    setIsLoading(true);
+    const res = await postWeightCalc(inputs);
+    if(res && res.success)
+    {
+      setIdealData(res.data);
+      setIsLoading(false);
     }
+    console.log(idealData);
+  }
 
-    setResults({ idealW, minW, maxW, bmi, status });
-  };
+  
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] p-6 lg:p-12 font-sans">
@@ -123,18 +102,19 @@ export default function IdealWeightWeb() {
               />
             </div>
 
-            <button
-              onClick={calculateMetrics}
+            <Button
+              isLoading={isLoading}
+              onClick={idealWeightCalc}
               className="w-full  bg-[#4E7355] text-white py-3 my-4 cursor-pointer rounded-xl font-bold text-lg hover:bg-[#3d5a42] transition-colors"
             >
               Calculate Ideal Weight
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* RIGHT COLUMN: RESULTS DASHBOARD (SCREENS 2 & 3) */}
         <div className="lg:col-span-8 space-y-6">
-          {results ? (
+          {idealData ? (
             <>
               {/* Top Result Card */}
               <div className="bg-gradient-to-r from-[#4E7355] to-[#79A683] p-10 rounded-xl text-white text-center shadow-lg">
@@ -144,7 +124,7 @@ export default function IdealWeightWeb() {
                 <p className="text-sm uppercase tracking-widest opacity-90">
                   Ideal Weight
                 </p>
-                <h2 className="text-6xl font-bold mt-2">{results.idealW}</h2>
+                <h2 className="text-6xl font-bold mt-2">{idealData.idealWeight}</h2>
               </div>
 
               {/* Range Cards - Exact Layout from Screen 2 */}
@@ -152,13 +132,13 @@ export default function IdealWeightWeb() {
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
                   <p className="text-gray-400 text-sm mb-2">Minimum</p>
                   <h3 className="text-3xl font-bold text-gray-800">
-                    {results.minW} kg
+                    {idealData.minW} kg
                   </h3>
                 </div>
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
                   <p className="text-gray-400 text-sm mb-2">Maximum</p>
                   <h3 className="text-3xl font-bold text-gray-800">
-                    {results.maxW} kg
+                    {idealData.maxW} kg
                   </h3>
                 </div>
               </div>
@@ -174,10 +154,10 @@ export default function IdealWeightWeb() {
                       <span className="text-gray-400 text-xs uppercase block">
                         Index
                       </span>
-                      <span className="font-bold">{results.bmi || "--"}</span>
+                      <span className="font-bold">{idealData.bmi || "--"}</span>
                     </div>
-                    <span className={`${results.status==='Normal weight'?'bg-[#D1F7D6]  text-[#4E7355]':results.status==='Obese'?'text-red-800 bg-red-600/20':results.status==='Underweight'?'bg-blue-200 text-blue-800':'text-yellow-700 bg-yellow-200'} px-4 py-1 rounded-full text-sm font-semibold`}>
-                      {results.status}
+                    <span className={`${idealData.status==='Normal weight'?'bg-[#D1F7D6]  text-[#4E7355]':idealData.status==='Obese'?'text-red-800 bg-red-600/20':idealData.status==='Underweight'?'bg-blue-200 text-blue-800':'text-yellow-700 bg-yellow-200'} px-4 py-1 rounded-full text-sm font-semibold`}>
+                      {idealData.weightStatus}
                     </span>
                   </div>
                 </div>
@@ -196,7 +176,7 @@ export default function IdealWeightWeb() {
             </div>
           )}
           {/* Recommendations from Screen 3 */}
-          {results ? (
+          {idealData ? (
             <>
               <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
                 <h4 className="font-bold text-gray-800 mb-6">
@@ -205,9 +185,9 @@ export default function IdealWeightWeb() {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-gray-600">
                     <span className="text-[#4E7355] mt-1">•</span>
-                    Follow a balanced diet rich in vegetables and fruits
+                        {idealData.recommendation}
                   </li>
-                  <li className="flex items-start gap-3 text-gray-600">
+                  {/* <li className="flex items-start gap-3 text-gray-600">
                     <span className="text-[#4E7355] mt-1">•</span>
                     Exercise regularly for 30 minutes daily
                   </li>
@@ -218,12 +198,13 @@ export default function IdealWeightWeb() {
                   <li className="flex items-start gap-3 text-gray-600">
                     <span className="text-[#4E7355] mt-1">•</span>
                     Consult a doctor or nutritionist for a personalized plan
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </>
           ) : null}
         </div>
+
       </div>
     </div>
   );
