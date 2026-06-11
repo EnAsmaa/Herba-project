@@ -9,15 +9,15 @@ export const sendGetCartData = async () => {
       },
     });
     return data;
-  } catch(error){
-   console.log(error.response.data);
-}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
 
 export const sendAddToCart = async (productId, quantity) => {
   try {
     const token = localStorage.getItem("loginToken");
-    quantity=1;
+    quantity = 1;
     const { data } = await axios.post(
       "http://herbs.runasp.net/api/Cart/add",
       {
@@ -31,11 +31,11 @@ export const sendAddToCart = async (productId, quantity) => {
       },
     );
     console.log(data);
-    
+
     return data;
-  } catch(error){
-   console.log(error.response.data);
-}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
 
 export const sendRemoveFromCart = async (productId) => {
@@ -51,7 +51,7 @@ export const sendRemoveFromCart = async (productId) => {
       },
     );
     return data;
-  } catch(error){
-   console.log(error.response.data);
-}
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
