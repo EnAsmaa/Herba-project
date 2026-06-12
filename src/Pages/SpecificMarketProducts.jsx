@@ -1,0 +1,112 @@
+import React, { useEffect, useState } from 'react'
+import { getMarketProductsAPI } from '../Services/MarketServices';
+import toast from 'react-hot-toast';
+import { Navigate, useParams } from 'react-router-dom';
+import { FaCartShopping } from 'react-icons/fa6';
+import { sendAddToCart } from '../Services/CartServices';
+
+
+export default function SpecificMarketProducts() {
+    const [products, setProducts] = useState([]);
+    const [loadingProducts, setLoadingProducts] = useState(true);
+    const { storeId } = useParams()
+
+    // get products
+    const getMarketProducts = async () => {
+        try {
+            const response = await getMarketProductsAPI(storeId)
+            console.log(response)
+            if (response.success) {
+                setProducts(response.data)
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoadingProducts(false);
+        }
+    };
+
+    useEffect(() => {
+        getMarketProducts()
+    }, [])
+
+    // add to cart
+    const addToCart = async (id) => {
+        const response = await sendAddToCart(id);
+        if (response && response.success) {
+            Navigate("/cart");
+        }
+    };
+
+
+    return (
+        <section className="container mx-auto px-4 lg:px-8 py-8">
+            {/* Hero */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-700 to-emerald-500 p-8 md:p-12 text-white mb-10">
+                <div className="max-w-3xl">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        Welcome To Our Store
+                    </h1>
+
+                    <p className="text-lg opacity-90">
+                        Explore trusted herbal stores and premium natural products all in
+                        one place.
+                    </p>
+                </div>
+
+                <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full"></div>
+                <div className="absolute right-20 bottom-0 w-24 h-24 bg-white/10 rounded-full"></div>
+            </div>
+
+            {/* products */}
+            <div>
+                <h2 className="text-3xl font-bold mb-6 dark:text-white">
+                    Herbal Products
+                </h2>
+
+                {loadingProducts ? (
+                    <div className="min-h-70 w-full flex items-center justify-center">
+                        <span class="loader"></span>
+                    </div>
+                ) : (
+                    <div className="grid gap-6 grid-cols-12">
+                        {products?.map((product, index) => (
+                            <div
+                                key={product.productId}
+                                className={`group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700 col-span-12 sm:col-span-4 md:col-span-3 ${index == 1 && 'col-span-12! sm:col-span-5!'} ${index == 0 && 'col-span-12! sm:col-span-7!'}`}
+                            >
+                                <div className="overflow-hidden">
+                                    <img
+                                        src={
+                                            product.image ||
+                                            "https://via.placeholder.com/400x300?text=Herb"
+                                        }
+                                        alt={product.name}
+                                        className="w-full h-56 object-cover group-hover:scale-110 transition duration-500"
+                                    />
+                                </div>
+
+                                <div className="p-4">
+                                    <h3 className="font-semibold text-lg dark:text-white line-clamp-1">
+                                        {product.name}
+                                    </h3>
+
+                                    <div className="">
+                                        <span className="text-green-700 dark:text-green-400 font-bold text-lg w-full">
+                                            {product.price} EGP
+                                        </span>
+
+                                        <button onClick={() => { addToCart(product.productId) }} className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-xl transition w-full mt-2">
+                                            <FaCartShopping />
+                                            Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}

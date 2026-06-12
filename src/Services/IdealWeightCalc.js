@@ -4,7 +4,7 @@ export const getWeightBmi = async (wValue, hValue) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.get(
-      `https://herbs.runasp.net/api/IdealWeight/bmi`,
+      `http://herbs.runasp.net/api/IdealWeight/bmi`,
       {
         params: {
           weight: parseFloat(wValue),
@@ -25,7 +25,7 @@ export const postWeightCalc = async (userdata) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.post(
-      "https://herbs.runasp.net/api/IdealWeight/calculate", userdata,
+      "http://herbs.runasp.net/api/IdealWeight/calculate", userdata,
       {
         headers: {
           Authorization: `Bearer ${token}`,

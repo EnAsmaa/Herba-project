@@ -13,7 +13,7 @@ export default function MyConsultations() {
     // get questions
     const getQuestions = async () => {
         try {
-            const { data } = await axios.get('https://herbs.runasp.net/api/Consultation/my-consultations', {
+            const { data } = await axios.get('http://herbs.runasp.net/api/Consultation/my-consultations', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
