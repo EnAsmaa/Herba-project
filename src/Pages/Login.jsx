@@ -52,19 +52,21 @@ export default function Login() {
       toast.error(response.message)
 
     }
-  };
-  return (
+  };return (
     <>
-      <div className="max-w-md mx-auto my-12 py-12 ">
-        <div className="grid grid-cols-1  rounded-xl border bg-white dark:bg-[#1A242A]  dark:border-gray-700 border-gray-300 shadow">
-          <h2 className="mx-auto text-center font-bold mt-4 text-2xl text-[#14532D] dark:text-white ">
+      <div className="min-h-[80vh] flex items-center justify-center p-4 font-sans text-[#3E4E36] dark:text-[#E2E8F0] transition-colors duration-200">
+        <div className="w-full max-w-md bg-white dark:bg-[#232925] rounded-2xl border border-gray-100 dark:border-[#2C3530] shadow-sm overflow-hidden">
+          
+          <h2 className="text-center font-black mt-8 text-2xl text-[#3E4E36] dark:text-[#E2E8F0]">
             Login Now
           </h2>
-          <div className="pb-10 pt-5 px-6 flex flex-col justify-center">
-            <form onSubmit={handleSubmit(login)} className="space-y-6">
+          
+          <div className="pb-8 pt-4 px-6 flex flex-col justify-center">
+            <form onSubmit={handleSubmit(login)} className="space-y-5">
+              
               {/* Email */}
-              <div className="flex flex-col">
-                <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
+              <div className="flex flex-col gap-1">
+                <label className="text-[#3E4E36] dark:text-[#E2E8F0] font-bold text-sm">
                   Email Address*
                 </label>
                 <Input
@@ -74,49 +76,66 @@ export default function Login() {
                   {...register("email")}
                   isInvalid={Boolean(errors.email) && touchedFields.email}
                   errorMessage={errors.email?.message}
+                  className="dark:text-white"
                 />
               </div>
 
               {/* Password */}
-              <div className="flex flex-col">
-                <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
+              <div className="flex flex-col gap-1 relative">
+                <label className="text-[#3E4E36] dark:text-[#E2E8F0] font-bold text-sm">
                   Password*
-                  {
-                    shownPasswrd === true ? <IoEyeOffOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" /> : <IoEyeOutline onClick={() => { setShownPassword(!shownPasswrd) }} size={20} className="absolute -bottom-9 end-4 cursor-pointer z-50" />
-                  }
-
                 </label>
-                <Input
-                  type={shownPasswrd === true ? 'text' : 'password'}
-                  placeholder="Password"
-                  variant="bordered"
-                  {...register("password")}
-                  isInvalid={Boolean(errors.password) && touchedFields.password}
-                  errorMessage={errors.password?.message}
-                />
+                
+                <div className="relative w-full flex items-center">
+                  <Input
+                    type={shownPasswrd === true ? 'text' : 'password'}
+                    placeholder="Password"
+                    variant="bordered"
+                    {...register("password")}
+                    isInvalid={Boolean(errors.password) && touchedFields.password}
+                    errorMessage={errors.password?.message}
+                    className="w-full dark:text-white"
+                  />
+                  
+                  {/* Password Toggle Eye Icon Adjusted cleanly */}
+                  <div className="absolute right-3 top-[14px] z-20 text-gray-400 hover:text-[#446C4F] dark:hover:text-[#528B63] transition-colors">
+                    {shownPasswrd === true ? (
+                      <IoEyeOffOutline onClick={() => setShownPassword(!shownPasswrd)} size={20} className="cursor-pointer" />
+                    ) : (
+                      <IoEyeOutline onClick={() => setShownPassword(!shownPasswrd)} size={20} className="cursor-pointer" />
+                    )}
+                  </div>
+                </div>
               </div>
 
-              {/* CTA */}
-              <div className="flex items-center gap-2">
+              {/* CTA & Toggle link */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                 <Button
                   type="submit"
                   isLoading={loading}
-                  className="bg-[#3a5543] dark:bg-[#26804a] hover:bg-green-800 text-white px-6 py-2 rounded-lg transition"
+                  className="w-full sm:w-auto bg-[#446C4F] dark:bg-[#528B63] text-white px-8 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:opacity-95 transition-all active:scale-95"
                 >
                   Login
                 </Button>
 
-                <span className="dark:text-white text-gray-800">
-                  Has no account?{" "}
+                <span className="text-sm text-[#3E4E36]/80 dark:text-[#94A3B8] font-medium">
+                  Have no account?{" "}
                   <Link
-                    className="text-[#2b7945] dark:text-[#57d88a] "
+                    className="text-[#446C4F] dark:text-[#528B63] font-bold hover:underline ml-1"
                     to="/register"
                   >
                     Sign Up
                   </Link>
                 </span>
               </div>
-              {apiError && <span className=" flex items-center justify-center text-red-500 text-sm">{apiError}</span>}
+
+              {/* API Error Message */}
+              {apiError && (
+                <div className="flex items-center justify-center text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30 py-2 px-4 rounded-xl text-xs font-semibold text-center animate-shake mt-2">
+                  {apiError}
+                </div>
+              )}
+
             </form>
           </div>
         </div>

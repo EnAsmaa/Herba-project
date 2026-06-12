@@ -53,214 +53,228 @@ export default function Register() {
     setIsLoading(false);
   };
 
-  return (
+ return (
     <>
-      <div className="sm:w-3/4 md:w-1/2 p-8  mx-auto my-12  bg-white dark:bg-[#1A242A] border border-gray-300 dark:border-gray-700 shadow rounded-lg ">
-        <h2 className="mx-auto text-center font-bold text-2xl text-[#14532D] dark:text-white ">
-          Register Now
-        </h2>
-        <form
-          onSubmit={handleSubmit(submit)}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6  mt-5"
-        >
-          {/* FirstName */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              FirstName*
-            </label>
-            <Input
-              type="text"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none "
-              {...register("firstName")}
-              isInvalid={Boolean(errors.firstName) && touchedFields.firstName}
-              errorMessage={errors.firstName?.message}
-            />
-          </div>
+      <div className="min-h-screen bg-gray-50 text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] py-12 px-4 font-sans transition-colors duration-200 flex items-center justify-center">
+        <div className="w-full max-w-3xl bg-white dark:bg-[#232925] border border-gray-100 dark:border-[#2C3530] shadow-sm rounded-2xl p-6 md:p-10">
+          
+          {/* Header Title */}
+          <h2 className="text-2xl md:text-3xl font-black text-center text-[#3E4E36] dark:text-[#E2E8F0] mb-8">
+            Register Now
+          </h2>
 
-          {/* Lastname */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              LastName*
-            </label>
-            <Input
-              type="text"
-              variant="bordered"
-              className="rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("lastName")}
-              isInvalid={Boolean(errors.lastName) && touchedFields.lastName}
-              errorMessage={errors.lastName?.message}
-            />
-          </div>
+          <form
+            onSubmit={handleSubmit(submit)}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+          >
+            {/* FirstName */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                First Name*
+              </label>
+              <Input
+                type="text"
+                variant="bordered"
+                placeholder="John"
+                {...register("firstName")}
+                isInvalid={Boolean(errors.firstName) && touchedFields.firstName}
+                errorMessage={errors.firstName?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* Email */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              Email*
-            </label>
-            <Input
-              type="email"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("email")}
-              isInvalid={Boolean(errors.email) && touchedFields.email}
-              errorMessage={errors.email?.message}
-            />
-          </div>
+            {/* LastName */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Last Name*
+              </label>
+              <Input
+                type="text"
+                variant="bordered"
+                placeholder="Doe"
+                {...register("lastName")}
+                isInvalid={Boolean(errors.lastName) && touchedFields.lastName}
+                errorMessage={errors.lastName?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* Password */}
-          <div className="flex flex-col">
-            <label className="relative text-gray-700 dark:text-gray-300 font-medium mb-1">
-              Password*
-              {shownPasswrd === true ? (
-                <IoEyeOffOutline
-                  onClick={() => {
-                    setShownPassword(!shownPasswrd);
-                  }}
-                  size={20}
-                  className="absolute -bottom-9 end-4 cursor-pointer z-50"
+            {/* Email */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Email*
+              </label>
+              <Input
+                type="email"
+                variant="bordered"
+                placeholder="example@email.com"
+                {...register("email")}
+                isInvalid={Boolean(errors.email) && touchedFields.email}
+                errorMessage={errors.email?.message}
+                className="dark:text-white"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col gap-1 relative">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Password*
+              </label>
+              <div className="relative w-full">
+                <Input
+                  type={shownPasswrd === true ? "text" : "password"}
+                  variant="bordered"
+                  placeholder="••••••••"
+                  {...register("password")}
+                  isInvalid={Boolean(errors.password) && touchedFields.password}
+                  errorMessage={errors.password?.message}
+                  className="dark:text-white w-full"
                 />
-              ) : (
-                <IoEyeOutline
-                  onClick={() => {
-                    setShownPassword(!shownPasswrd);
-                  }}
-                  size={20}
-                  className="absolute -bottom-9 end-4 cursor-pointer z-50"
-                />
-              )}
-            </label>
-            <Input
-              type={shownPasswrd === true ? "text" : "password"}
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("password")}
-              isInvalid={Boolean(errors.password) && touchedFields.password}
-              errorMessage={errors.password?.message}
-            />
-          </div>
+                <div className="absolute top-[14px] end-4 text-gray-400 dark:text-zinc-500 hover:text-[#446C4F] cursor-pointer z-40">
+                  {shownPasswrd === true ? (
+                    <IoEyeOffOutline
+                      onClick={() => setShownPassword(!shownPasswrd)}
+                      size={20}
+                    />
+                  ) : (
+                    <IoEyeOutline
+                      onClick={() => setShownPassword(!shownPasswrd)}
+                      size={20}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
 
-          {/* Gender */}
-          <div className="flex flex-col">
-            <Select
-              label="Gender*"
-              variant="bordered"
-              defaultSelectedKeys={["Male"]}
-              {...register("gender")}
-              isInvalid={Boolean(errors.gender)}
-              errorMessage={errors.gender?.message}
-            >
-              <SelectItem key="Male" textValue="Male">
-                Male
-              </SelectItem>
-              <SelectItem key="Female" textValue="Female">
-                Female
-              </SelectItem>
-            </Select>
-          </div>
+            {/* Gender */}
+            <div className="flex flex-col justify-end">
+              <Select
+                label="Gender*"
+                variant="bordered"
+                defaultSelectedKeys={["Male"]}
+                {...register("gender")}
+                isInvalid={Boolean(errors.gender)}
+                errorMessage={errors.gender?.message}
+                className="dark:text-white"
+              >
+                <SelectItem key="Male" textValue="Male">
+                  Male
+                </SelectItem>
+                <SelectItem key="Female" textValue="Female">
+                  Female
+                </SelectItem>
+              </Select>
+            </div>
 
-          {/* Account Type */}
-          <div className="flex flex-col">
-            <Select
-              label="Account Type*"
-              variant="bordered"
-              defaultSelectedKeys={["0"]}
-              {...register("userType")}
-              isInvalid={Boolean(errors.userType)}
-              errorMessage={errors.userType?.message}
-            >
-              <SelectItem key="1" textValue="Doctor">
-                Doctor
-              </SelectItem>
-              <SelectItem key="0" textValue="User">
-                User
-              </SelectItem>
-            </Select>
-          </div>
+            {/* Account Type */}
+            <div className="flex flex-col justify-end">
+              <Select
+                label="Account Type*"
+                variant="bordered"
+                defaultSelectedKeys={["0"]}
+                {...register("userType")}
+                isInvalid={Boolean(errors.userType)}
+                errorMessage={errors.userType?.message}
+                className="dark:text-white"
+              >
+                <SelectItem key="1" textValue="Doctor">
+                  Doctor
+                </SelectItem>
+                <SelectItem key="0" textValue="User">
+                  User
+                </SelectItem>
+              </Select>
+            </div>
 
-          {/* Phone */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              Phone*
-            </label>
-            <Input
-              type="tel"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("phone")}
-              isInvalid={Boolean(errors.phone) && touchedFields.phone}
-              errorMessage={errors.phone?.message}
-            />
-          </div>
+            {/* Phone */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Phone*
+              </label>
+              <Input
+                type="tel"
+                variant="bordered"
+                placeholder="+20 123 456 7890"
+                {...register("phone")}
+                isInvalid={Boolean(errors.phone) && touchedFields.phone}
+                errorMessage={errors.phone?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* BirthDate */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              BirthDate*
-            </label>
-            <Input
-              type="date"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("birthDate")}
-              isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
-              errorMessage={errors.birthDate?.message}
-            />
-          </div>
+            {/* BirthDate */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Birth Date*
+              </label>
+              <Input
+                type="date"
+                variant="bordered"
+                {...register("birthDate")}
+                isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
+                errorMessage={errors.birthDate?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* Address */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              Address*
-            </label>
-            <Input
-              type="text"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("address")}
-              isInvalid={Boolean(errors.address) && touchedFields.address}
-              errorMessage={errors.address?.message}
-            />
-          </div>
+            {/* Address */}
+            <div className="flex flex-col gap-1 md:col-span-2">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Address*
+              </label>
+              <Input
+                type="text"
+                variant="bordered"
+                placeholder="Cairo, Egypt"
+                {...register("address")}
+                isInvalid={Boolean(errors.address) && touchedFields.address}
+                errorMessage={errors.address?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* Specialty */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-              Specialty
-            </label>
-            <Input
-              type="text"
-              variant="bordered"
-              className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
-              {...register("specialty")}
-              isInvalid={Boolean(errors.specialty) && touchedFields.specialty}
-              errorMessage={errors.specialty?.message}
-            />
-          </div>
+            {/* Specialty */}
+            <div className="flex flex-col gap-1 md:col-span-2">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Specialty (For Doctors Only)
+              </label>
+              <Input
+                type="text"
+                variant="bordered"
+                placeholder="e.g., Phytotherapy, Nutritionist"
+                {...register("specialty")}
+                isInvalid={Boolean(errors.specialty) && touchedFields.specialty}
+                errorMessage={errors.specialty?.message}
+                className="dark:text-white"
+              />
+            </div>
 
-          {/* Button - FULL WIDTH */}
-          <div className="md:col-span-2 flex flex-col md:flex-row items-start md:items-center gap-3 ">
-            <Button
-              type="submit"
-              className="bg-[#3a5543] dark:bg-[#26804a] hover:bg-green-800 text-white px-6 py-2 rounded-lg"
-              isLoading={loading}
-            >
-              Create Account
-            </Button>
+            {/* Actions Footer */}
+            <div className="md:col-span-2 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 mt-2 border-t border-gray-100 dark:border-[#2C3530]/40 w-full">
+              <Button
+                type="submit"
+                isLoading={loading}
+                className="w-full sm:w-auto bg-[#446C4F] dark:bg-[#528B63] text-white px-8 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:opacity-95 transition-all active:scale-95"
+              >
+                Create Account
+              </Button>
 
-            <span>
-              Already have an account?{" "}
-              <Link className="text-green-700 dark:text-[#57d88a] " to="/login">
-                Login
-              </Link>
-            </span>
-          </div>
-          {apiError && (
-            <span className=" flex items-center justify-center text-red-500 text-sm">
-              {apiError}
-            </span>
-          )}
-        </form>
+              <span className="text-xs font-medium text-[#3E4E36]/80 dark:text-[#94A3B8]">
+                Already have an account?{" "}
+                <Link className="text-[#446C4F] dark:text-[#528B63] font-bold hover:underline ml-1" to="/login">
+                  Login
+                </Link>
+              </span>
+            </div>
+
+            {/* Global API Error Display */}
+            {apiError && (
+              <div className="md:col-span-2 w-full p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30 text-red-500 text-xs font-bold rounded-xl text-center mt-2 animate-in fade-in duration-200">
+                {apiError}
+              </div>
+            )}
+          </form>
+        </div>
       </div>
     </>
   );

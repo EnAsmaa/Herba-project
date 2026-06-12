@@ -49,72 +49,84 @@ export default function Profile() {
   };
 
 
-  return (
-    <div className="min-h-screen py-10 px-4">
-      <div className="sm:w-3/4 md:w-1/2  mx-auto">
-        <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
+ return (
+    <div className="min-h-screen bg-gray-50 text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] py-12 px-4 font-sans transition-colors duration-200">
+      <div className="w-full max-w-3xl mx-auto">
+        
+        {/* Page Title */}
+        <h1 className="text-2xl md:text-3xl font-black text-center text-[#3E4E36] dark:text-[#E2E8F0] mb-8">
           Profile Settings
         </h1>
 
-        <div className="bg-main border border-black/20 dark:border-white/20 rounded-xl p-8 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-center">
+        {/* Form Container */}
+        <div className="bg-white dark:bg-[#232925] border border-gray-100 dark:border-[#2C3530] rounded-2xl p-6 md:p-10 shadow-sm">
+          <h3 className="text-lg font-bold mb-6 text-center text-[#446C4F] dark:text-[#528B63] flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 bg-[#446C4F] dark:bg-[#528B63] rounded-full"></span>
             Personal Information
+            <span className="w-1.5 h-1.5 bg-[#446C4F] dark:bg-[#528B63] rounded-full"></span>
           </h3>
 
           <form
             onSubmit={handleSubmit(submit)}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
             {/* First Name */}
-            <div>
-              <label className="block mb-2 font-medium">First Name*</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">First Name*</label>
               <Input
                 type="text"
                 variant="bordered"
+                placeholder="John"
                 {...register("firstName")}
                 isInvalid={Boolean(errors.firstName) && touchedFields.firstName}
                 errorMessage={errors.firstName?.message}
+                className="dark:text-white"
               />
             </div>
 
             {/* Last Name */}
-            <div>
-              <label className="block mb-2 font-medium">Last Name*</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">Last Name*</label>
               <Input
                 type="text"
                 variant="bordered"
+                placeholder="Doe"
                 {...register("lastName")}
                 isInvalid={Boolean(errors.lastName) && touchedFields.lastName}
                 errorMessage={errors.lastName?.message}
+                className="dark:text-white"
               />
             </div>
 
             {/* Birth Date */}
-            <div>
-              <label className="block mb-2 font-medium">Birth Date*</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">Birth Date*</label>
               <Input
                 type="date"
                 variant="bordered"
                 {...register("birthDate")}
                 isInvalid={Boolean(errors.birthDate) && touchedFields.birthDate}
                 errorMessage={errors.birthDate?.message}
+                className="dark:text-white"
               />
             </div>
 
             {/* Address */}
-            <div className="flex flex-col">
-              <label className="block mb-2 font-medium">Address*</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">Address*</label>
               <Input
                 type="text"
                 variant="bordered"
+                placeholder="Cairo, Egypt"
                 {...register("address")}
                 isInvalid={Boolean(errors.address) && touchedFields.address}
                 errorMessage={errors.address?.message}
+                className="dark:text-white"
               />
             </div>
 
             {/* Gender */}
-            <div className="flex flex-col mt-3">
+            <div className="flex flex-col justify-end">
               <Select
                 label="Gender*"
                 variant="bordered"
@@ -122,6 +134,7 @@ export default function Profile() {
                 {...register("gender")}
                 isInvalid={Boolean(errors.gender)}
                 errorMessage={errors.gender?.message}
+                className="dark:text-white"
               >
                 <SelectItem key="Male" textValue="Male">
                   Male
@@ -133,7 +146,7 @@ export default function Profile() {
             </div>
 
             {/* Account Type */}
-            <div className="flex flex-col mt-3">
+            <div className="flex flex-col justify-end">
               <Select
                 label="Account Type*"
                 variant="bordered"
@@ -141,6 +154,7 @@ export default function Profile() {
                 {...register("userType")}
                 isInvalid={Boolean(errors.userType)}
                 errorMessage={errors.userType?.message}
+                className="dark:text-white"
               >
                 <SelectItem key="1" textValue="Doctor">
                   Doctor
@@ -151,29 +165,31 @@ export default function Profile() {
               </Select>
             </div>
 
-            {/* IdealWeight */}
-            <div className="flex flex-col col-span-2">
-              <label className="text-gray-700 dark:text-gray-300 font-medium mb-1">
-                IdealWeight*
+            {/* Ideal Weight */}
+            <div className="flex flex-col gap-1 md:col-span-2">
+              <label className="text-xs md:text-sm font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
+                Ideal Weight (kg)*
               </label>
               <Input
                 type="number"
                 variant="bordered"
-                className=" rounded-lg bg-transparent focus:outline-none focus:ring focus:ring-green-500"
+                placeholder="70"
                 {...register("idealWeight")}
                 isInvalid={Boolean(errors.idealWeight) && touchedFields.idealWeight}
                 errorMessage={errors.idealWeight?.message}
+                className="dark:text-white"
               />
             </div>
+
             {/* Save Button */}
-            <div className="md:col-span-2 flex flex-col md:flex-row items-start md:items-center gap-3 ">
-            <Button
-              type="submit"
-              className="bg-[#3a5543] dark:bg-[#26804a] hover:bg-green-800 text-white px-6 py-2 rounded-lg"
-              isLoading={isloading}
-            >
-              Save Info
-            </Button>
+            <div className="md:col-span-2 flex justify-end pt-4 mt-2 border-t border-gray-100 dark:border-[#2C3530]/40">
+              <Button
+                type="submit"
+                isLoading={isloading}
+                className="w-full sm:w-auto bg-[#446C4F] dark:bg-[#528B63] text-white px-8 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:opacity-95 transition-all active:scale-95"
+              >
+                Save Info
+              </Button>
             </div>
           </form>
         </div>

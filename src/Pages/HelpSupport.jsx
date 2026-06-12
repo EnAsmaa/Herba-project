@@ -34,21 +34,22 @@ const faqs = [
   },
   {
     question: "How do I search for herbs?",
-    answer: "Use the search bar to find herbs بسهولة.",
+    answer: "Use the search bar to find herbs easily through our library.",
   },
   {
     question: "What are Premium features?",
-    answer: "Premium features give you advanced tools and insights.",
+    answer: "Premium features give you advanced AI nutritional tools and expert insights.",
   },
   {
     question: "How does herb image analysis work?",
-    answer: "Upload an image and our AI analyzes it.",
+    answer: "Upload a clear image of any herb and our AI instantly analyzes and identifies it.",
   },
   {
     question: "How do I book a consultation with an expert?",
-    answer: "Go to consultations section and book directly.",
+    answer: "Go to the consultations section, choose a certified specialist, and book directly.",
   },
 ];
+
 const resources = [
   {
     title: "User Guide",
@@ -66,60 +67,79 @@ const resources = [
     description: "Detailed articles and tutorials",
   },
 ];
+
 export default function HelpSupport() {
-  const [open, setOpen] = useState(false);
+  // تم تعديلها لتخزين index السؤال المفتوح لمنع فتح جميع الأسئلة معاً
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <div className="min-h-screen bg-main py-5 px-4">
+    <div className="min-h-screen bg-gray-50 text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] py-12 px-4 font-sans transition-colors duration-200">
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
-        <h2 className="text-3xl font-bold text-emerald-950 mb-6">
+        
+        {/* Main Page Title */}
+        <h2 className="text-3xl font-black text-[#3E4E36] dark:text-[#E2E8F0] mb-8 tracking-tight">
           Help & Support
         </h2>
 
-        {/* Contact */}
-        <h2 className="text-xl font-semibold mb-4 text-emerald-950">Contact Us</h2>
+        {/* Contact Section */}
+        <h2 className="text-lg font-bold mb-4 text-[#446C4F] dark:text-[#528B63] flex items-center gap-2">
+          <span className="w-1.5 h-4 bg-[#446C4F] dark:bg-[#528B63] rounded-full block"></span>
+          Contact Us
+        </h2>
+        
         <div className="space-y-4 mb-8">
           {contactOptions.map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl p-5 shadow-sm flex  items-center gap-3 hover:shadow-md transition cursor-pointer"
+              className="bg-white dark:bg-[#232925] rounded-2xl p-5 border border-gray-100 dark:border-[#2C3530] shadow-sm flex items-center gap-4 hover:shadow-md transition duration-200 cursor-pointer group"
             >
-              <div className="p-3 text-xl font-bold bg-[#5ab67f42] rounded-full text-[#14532D]">
+              <div className="p-3 bg-green-50 dark:bg-green-950/30 text-[#446C4F] dark:text-[#528B63] rounded-xl text-xl shrink-0 border border-green-100 dark:border-green-900/10">
                 {item.icon}
               </div>
-              <div className="flex   items-center justify-between w-full">
+              <div className="flex items-center justify-between w-full">
                 <div>
-                  <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                  <p className="text-gray-500 text-sm">{item.description}</p>
+                  <h3 className="font-bold text-sm md:text-base text-[#3E4E36] dark:text-[#E2E8F0]">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-[#3E4E36]/70 dark:text-[#94A3B8] mt-0.5">
+                    {item.description}
+                  </p>
                 </div>
-                <span className="text-gray-500">
-                  <FaAngleRight />
+                <span className="text-gray-400 dark:text-zinc-500 group-hover:translate-x-1 transition-transform">
+                  <FaAngleRight size={16} />
                 </span>
               </div>
             </div>
           ))}
         </div>
 
-        {/* FAQ */}
-        <h2 className="text-xl font-semibold mb-4 text-emerald-950">
+        {/* FAQ Section */}
+        <h2 className="text-lg font-bold mb-4 text-[#446C4F] dark:text-[#528B63] flex items-center gap-2">
+          <span className="w-1.5 h-4 bg-[#446C4F] dark:bg-[#528B63] rounded-full block"></span>
           Frequently Asked Questions
         </h2>
-        <div className="bg-white rounded-xl p-5 shadow-sm mb-8">
+        
+        <div className="bg-white dark:bg-[#232925] border border-gray-100 dark:border-[#2C3530] rounded-2xl p-4 md:p-6 shadow-sm mb-8 divide-y divide-gray-100 dark:divide-[#2C3530]/40">
           {faqs.map((item, i) => (
-            <div key={i} className="border-b border-gray-300 py-4">
+            <div key={i} className={`${i === 0 ? "pb-4" : "py-4"} ${i === faqs.length - 1 ? "pb-0" : ""}`}>
               <div
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => setOpen(!open)}
+                className="flex justify-between items-center cursor-pointer group py-1"
+                onClick={() => toggleFaq(i)}
               >
-                <h4 className="font-medium text-gray-800">{item.question}</h4>
-                <span className="text-gray-500">
-                  {open ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                <h4 className="font-bold text-sm md:text-base text-[#3E4E36] dark:text-[#E2E8F0] group-hover:text-[#446C4F] dark:group-hover:text-[#528B63] transition-colors">
+                  {item.question}
+                </h4>
+                <span className="text-gray-400 dark:text-zinc-500">
+                  {openIndex === i ? <IoIosArrowUp size={18} /> : <IoIosArrowDown size={18} />}
                 </span>
               </div>
 
-              {open && (
-                <p className="text-gray-500 mt-2 text-sm leading-relaxed">
+              {openIndex === i && (
+                <p className="text-xs md:text-sm text-[#3E4E36]/80 dark:text-[#94A3B8] mt-3 leading-relaxed bg-gray-50/50 dark:bg-[#1A1F1C]/40 p-3 rounded-xl animate-in fade-in duration-200">
                   {item.answer}
                 </p>
               )}
@@ -127,36 +147,52 @@ export default function HelpSupport() {
           ))}
         </div>
 
-        {/* Resources */}
-        <h2 className="text-xl font-semibold mb-4 text-emerald-950">Additional Resources</h2>
+        {/* Resources Section */}
+        <h2 className="text-lg font-bold mb-4 text-[#446C4F] dark:text-[#528B63] flex items-center gap-2">
+          <span className="w-1.5 h-4 bg-[#446C4F] dark:bg-[#528B63] rounded-full block"></span>
+          Additional Resources
+        </h2>
+        
         <div className="space-y-4">
           {resources.map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl p-5 shadow-sm flex gap-3 items-center hover:shadow-md transition cursor-pointer"
+              className="bg-white dark:bg-[#232925] rounded-2xl p-5 border border-gray-100 dark:border-[#2C3530] shadow-sm flex gap-4 items-center hover:shadow-md transition duration-200 cursor-pointer group"
             >
-              <div className="p-3 text-lg font-bold bg-[#5ab67f42] rounded-full text-[#14532D]">
+              <div className="p-3 bg-green-50 dark:bg-green-950/30 text-[#446C4F] dark:text-[#528B63] rounded-xl text-xl shrink-0 border border-green-100 dark:border-green-900/10">
                 {item.icon}
               </div>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full justify-between items-center">
                 <div>
-                  <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                  <p className="text-gray-500 text-sm">{item.description}</p>
+                  <h3 className="font-bold text-sm md:text-base text-[#3E4E36] dark:text-[#E2E8F0]">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-[#3E4E36]/70 dark:text-[#94A3B8] mt-0.5">
+                    {item.description}
+                  </p>
                 </div>
-                <span className="text-gray-500">{<FaAngleRight />}</span>
+                <span className="text-gray-400 dark:text-zinc-500 group-hover:translate-x-1 transition-transform">
+                  <FaAngleRight size={16} />
+                </span>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Support Hours */}
-        <div className="bg-green-100 rounded-2xl p-6 mt-8">
-          <h3 className="font-semibold text-gray-800 mb-2 ">Support Hours</h3>
-          <p className="text-gray-600 leading-relaxed">
-            We are available to help you from Saturday to Thursday,
-            <br />9 AM - 6 PM (Saudi Arabia Time)
+        {/* Support Hours Box */}
+        <div className="bg-green-50/60 dark:bg-[#232925] rounded-2xl p-6 md:p-8 mt-8 border border-green-100 dark:border-[#2C3530] relative overflow-hidden">
+          <h3 className="text-base font-bold text-[#3E4E36] dark:text-[#E2E8F0] mb-2">
+            Support Hours
+          </h3>
+          <p className="text-xs md:text-sm text-[#3E4E36]/80 dark:text-[#94A3B8] leading-relaxed">
+            Our expert support team is available to assist you from Saturday to Thursday,
+            <br />
+            <span className="font-bold text-[#446C4F] dark:text-[#528B63] mt-1 inline-block">
+              9 AM - 6 PM (Saudi Arabia Time)
+            </span>
           </p>
         </div>
+
       </div>
     </div>
   );
