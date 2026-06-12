@@ -47,33 +47,44 @@ export default function PrivacyPage() {
   ];
   return (
     <>
-      <div className="min-h-screen bg-main py-5 px-4 ">
+      <div className="min-h-screen bg-gray-50 text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] py-12 px-4 font-sans transition-colors duration-200">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-emerald-950 mb-6">
+          
+          {/* Title */}
+          <h2 className="text-3xl font-black text-[#3E4E36] dark:text-[#E2E8F0] mb-8 tracking-tight">
             Privacy & Security
           </h2>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
-            <h2 className="text-xl font-semibold text-[#14532D] mb-2">
+          {/* Main Commitment Card */}
+          <div className="bg-white dark:bg-[#232925] rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-[#2C3530] shadow-sm mb-6">
+            <h2 className="text-xl font-black text-[#446C4F] dark:text-[#528B63] mb-3 flex items-center gap-2">
+              <span className="w-1.5 h-4 bg-[#446C4F] dark:bg-[#528B63] rounded-full block"></span>
               Our Commitment to Your Privacy
             </h2>
-            <p className="text-gray-500">
+            <p className="text-sm md:text-base text-[#3E4E36]/80 dark:text-[#94A3B8] leading-relaxed">
               At HerbaCare, we take your privacy seriously. We are committed to
-              protecting your personal information and ensuring that your data
-              is safe and secure.
+              protecting your personal information and ensuring that your health data,
+              consultations, and choices are perfectly safe and secure.
             </p>
           </div>
 
-          {/* Cards */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Feature Grid Sections */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {privacySections.map((item, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition flex items-start gap-3">
-                <div className="p-3  text-xl font-bold bg-[#5ab67f42] rounded-lg text-[#14532D]">{item.icon}</div>
+              <div 
+                key={index} 
+                className="bg-white dark:bg-[#232925] rounded-2xl border border-gray-100 dark:border-[#2C3530] shadow-sm p-6 hover:shadow-md transition-all duration-200 flex items-start gap-4"
+              >
+                {/* Icon Wrapper Optimized */}
+                <div className="p-3 bg-green-50 dark:bg-green-950/30 text-[#446C4F] dark:text-[#528B63] rounded-xl text-xl shrink-0 border border-green-100 dark:border-green-900/10">
+                  {item.icon}
+                </div>
+                
                 <div>
-                  <h3 className="text-lg font-semibold text-[#14532D] ">
+                  <h3 className="text-lg font-bold text-[#3E4E36] dark:text-[#E2E8F0]">
                     {item.title}
                   </h3>
-                  <p className="text-gray-500 mt-2 leading-relaxed">
+                  <p className="text-xs md:text-sm text-[#3E4E36]/70 dark:text-[#94A3B8] mt-2 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -81,20 +92,26 @@ export default function PrivacyPage() {
             ))}
           </div>
 
-          {/* Contact */}
-          <div className="bg-green-100 rounded-xl p-6 mt-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Have Questions?
-            </h3>
-            <p className="text-gray-600 mb-3">
-              If you have any questions about our privacy policy, feel free to
-              contact us.
-            </p>
-            <p className="font-semibold text-gray-900">privacy@herbacare.com</p>
+          {/* Contact Support Box */}
+          <div className="bg-green-50/60 dark:bg-[#232925] rounded-2xl p-6 md:p-8 mt-8 border border-green-100 dark:border-[#2C3530] relative overflow-hidden">
+            <div className="relative z-10">
+              <h3 className="text-lg font-bold text-[#3E4E36] dark:text-[#E2E8F0] mb-2">
+                Have Questions?
+              </h3>
+              <p className="text-sm text-[#3E4E36]/80 dark:text-[#94A3B8] mb-4 max-w-xl">
+                If you have any inquiries or concerns regarding our privacy policies, data handling, or security protocols, feel free to reach out to our dedicated compliance team.
+              </p>
+              <a 
+                href="mailto:privacy@herbacare.com"
+                className="inline-block font-bold text-sm text-[#446C4F] dark:text-[#528B63] hover:underline"
+              >
+                privacy@herbacare.com
+              </a>
+            </div>
           </div>
 
-          {/* Footer */}
-          <p className="text-center text-gray-400 text-sm mt-6">
+          {/* Meta Footer */}
+          <p className="text-center text-gray-400 dark:text-zinc-500 text-xs mt-8">
             Last updated: October 2025
           </p>
         </div>

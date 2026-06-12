@@ -4,107 +4,115 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { getDoctorDataAPI, sendQuestionAPI } from "../../Services/ConsultationServices";
+import {
+  getDoctorDataAPI,
+  sendQuestionAPI,
+} from "../../Services/ConsultationServices";
 
 export default function AskConsultation() {
+  const { id } = useParams();
+  const [doctor, setDoctor] = useState(null);
+  const [token, setToken] = useState(
+    localStorage.getItem("loginToken") || null,
+  );
+  const question = useRef(0);
 
-    const { id } = useParams()
-    const [doctor, setDoctor] = useState(null)
-    const [token, setToken] = useState(localStorage.getItem("loginToken") || null)
-    const question = useRef(0)
-
-    // get doctor data
-    const getDoctorData = async () => {
-        try {
-            const response = await getDoctorDataAPI(id)
-            if (response.success) {
-                setDoctor(response.data)
-            }
-        } catch (err) {
-            toast.error(err?.message)
-        }
+  // get doctor data
+  const getDoctorData = async () => {
+    try {
+      const response = await getDoctorDataAPI(id);
+      if (response.success) {
+        setDoctor(response.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
     }
+  };
 
-    useEffect(() => {
-        getDoctorData()
-    }, [])
+  useEffect(() => {
+    getDoctorData();
+  }, []);
 
-    // ask question
-    const sendQuestion = async (message) => {
-        try {
-            const response = await sendQuestionAPI(message, id)
-            if (response?.success) {
-                toast.success('Consultation Sent Successfully')
-                question.current.value = ''
-            }
-        } catch (err) {
-            toast.error(err?.message)
-        }
+  // ask question
+  const sendQuestion = async (message) => {
+    try {
+      const response = await sendQuestionAPI(message, id);
+      if (response?.success) {
+        toast.success("Consultation Sent Successfully");
+        question.current.value = "";
+      }
+    } catch (err) {
+      toast.error(err?.message);
     }
+  };
 
-
-    return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] p-6">
-            <div className="max-w-3xl mx-auto space-y-6">
-
-                {/* Doctor Card */}
-                <div className="bg-white dark:bg-[#1e293b] shadow-lg rounded-2xl p-6 border border-gray-100 dark:border-slate-700">
-                    <div className="flex items-center gap-4">
-
-                        {/* Avatar */}
-                        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xl uppercase">
-                            {doctor?.firstName?.charAt(0)}
-                            {doctor?.lastName?.charAt(0)}
-                        </div>
-
-                        {/* Info */}
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                                Dr {doctor?.firstName + ' ' + doctor?.lastName}
-                            </h2>
-
-                            <p className="text-gray-500">{doctor?.specialty}</p>
-
-                            <p className="text-sm text-gray-400">
-                                {doctor?.email}
-                            </p>
-
-                            {/* Rating */}
-                            <div className="flex gap-1 mt-2">
-                                {Array.from({ length: 5 }).map((_, i) =>
-                                    i < doctor?.rating ? (
-                                        <FaStar key={i} className="text-yellow-400" />
-                                    ) : (
-                                        <FaRegStar key={i} className="text-yellow-400" />
-                                    )
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Ask Question */}
-                <div className="bg-white dark:bg-[#1e293b] shadow-lg rounded-2xl p-6 border border-gray-100 dark:border-slate-700">
-                    <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-white">
-                        Ask a Question
-                    </h3>
-
-                    <textarea
-                        ref={question}
-                        placeholder="Write your question..."
-                        className="w-full p-3 border rounded-xl dark:bg-slate-800 dark:border-slate-600 dark:text-white outline-none focus:ring-2 focus:ring-green-500"
-                        rows={4}
-                    />
-
-                    <button
-                        onClick={() => { sendQuestion(question.current.value) }}
-                        className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl transition"
-                    >
-                        Send Question
-                    </button>
-                </div>
-
+  return (
+    <div className="min-h-screen bg-[#F5F7F3] text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] p-4 md:p-8 font-sans transition-colors duration-200">
+      <div className="max-w-3xl mx-auto space-y-6">
+        {/* Doctor Card */}
+        <div className="bg-white dark:bg-[#232925] shadow-sm rounded-2xl p-6 border border-gray-100 dark:border-[#2C3530]">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+            {/* Avatar */}
+            <div className="w-20 h-20 rounded-2xl bg-[#E8F3EE] dark:bg-[#2C3530] flex items-center justify-center text-[#446C4F] dark:text-[#528B63] font-black text-2xl uppercase border border-[#94C973]/20 dark:border-green-900/10 shrink-0 shadow-inner">
+              {doctor?.firstName?.charAt(0)}
+              {doctor?.lastName?.charAt(0)}
             </div>
+
+            {/* Info */}
+            <div className="flex-1">
+              <h2 className="text-xl font-black text-[#3E4E36] dark:text-[#E2E8F0] tracking-tight">
+                Dr. {doctor?.firstName} {doctor?.lastName}
+              </h2>
+
+              <p className="text-sm font-bold text-[#446C4F] dark:text-[#528B63] mt-0.5">
+                {doctor?.specialty || "Phytotherapy Specialist"}
+              </p>
+
+              <p className="text-xs text-[#94A3B8] dark:text-zinc-500 mt-1">
+                {doctor?.email}
+              </p>
+
+              {/* Rating */}
+              <div className="flex gap-1 mt-3 justify-center sm:justify-start">
+                {Array.from({ length: 5 }).map((_, i) =>
+                  i < (doctor?.rating || 5) ? (
+                    <FaStar key={i} className="text-amber-400 text-sm" />
+                  ) : (
+                    <FaRegStar key={i} className="text-amber-400 text-sm" />
+                  ),
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Ask Question Card */}
+        <div className="bg-white dark:bg-[#232925] shadow-sm rounded-2xl p-6 border border-gray-100 dark:border-[#2C3530]">
+          <h3 className="text-base font-bold text-[#3E4E36] dark:text-[#E2E8F0] mb-4 flex items-center gap-2">
+            <span className="w-1.5 h-4 bg-[#446C4F] dark:bg-[#528B63] rounded-full block"></span>
+            Ask a Question
+          </h3>
+
+          <textarea
+            ref={question}
+            placeholder="Describe your symptoms or ask about specific herbal interactions..."
+            className="w-full p-4 border border-gray-200 dark:border-[#2C3530] rounded-xl bg-[#F5F7F3] dark:bg-[#1A1F1C] text-sm text-[#3E4E36] dark:text-[#E2E8F0] placeholder-[#94A3B8] dark:placeholder-zinc-500 outline-none focus:ring-1 focus:ring-[#446C4F] dark:focus:ring-[#528B63] transition-all resize-none leading-relaxed"
+            rows={5}
+          />
+
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={() => {
+                if (question.current?.value)
+                  sendQuestion(question.current.value);
+              }}
+              className="w-full sm:w-auto bg-[#446C4F] dark:bg-[#528B63] hover:opacity-95 text-white px-8 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all active:scale-95 cursor-pointer"
+            >
+              Send Question
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

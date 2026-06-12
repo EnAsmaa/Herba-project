@@ -97,19 +97,18 @@ export default function Herbas() {
 
 
   return (
-    <section className="container mx-auto px-4 lg:px-10 py-10">
+    <section className="container mx-auto px-4 lg:px-10 py-10 transition-colors duration-200">
 
       {/* HEADER */}
-      <div className=" py-5">
-        <h1 className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
+      <div className="py-5">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#3E4E36] dark:text-[#E2E8F0] mb-2">
           Discover Natural Herbs 🌿
         </h1>
-
-        <p className="text-base text-gray-500 dark:text-gray-400 mb-5">
+        <p className="text-base text-[#3E4E36]/70 dark:text-[#94A3B8] mb-5">
           Explore natural herbs & organic healing products
         </p>
-
       </div>
+      
       <Search placehoder={"herbas"} />
 
       {/* CATEGORIES */}
@@ -117,10 +116,10 @@ export default function Herbas() {
         <ul className="flex gap-3 overflow-x-auto scrollbar-hide py-2 justify-center">
           <li
             onClick={() => setActiveCat(0)}
-            className={`px-5 py-2 rounded-full cursor-pointer transition
+            className={`px-5 py-2 rounded-full cursor-pointer transition-all font-medium text-sm shadow-sm
               ${activeCat === 0
-                ? "bg-green-800 text-white shadow-md"
-                : "dark:bg-[#0C1A1A] bg-green-800/10"
+                ? "bg-[#446C4F] dark:bg-[#528B63] text-white"
+                : "bg-[#446C4F]/10 text-[#3E4E36] dark:bg-[#2C3530] dark:text-[#E2E8F0]"
               }`}
           >
             All
@@ -130,10 +129,10 @@ export default function Herbas() {
             <li
               key={cat.categoryId}
               onClick={() => setActiveCat(cat.categoryId)}
-              className={`px-5 py-2 rounded-full cursor-pointer transition whitespace-nowrap
+              className={`px-5 py-2 rounded-full cursor-pointer transition-all font-medium text-sm whitespace-nowrap shadow-sm
                 ${activeCat === cat.categoryId
-                  ? "bg-green-800 text-white shadow-md"
-                  : "dark:bg-[#0C1A1A] bg-green-800/10"
+                  ? "bg-[#446C4F] dark:bg-[#528B63] text-white"
+                  : "bg-[#446C4F]/10 text-[#3E4E36] dark:bg-[#2C3530] dark:text-[#E2E8F0]"
                 }`}
             >
               {cat.name}
@@ -156,75 +155,76 @@ export default function Herbas() {
                 key={herb.herbId}
                 onClick={() => navigate(`/herbas-details/${herb.herbId}`)}
                 className={`group cursor-pointer rounded-2xl overflow-hidden
-              bg-[#1A242A]/70 border border-white/10
-              shadow-md hover:shadow-2xl
-              transition-all duration-500 hover:-translate-y-2
-              ${index === 0 ? "col-span-2 row-span-2" : ""}`}
+                bg-white dark:bg-[#232925] border border-gray-100 dark:border-[#2C3530]
+                shadow-sm hover:shadow-xl
+                transition-all duration-500 hover:-translate-y-1.5
+                ${index === 0 ? "col-span-2 row-span-2" : ""}`}
               >
 
                 {/* IMAGE */}
                 <div className="relative w-full h-full">
-
                   <img
                     src={herb.imageLink}
                     onError={(e) => (e.target.src = herbImage)}
-                    className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    alt={herb.name}
                   />
 
                   {/* overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                  {/* heart */}
-                  <div className="absolute top-3 right-3">
-                    {isFavorite ?
+                  {/* heart button */}
+                  <div className="absolute top-3 right-3 z-10">
+                    {isFavorite ? (
                       <FaHeart
                         onClick={(e) => {
                           removeFromFav(herb.herbId);
-                          e.stopPropagation()
+                          e.stopPropagation();
                         }}
-                        className={`text-2xl transition text-red-500`} /> :
+                        className="text-xl transition text-red-500 hover:scale-110 active:scale-90"
+                      />
+                    ) : (
                       <FaHeart
                         onClick={(e) => {
                           addToFav(herb.herbId);
-                          e.stopPropagation()
+                          e.stopPropagation();
                         }}
-                        className={`text-2xl transition text-white`} />
-
-                    }
+                        className="text-xl transition text-white/90 hover:text-white hover:scale-110 active:scale-90"
+                      />
+                    )}
                   </div>
 
-                  {/* text */}
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white font-semibold text-sm md:text-base">
+                  {/* text content */}
+                  <div className="absolute bottom-3 left-4 right-4 text-white">
+                    <h3 className="font-bold text-sm md:text-base drop-shadow-md line-clamp-1">
                       {herb.name}
                     </h3>
-
-                    <p className="text-green-300 font-bold text-sm">
+                    <p className="text-[#A3E635] dark:text-[#528B63] font-extrabold text-sm mt-0.5 drop-shadow-sm">
                       ${herb.price}
                     </p>
                   </div>
 
                 </div>
               </div>
-            )
+            );
           })}
 
         </div>
       ) : (
         <div className="flex justify-center items-center py-20">
-          <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#446C4F] dark:border-[#528B63] border-t-transparent rounded-full animate-spin" />
         </div>
       )}
 
       {/* PAGINATION */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-10">
-          <div className="flex items-center gap-2 bg-white/5 dark:bg-[#0C1A1A] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
+        <div className="flex justify-center mt-12">
+          <div className="flex items-center gap-2 bg-white dark:bg-[#232925] px-4 py-2 rounded-full border border-gray-200 dark:border-[#2C3530] shadow-sm">
 
             {/* Prev */}
             <button
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              className="px-3 py-1 text-sm rounded-full hover:bg-green-700/20 cursor-pointer"
+              className="px-3 py-1 text-sm font-medium rounded-full text-[#3E4E36] dark:text-[#E2E8F0] hover:bg-[#446C4F]/10 dark:hover:bg-[#528B63]/20 cursor-pointer transition-colors"
             >
               Prev
             </button>
@@ -238,10 +238,10 @@ export default function Herbas() {
                   <button
                     key={p}
                     onClick={() => setCurrentPage(p)}
-                    className={`w-8 h-8 rounded-full text-sm transition cursor-pointer
+                    className={`w-8 h-8 rounded-full text-sm font-semibold transition cursor-pointer
                       ${currentPage === p
-                        ? "bg-green-700 text-white shadow-md scale-110"
-                        : "hover:bg-green-700/20"
+                        ? "bg-[#446C4F] dark:bg-[#528B63] text-white shadow-sm scale-105"
+                        : "text-[#3E4E36] dark:text-[#E2E8F0] hover:bg-[#446C4F]/10 dark:hover:bg-[#528B63]/20"
                       }`}
                   >
                     {p}
@@ -251,7 +251,7 @@ export default function Herbas() {
 
               const addDots = (key) => {
                 pages.push(
-                  <span key={key} className="px-2 text-gray-400 cursor-pointer">
+                  <span key={key} className="px-1 text-gray-400 dark:text-zinc-600">
                     ...
                   </span>
                 );
@@ -278,10 +278,8 @@ export default function Herbas() {
 
             {/* Next */}
             <button
-              onClick={() =>
-                setCurrentPage((p) => Math.min(p + 1, totalPages))
-              }
-              className="px-3 py-1 text-sm rounded-full cursor-pointer hover:bg-green-700/20"
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+              className="px-3 py-1 text-sm font-medium rounded-full text-[#3E4E36] dark:text-[#E2E8F0] hover:bg-[#446C4F]/10 dark:hover:bg-[#528B63]/20 cursor-pointer transition-colors"
             >
               Next
             </button>

@@ -39,63 +39,58 @@ export default function FavoritePage() {
   return (
     <>
       <div className="min-h-screen flex justify-center text-center container lg:px-7 px-4 mx-auto">
-        {favorites?.length != 0 ? (
+        {favorites?.length !== 0 ? (
           <div>
-            <h2 className="text-green-700 dark:text-green-400 mb-2 text-3xl font-semibold flex items-center gap-2  mt-8">
+            <h2 className="text-[#446C4F] dark:text-[#528B63] mb-2 text-3xl font-black flex items-center justify-center gap-2 mt-8 tracking-tight">
               My Favorites
               <FaRegHeart />
             </h2>
-            <p className="text-base text-start text-gray-500 dark:text-gray-400 mb-5 border-b border-green-800/50 pb-2">
-              {" "}
+            <p className="text-base text-[#3E4E36] dark:text-[#94A3B8] mb-8 border-b border-[#446C4F]/20 pb-4">
               Find your favorite natural herbs & organic healing products
             </p>
-            <div className="herbas grid grid-cols-1 my-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
-              {/* Your 5 cards go here */}
-              {favorites.map((herb, idx) => (
+
+            <div className="herbas grid grid-cols-1 my-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {favorites.map((herb) => (
                 <div
                   key={herb.herbId}
-                  className=" slider-images shadow-md cursor-pointer bg-green-200/10 rounded-lg overflow-hidden text-center relative"
+                  className="shadow-sm border border-[#E8F3EE] dark:border-[#2C3530] cursor-pointer bg-white dark:bg-[#232925] rounded-2xl overflow-hidden text-center relative transition-all hover:shadow-md"
                 >
                   <img
-                    className="w-full cat-img h-50 object-cover!"
+                    className="w-full h-52 object-cover"
                     src={herb.imageLink}
                     alt={herb.description}
                   />
-                  <p className="text-green-800  py-3 px-2 m-0! font-semibold text-center">
-                    {" "}
+                  <p className="text-[#3E4E36] dark:text-[#E2E8F0] py-4 px-2 m-0 font-bold text-center">
                     {herb.herbName}
                   </p>
-                  <div className="w-full mb-7 mt-2  mx-auto">
-                    <Link
-                      // to={"/cart"}
-                      onClick={() => {
-                        addToCart(herb.herbId);
-                      }}
-                      className="rounded-lg text-white bg-green-800 dark:bg-green-600 p-4 py-2 cursor-pointer"
+                  <div className="w-full mb-6 mt-1 px-4">
+                    <button
+                      onClick={() => addToCart(herb.herbId)}
+                      className="w-full block rounded-xl text-white bg-[#446C4F] dark:bg-[#528B63] hover:opacity-90 py-3 cursor-pointer font-bold text-sm transition-all active:scale-95"
                     >
                       Add To Cart
-                    </Link>
+                    </button>
                   </div>
                   <FaHeart
                     onClick={() => deleteFavHerb(herb.herbId)}
-                    className="text-red-800 hover:text-red-800 opacity-80 hover:opacity-100 text-xl absolute top-2 right-2 cursor-pointer hover:scale-110 duration-300"
+                    className="text-[#D34040] opacity-80 hover:opacity-100 text-xl absolute top-3 right-3 cursor-pointer hover:scale-110 duration-300"
                   />
                 </div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center min-h-[400px]">
             <div>
-              <div className=" py-7 px-7 w-fit bg-[#cef0d9] m-auto rounded-full">
-                <FaHeart className="text-center inline text-2xl text-[#14532D]" />
+              <div className="py-7 px-7 w-fit bg-[#E8F3EE] dark:bg-[#446C4F]/20 m-auto rounded-full">
+                <FaHeart className="text-center inline text-2xl text-[#446C4F] dark:text-[#528B63]" />
               </div>
-              <h2 className="text-[#14532D] text-2xl my-2 font-medium">
+              <h2 className="text-[#446C4F] dark:text-[#E2E8F0] text-2xl my-2 font-black">
                 No Favorites Yet!
               </h2>
-              <p className="text-[#3a5543]">
-                Start adding herbas to your favorites by tapping the heart icon
-                on any herb card{" "}
+              <p className="text-[#3E4E36] dark:text-[#94A3B8]">
+                Start adding herbs to your favorites by tapping the heart icon
+                on any herb card.
               </p>
             </div>
           </div>

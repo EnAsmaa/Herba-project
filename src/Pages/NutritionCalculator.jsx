@@ -52,13 +52,12 @@ Rules:
               },
             ],
           }),
-        }
+        },
       );
 
       const data = await res.json();
 
-      let textResponse =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      let textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
       // تنظيف JSON لو فيه markdown
       textResponse = textResponse.replace(/```json|```/g, "");
@@ -75,12 +74,11 @@ Rules:
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F2F1] p-6 lg:p-10 font-sans text-slate-800">
-      <div className="grid grid-cols-12 gap-6">
-
-        {/* INPUT */}
-        <div className="col-span-12 bg-white p-8 rounded-3xl">
-          <h2 className="text-lg font-bold mb-4">
+    <div className="min-h-screen bg-[#F5F7F3] p-6 lg:p-10 font-sans text-[#3E4E36]">
+      <div className="max-w-4xl mx-auto grid grid-cols-12 gap-6">
+        {/* INPUT SECTION */}
+        <div className="col-span-12 bg-white dark:bg-[#232925] p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-[#2C3530]">
+          <h2 className="text-lg font-bold mb-4 text-[#3E4E36] dark:text-[#E2E8F0]">
             Enter Meal Description
           </h2>
 
@@ -88,40 +86,36 @@ Rules:
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Example: Rice 200g, Chicken 150g, Broccoli 100g"
-            className="w-full h-40 p-4 bg-gray-50 rounded-2xl"
+            className="w-full h-40 p-4 bg-[#F5F7F3] dark:bg-[#1A1F1C] border border-gray-200 dark:border-[#2C3530] rounded-2xl outline-none focus:ring-1 focus:ring-[#446C4F] dark:text-[#E2E8F0]"
           />
 
           <button
             onClick={analyzeWithGemini}
             disabled={loading}
-            className="w-full mt-6 bg-[#4E7355] text-white py-4 rounded-2xl font-bold"
+            className="w-full mt-6 bg-[#446C4F] hover:bg-[#3E4E36] text-white py-4 rounded-2xl font-bold transition-all active:scale-95"
           >
             {loading ? "Analyzing..." : "Analyze with AI"}
           </button>
         </div>
 
-        {/* RESULTS */}
+        {/* RESULTS SECTION */}
         <div className="col-span-12">
-
           {!stats && (
-            <div className="text-center text-gray-400">
+            <div className="text-center text-[#94A3B8] py-10">
               Enter a meal to analyze with AI
             </div>
           )}
 
           {stats && (
             <div className="space-y-6">
-
               {/* Calories */}
-              <div className="bg-[#4E7355] text-white p-8 rounded-3xl text-center">
-                <div className="text-5xl font-black">
-                  {stats.calories}
-                </div>
-                <p>Calories</p>
+              <div className="bg-[#446C4F] text-white p-8 rounded-3xl text-center shadow-lg">
+                <div className="text-5xl font-black">{stats.calories}</div>
+                <p className="opacity-90">Calories</p>
               </div>
 
               {/* Macros */}
-              <div className="grid md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   ["Protein", stats.protein],
                   ["Carbs", stats.carbs],
@@ -130,26 +124,26 @@ Rules:
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="bg-white p-4 rounded-2xl text-center"
+                    className="bg-white dark:bg-[#232925] p-4 rounded-2xl text-center border border-gray-100 dark:border-[#2C3530]"
                   >
-                    <p className="font-bold text-[#4E7355]">
+                    <p className="font-bold text-[#446C4F] dark:text-[#528B63]">
                       {value}g
                     </p>
-                    <p className="text-xs text-gray-400">{label}</p>
+                    <p className="text-xs text-[#94A3B8]">{label}</p>
                   </div>
                 ))}
               </div>
 
               {/* Missing Nutrients */}
-              <div className="bg-red-400/20 p-6 rounded-3xl col-span-12">
-                <h3 className="font-bold mb-3">
+              <div className="bg-[#E8F3EE] dark:bg-[#446C4F]/10 p-6 rounded-3xl border border-[#94C973]/20">
+                <h3 className="font-bold mb-3 text-[#3E4E36] dark:text-[#E2E8F0]">
                   Missing Nutrients
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {stats.missingNutrients?.map((n) => (
                     <span
                       key={n}
-                      className="bg-white px-3 py-1 rounded-lg text-xs"
+                      className="bg-white dark:bg-[#2C3530] px-3 py-1 rounded-lg text-xs text-[#446C4F] dark:text-[#94C973] border border-[#94C973]/30"
                     >
                       {n}
                     </span>
@@ -158,13 +152,15 @@ Rules:
               </div>
 
               {/* Recommendations */}
-              <div className="bg-white p-6 rounded-3xl col-span-12">
-                <h3 className="font-bold mb-3">
+              <div className="bg-white dark:bg-[#232925] p-6 rounded-3xl border border-gray-100 dark:border-[#2C3530]">
+                <h3 className="font-bold mb-3 text-[#3E4E36] dark:text-[#E2E8F0]">
                   AI Recommendations
                 </h3>
-
                 {stats.recommendations?.map((r, i) => (
-                  <p key={i} className="text-sm mb-2">
+                  <p
+                    key={i}
+                    className="text-sm mb-2 text-[#3E4E36]/80 dark:text-[#E2E8F0]/80"
+                  >
                     • {r}
                   </p>
                 ))}
@@ -173,18 +169,17 @@ Rules:
               <button
                 onClick={() => {
                   setStats(null);
-                  setText('')
+                  setText("");
                 }}
-                className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-2xl flex items-center gap-3 mx-auto transition"
+                className="bg-[#446C4F] hover:bg-[#3E4E36] text-white px-8 py-4 rounded-2xl flex items-center gap-3 mx-auto transition active:scale-95"
               >
                 <FaHistory />
-                Analyze Another Herb
+                Analyze Another Meal
               </button>
-
             </div>
           )}
         </div>
       </div>
     </div>
   );
-} 
+}
