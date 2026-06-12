@@ -35,55 +35,57 @@ export default function Footer() {
     },
   ];
 
-  return (
-    <footer className="shadow-2xl bg-green-100/20 text-[#1A242A] dark:bg-[#1A242A]  border-b border-[#adabab] dark:border-[#294353a6] border-t py-5 mt-6">
+ return (
+    <footer className="shadow-2xl bg-[#E8F3EE]/40 text-[#3E4E36] dark:bg-[#232925] dark:text-[#94A3B8] border-b border-gray-200 dark:border-[#2C3530] border-t py-6 mt-12 transition-colors duration-200">
       <div className="container lg:px-7 px-4 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <div>
+          <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-2xl text-[#335D39] dark:text-[#6bb683]" />
-              <h3 className="m-0 text-xl font-bold dark:text-[#E9EDEF]">HerbalCare</h3>
+              <FaLeaf className="text-2xl text-[#446C4F] dark:text-[#528B63]" />
+              <h3 className="m-0 text-xl font-bold text-[#3E4E36] dark:text-[#E2E8F0]">HerbalCare</h3>
             </div>
-            <p className="mt-2 text-base  text-[#333333]  dark:text-[#C5CFD6]">
+            <p className="text-sm text-[#3E4E36]/80 dark:text-[#94A3B8]">
               Your Journey to Holistic Wellness
             </p>
           </div>
 
           {/* Dynamic Sections */}
           {sections.map((section, index) => (
-            <div key={index} className="footer-section text-[#333333]  dark:text-[#8696A0]">
+            <div key={index} className="footer-section">
 
               {/* Section Header */}
               <div
                 className="flex justify-between items-center footer-title cursor-pointer md:cursor-default"
                 onClick={() => toggleSection(index)}
               >
-                <h5 className="font-medium m-0 text-black dark:text-[#E9EDEF]">{section.title}</h5>
+                <h5 className="font-bold text-sm uppercase tracking-wider text-[#3E4E36] dark:text-[#E2E8F0]">
+                  {section.title}
+                </h5>
 
                 {/* Toggle Icon (mobile only) */}
-                <span className="md:hidden text-lg">
+                <span className="md:hidden text-lg text-[#446C4F] dark:text-[#528B63]">
                   {openSection === index ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
               </div>
 
               {/* Links */}
               <ul
-                className={`list-none mt-3 space-y-2 
-              ${openSection === index ? "block" : "hidden"} 
-              md:block`}
+                className={`list-none mt-3 space-y-2 text-sm
+                ${openSection === index ? "block" : "hidden"} 
+                md:block`}
               >
                 {section.links.map((link, i) => (
                   <li key={i}>
                     {link.path ? (
                       <Link
                         to={link.path}
-                        className="text-base  hover:underline"
+                        className="hover:text-[#446C4F] dark:hover:text-[#528B63] transition-colors duration-150"
                       >
                         {link.name}
                       </Link>
                     ) : (
-                      <span className="text-base">{link.name}</span>
+                      <span>{link.name}</span>
                     )}
                   </li>
                 ))}
@@ -92,9 +94,11 @@ export default function Footer() {
           ))}
 
           {/* App Download */}
-          <div>
-            <h5 className="font-medium dark:text-[#E9EDEF]">Download The App</h5>
-            <Link className="block mt-3">
+          <div className="space-y-3">
+            <h5 className="font-bold text-sm uppercase tracking-wider text-[#3E4E36] dark:text-[#E2E8F0]">
+              Download The App
+            </h5>
+            <Link className="block w-fit hover:scale-[1.02] transition-transform duration-200">
               <img
                 src={playStore}
                 alt="Download from Play Store"
@@ -107,12 +111,11 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-[#adabab] dark:border-[#294353a6] text-center mt-6 pt-4">
-        <p className="m-0 text-base text-[#333333] dark:text-[#8696A0]">
+      <div className="border-t border-gray-200 dark:border-[#2C3530] text-center mt-8 pt-4">
+        <p className="m-0 text-sm text-[#3E4E36]/70 dark:text-[#94A3B8]/70">
           &copy; 2026 HerbalCare. All Rights Reserved.
         </p>
       </div>
     </footer>
-
   );
 }

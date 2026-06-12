@@ -3,44 +3,45 @@
 @source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
-
+/* ===== التنسيقات العامة للـ Typography والخلفيات البنيوية ===== */
 .heading-Sections {
-  @apply text-center font-bold text-3xl mb-5 dark:text-[#E9EDEF];
+  @apply text-center font-bold text-3xl mb-5 text-[#333333] dark:text-[#E2E8F0];
 }
 
 .cap-sections {
-  @apply text-center text-lg text-[#333333] dark:text-[#C5CFD6] md:w-3/4 mx-auto;
+  @apply text-center text-lg text-[#333333] dark:text-[#94A3B8] md:w-3/4 mx-auto;
 }
 
 .gridtemplet {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.25rem;
-  /* gap-5 */
 }
 
+/* ===== الأزرار الأساسية (باستخدام ألوان Flutter الموحدة) ===== */
 .btn {
-  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#446C4F] hover:bg-[#4E8369] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 
 .storeBtn {
-  @apply mx-auto flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
+  @apply mx-auto flex items-center justify-center gap-2 bg-[#446C4F] dark:bg-[#528B63] hover:dark:bg-[#4E8369] hover:bg-[#4E8369] text-gray-100 w-fit px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 
 .aiAsistBtn {
-  @apply w-full flex items-center justify-center gap-2 bg-[#3a5543] dark:bg-[#14532D] hover:dark:bg-[#1B6B39] hover:bg-[#4d7c5c] text-gray-100 px-5 py-2 rounded-lg cursor-pointer duration-200;
+  @apply w-full flex items-center justify-center gap-2 bg-[#446C4F] dark:bg-[#528B63] hover:dark:bg-[#4E8369] hover:bg-[#4E8369] text-gray-100 px-5 py-2 rounded-lg cursor-pointer duration-200;
 }
 
+/* ===== الكروت والـ Containers الداكنة والفاتحة ===== */
 .aboutBox {
-  @apply border dark:border-[#294353a6] border-[#adabab] p-3 ps-4 rounded-xl;
+  @apply border dark:border-[#2C3530] border-[#adabab] p-3 ps-4 rounded-xl;
 }
 
 .profileToggle {
-  @apply h-screen bg-[#e0e7e3] dark:bg-[#1A242A] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
+  @apply h-screen bg-[#E8F3EE] dark:bg-[#232925] shadow-md w-max fixed top-0 z-50 flex flex-col gap-3 duration-400;
 }
 
 .testimonialBox {
-  @apply border border-[#adabab] dark:border-[#294353a6] rounded-xl p-3 ps-4;
+  @apply border border-[#adabab] dark:border-[#2C3530] rounded-xl p-3 ps-4;
 }
 
 .testmonial-person {
@@ -52,17 +53,19 @@
 }
 
 .h3-vision {
-  @apply text-[#203825] dark:text-[#4d805e] text-xl font-medium;
+  @apply text-[#34533D] dark:text-[#528B63] text-xl font-medium;
 }
 
 .cat-active {
-  @apply bg-[#335D39] dark:bg-green-900/50 text-white dark:text-white px-4 py-1.5 rounded-full
+  @apply bg-[#446C4F] dark:bg-[#528B63] text-white px-4 py-1.5 rounded-full;
 }
 
+/* ===== تهيئة الـ HTML Body وعناصر التصفح ===== */
 body {
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
+  @apply bg-[#F5F7F3] dark:bg-[#1A1F1C] text-[#3E4E36] dark:text-[#E2E8F0];
 }
 
 p {
@@ -75,32 +78,29 @@ p {
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;
-  /* IE & Edge */
-  scrollbar-width: none;
-  /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .link.active {
-  @apply text-[#4d7c5c] dark:text-[#6bb683];
+  @apply text-[#4E8369] dark:text-[#528B63];
 }
 
+/* ===== التوقيت وعناصر مكتبة الأعشاب والـ Progress ===== */
 .span-time {
-  @apply cursor-pointer bg-green-800/50 dark:bg-green-200/25 text-white px-3 py-1.5 rounded-full border border-green-200/10;
+  @apply cursor-pointer bg-[#446C4F] dark:bg-[#528B63] text-white px-3 py-1.5 rounded-full border border-transparent;
 }
 
 .close-time {
-  @apply cursor-pointer bg-gray-800/30 dark:bg-green-200/10 text-white dark:text-white px-3 py-1.5 rounded-full border border-green-200/10;
+  @apply cursor-pointer bg-gray-300 dark:bg-[#2C3530] text-gray-700 dark:text-[#94A3B8] px-3 py-1.5 rounded-full border border-transparent;
 }
-
 
 .no-scrollbar {
-  -ms-overflow-style: none;
-  /* IE & Edge */
-  scrollbar-width: none;
-  /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
+/* ===== الـ Loader الأنيميشن ليتطابق مع الـ Primary Color ===== */
 .loader {
   width: 48px;
   height: 48px;
@@ -111,6 +111,7 @@ p {
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
+
 .loader::after {
   content: '';  
   box-sizing: border-box;
@@ -120,10 +121,11 @@ p {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border-left: 4px solid #23813e;
+  border-left: 4px solid #446C4F;  /* اللون الأساسي */
   border-bottom: 4px solid transparent;
   animation: rotation 0.5s linear infinite reverse;
 }
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
@@ -131,5 +133,4 @@ p {
   100% {
     transform: rotate(360deg);
   }
-} 
-/* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
+}

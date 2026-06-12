@@ -78,7 +78,9 @@ export default function Layout() {
           }}
         ></div>
       )}
-      <div className=" bg-[#F0F2F1] dark:bg-[#111B21] text-black dark:text-[#C5CFD6] ">
+      
+      {/* 🎯 هنا تم تحديث الخلفية والنصوص لتطابق ألوان Flutter الرسمية بالكامل للموقع */}
+      <div className="min-h-screen bg-[#F5F7F3] dark:bg-[#1A1F1C] text-[#3E4E36] dark:text-[#E2E8F0] transition-colors duration-200">
         <NavbarComponent
           toggleTheme={toggleTheme}
           theme={theme}
@@ -86,7 +88,15 @@ export default function Layout() {
           setProfileToggle={setProfileToggle}
         />
         <div>
-          <QuickSettings quickSettings={quickSettings} setQuickSettings={setQuickSettings} newTheme={newTheme} saveQuickSettings={saveQuickSettings} setNewTheme={setNewTheme} language={language} setLanguage={setLanguage}/>
+          <QuickSettings 
+            quickSettings={quickSettings} 
+            setQuickSettings={setQuickSettings} 
+            newTheme={newTheme} 
+            saveQuickSettings={saveQuickSettings} 
+            setNewTheme={setNewTheme} 
+            language={language} 
+            setLanguage={setLanguage}
+          />
           <Outlet></Outlet>
         </div>
         <Footer />

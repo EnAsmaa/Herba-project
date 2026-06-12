@@ -20,20 +20,17 @@ const ActivityPage = () => {
   const [completedQuizzesList, setCompletedQuizzesList] = useState([]);
   const [loadingStats, setLoadingStats] = useState(true);
 
-  // States التمارين الديناميكية
   const [exercisesList, setExercisesList] = useState([]);
   const [completedExercisesList, setCompletedExercisesList] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(true);
   const [submittingExercise, setSubmittingExercise] = useState(false);
 
-  // مجموع النقاط المكتسبة
   const [instantPoints, setInstantPoints] = useState(0);
 
   const TOTAL_QUIZZES_COUNT = 10;
   const MAX_POINTS_PER_QUIZ = 10; 
   const MAX_POSSIBLE_POINTS = TOTAL_QUIZZES_COUNT * MAX_POINTS_PER_QUIZ;
 
-  // 1. جلب إحصائيات الكويزات المكتملة
   const fetchQuizStats = async () => {
     try {
       setLoadingStats(true);
@@ -54,7 +51,6 @@ const ActivityPage = () => {
     }
   };
 
-  // 2. جلب التمارين وإحصائياتها من السيرفر
   const fetchExerciseStats = async () => {
     try {
       setLoadingExercises(true);
@@ -66,7 +62,6 @@ const ActivityPage = () => {
       const myData = myRes?.data || myRes || [];
       console.log(completedExercisesList);
       
-      // حفظ التمارين المكتملة كمصفوفة نظيفة لضمان قراءة طولها بدقة
       setCompletedExercisesList(Array.isArray(myData) ? myData : []);
     } catch (err) {
       console.error("Failed to fetch exercises:", err);
@@ -80,7 +75,6 @@ const ActivityPage = () => {
     fetchExerciseStats();
   }, []);
 
-  // حساب النقاط الكلية بشكل آمن من الـ NaN
   useEffect(() => {
     if (completedQuizzesList.length > 0) {
       const totalPointsCalculated = completedQuizzesList.reduce((acc, current) => {
@@ -106,14 +100,13 @@ const ActivityPage = () => {
     }
   };
 
-  // دالة الإرسال المحدثة والمطابقة لملف الـ Services المصحح
   const handleCompleteExercise = async (exerciseId) => {
     try {
       setSubmittingExercise(true);
       await postExercise({ exerciseId: exerciseId });
       toast.success("Exercise progress saved successfully! 🎉");
       setSelectedExercise(null);
-      fetchExerciseStats(); // تحديث فوري للأرقام والعدادات بعد الإرسال
+      fetchExerciseStats(); 
     } catch (err) {
       toast.error("Failed to save exercise progress.");
       console.error(err);
@@ -147,7 +140,6 @@ const ActivityPage = () => {
                 </span>
               </div>
 
-              {/* 🎯 عداد التمارين المكتملة يقرأ الآن طول المصفوفة الراجعة من السيرفر كـ String آمن */}
               <div className="flex justify-between items-center">
                 <span>Exercises Completed</span>
                 <span className="font-bold text-[#4E7355] dark:text-[#76db89]">
@@ -228,7 +220,6 @@ const ActivityPage = () => {
               </div>
             )}
 
-            {/* عرض التمارين من الـ API */}
             {activeTab === "Exercises" && !selectedExercise && (
               loadingExercises ? (
                 <div className="flex justify-center items-center h-[300px]">
@@ -239,7 +230,6 @@ const ActivityPage = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in zoom-in-95">
                   {exercisesList.map((ex) => {
-                    // 🎯 تصحيح شرط المقارنة ليتناسب بدقة مع مخرجات السيرفر وهيكل الـ exerciseId المتوقع
                     const isCompleted = completedExercisesList.some(
                       (c) => Number(c.exerciseId) === Number(ex.exerciseId) || Number(c.id) === Number(ex.exerciseId)
                     );
@@ -284,7 +274,6 @@ const ActivityPage = () => {
               )
             )}
 
-            {/* تفاصيل خطوات التمرين */}
             {selectedExercise && (
               <div className="animate-in slide-in-from-right-8 duration-300">
                 <button onClick={() => setSelectedExercise(null)} className="flex items-center gap-2 cursor-pointer text-gray-400 dark:text-zinc-400 hover:text-[#4E7355] dark:hover:text-[#64bb74] font-bold mb-8 group">
