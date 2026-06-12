@@ -15,11 +15,9 @@ export default function QuizPlay({ quizId, onExit }) {
       try {
         const res = await getQuizById(quizId);
         
-        // التحقق أولاً: إذا كان الـ API يعيد الكويز مباشرة كـ Object أو مصفوفة تحتاج بحث
         let currentQuiz = null;
         
         if (Array.isArray(res?.data)) {
-          // استخدام == بدلاً من === لتجنب مشاكل اختلاف نوع البيانات (String vs Number)
           currentQuiz = res.data.find(q => q.quizId == quizId);
         } else if (res?.data && res.data.quizId == quizId) {
           currentQuiz = res.data;
@@ -66,15 +64,13 @@ const handleNext = async () => {
     } else {
       setSubmitting(true);
       
-      // 1. تجهيز المصفوفة الداخلية مع الحفاظ على التسمية السليمة لكل عنصر
       const formattedAnswers = Object.keys(selectedAnswers).map((qId) => ({
         questionId: parseInt(qId),
         selectedAnswer: selectedAnswers[qId], 
       }));
 
       try {
-        // 2. الحل الذهبي: تغليف المصفوفة داخل كائن يحمل اسم الخاصية "answers" بحرف صغير أو كبير 
-        // الـ .NET Core سيعمل لها Mapping تلقائياً مع حقل الـ Answers المشتكي في السيرفر
+        
         const result = await submitQuizAnswers(quizId, { answers: formattedAnswers });
         
         toast.success("Successfully Submitted! 🎉");
@@ -89,7 +85,6 @@ const handleNext = async () => {
   };
 
   return (
-    // دعم الـ Dark Mode للخلفية والحدود الخارجية للمكون بالكامل
     <div className="p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 max-w-4xl mx-auto transition-colors duration-200">
       
       {/* Header */}
@@ -105,7 +100,6 @@ const handleNext = async () => {
         </span>
       </div>
 
-      {/* Question Text - مع تحسين الرؤية في الـ Dark Mode ليكون باللون الأبيض الناصع */}
       <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-zinc-100 mb-12 leading-snug max-w-2xl mx-auto">
         {currentQuestion?.text}
       </h2>

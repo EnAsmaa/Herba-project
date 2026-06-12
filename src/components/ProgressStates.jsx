@@ -1,49 +1,52 @@
-import React from 'react'
+import React from 'react';
 import { PieChart, Pie, Label, ResponsiveContainer } from 'recharts';
-const data = [
-    { name: 'Group C', value: 6, fill: '#335D39cc' },
-    { name: 'Group C', value: 4, fill: '#6BB68333' },
-];
 
-const MyPie = () => (
-    <Pie
-        data={data}
-        dataKey="value"
-        nameKey="name"
-        outerRadius="80%"
-        innerRadius="60%"
-        isAnimationActive={true}
-        strokeWidth={0}
-    />
-);
+export default function ProgressStates({ completedCount = 0, totalQuizzes = 10 }) {
+    
+    // حساب عدد الكويزات المتبقية ديناميكياً
+    const remainingQuizzes = totalQuizzes - completedCount >= 0 ? totalQuizzes - completedCount : 0;
 
+    // تجهيز البيانات الحية للشارت بناءً على الإحصائيات الفعالة
+    const data = [
+        { name: 'Completed', value: completedCount, fill: '#4E7355' }, // اللون الأخضر الأساسي للتطبيق
+        { name: 'Remaining', value: remainingQuizzes, fill: '#6BB68333' }, // الأخضر الشفاف للخلفية المتبقية
+    ];
 
-export default function ProgressStates() {
-    const total = data.reduce((sum, item) => sum + item.value, 0);
-    const percentage = ((data[0].value / total) * 100).toFixed(0);
-    return <>
+    // حساب النسبة المئوية بدقة
+    const total = completedCount + remainingQuizzes;
+    const percentage = total > 0 ? ((completedCount / total) * 100).toFixed(0) : 0;
+
+    return (
         <div
-            style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                width: '100%',
-                maxWidth: '350px',
-                minHeight: '300px',
-                padding: '10px',
-                justifyContent: 'space-around',
-                alignItems: 'stretch',
-            }}
+            className="flex flex-wrap w-full max-w-[350px] min-h-[300px] p-2.5 justify-around items-stretch"
         >
-            <div style={{ width: '33%', flex: '1 1 200px', aspectRatio: 1, height: 'calc(100% - 20px)' }}>
+            <div className="w-[33%] flex-1 flex-shrink-0 basis-[200px] aspect-square h-[calc(100%-20px)]">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                        <MyPie />
-                        <Label position="center" fill="#222" fontWeight={600}>
-                            {`progress ${percentage}%`}
+                        <Pie
+                            data={data}
+                            dataKey="value"
+                            nameKey="name"
+                            outerRadius="80%"
+                            innerRadius="60%"
+                            isAnimationActive={true}
+                            strokeWidth={0}
+                            startAngle={90} // لجعل الشارت يبدأ الرسم من الأعلى باتجاه عقارب الساعة
+                            endAngle={-270}
+                        />
+                        {/* الـ Label تم تعديل الـ fill الخاص به ليتكيف تلقائياً:
+                          "currentColor" تعني أنه سيأخذ لون النص الخاص بالأب (أسود في الفاتح، وأبيض في الداكن)
+                        */}
+                        <Label 
+                            position="center" 
+                            fill="currentColor" 
+                            className="text-slate-800 dark:text-zinc-100 font-bold text-lg"
+                        >
+                            {`${percentage}%`}
                         </Label>
                     </PieChart>
                 </ResponsiveContainer>
             </div>
         </div>
-    </>
+    );
 }
