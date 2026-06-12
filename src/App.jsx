@@ -31,6 +31,7 @@ import MyConsultations from "./Pages/Consultation/MyConsultations";
 import Cart from "./components/Cart";
 import OrderSuccess from "./Pages/OrderSuccess";
 import QuizPlay from "./components/AnswerQuize"
+import SpecificMarketProducts from "./Pages/SpecificMarketProducts";
 function App() {
   const { i18n } = useTranslation();
 
@@ -65,6 +66,7 @@ function App() {
       { path: 'reply-consultation', element: <ProtectedRoot allowedRoles={['doctor']}><ReplyConsultation /></ProtectedRoot> },
       { path: 'my-consultation', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><MyConsultations /></ProtectedRoot> },
       { path: 'order-success', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><OrderSuccess /></ProtectedRoot> },
+      { path: 'market/:storeId', element: <ProtectedRoot allowedRoles={['user', 'doctor']}><SpecificMarketProducts /></ProtectedRoot> },
 
       { path: '*', element: <NotFound /> },
     ]
@@ -72,7 +74,7 @@ function App() {
 
 
   return <>
-  <div><Toaster/></div> 
+    <div><Toaster /></div>
     <RouterProvider router={router}></RouterProvider>
   </>
 

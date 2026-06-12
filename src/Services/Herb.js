@@ -61,15 +61,18 @@ export const getFavHerbas = async () => {
   }
 };
 
-
 export const PostFavHerbas = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.post("http://herbs.runasp.net/api/Favorite", { herbId }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const { data } = await axios.post(
+      "http://herbs.runasp.net/api/Favorite",
+      { herbId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return data;
   } catch (err) {
     console.log("error", err);
@@ -79,11 +82,14 @@ export const PostFavHerbas = async (herbId) => {
 export const DeleteFavHerb = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.delete(`http://herbs.runasp.net/api/Favorite/${herbId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const { data } = await axios.delete(
+      `http://herbs.runasp.net/api/Favorite/${herbId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return data;
   } catch (err) {
     console.log("error", err);

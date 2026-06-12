@@ -24,7 +24,7 @@ export default function Consultation() {
 
   const getDoctors = async () => {
     try {
-      const { data } = await axios.get('https://herbs.runasp.net/api/User/doctors')
+      const { data } = await axios.get('http://herbs.runasp.net/api/User/doctors')
       if (data.success) {
         setDoctors(data.data)
         console.log(data.data)
