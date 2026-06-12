@@ -58,127 +58,105 @@ export default function ReplyConsultation() {
     }
 
 
-    return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] p-6">
-            <div className="max-w-5xl mx-auto">
-                <h1 className="text-4xl font-bold text-center mt-8 mb-10 text-green-700 dark:text-green-400">
-                    Patient Consultations
-                </h1>
+return(
+    <div className="min-h-screen bg-[#F5F7F3] dark:bg-[#1A1F1C] p-6 transition-colors duration-300">
+  <div className="max-w-5xl mx-auto">
+    <h1 className="text-4xl font-bold text-center mt-8 mb-10 text-[#446C4F] dark:text-[#528B63]">
+      Patient Consultations
+    </h1>
 
-                <div className="flex justify-center mb-6 gap-4">
-                    <button
-                        onClick={() => setShownConsultationslabel('all')}
-                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'all' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
-                    >
-                        All Consultations
-                    </button>
-                    <button
-                        onClick={() => setShownConsultationslabel('notAnswered')}
-                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'notAnswered' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
-                    >
-                        Not Answered
-                    </button>
-                    <button
-                        onClick={() => setShownConsultationslabel('Answered')}
-                        className={`px-4 py-2 rounded-lg cursor-pointer ${shownConsultationslabel === 'Answered' ? 'bg-green-800 text-white shadow-md' : 'dark:bg-[#0C1A1A] bg-green-800/10'}`}
-                    >
-                        Answered
-                    </button>
-                </div>
+    {/* FILTER BUTTONS */}
+    <div className="flex justify-center mb-10 gap-4">
+      {['all', 'notAnswered', 'Answered'].map((filter) => (
+        <button
+          key={filter}
+          onClick={() => setShownConsultationslabel(filter)}
+          className={`px-6 py-2 rounded-xl cursor-pointer font-medium transition-all ${
+            shownConsultationslabel === filter 
+              ? 'bg-[#446C4F] text-white shadow-md' 
+              : 'bg-[#E8F3EE] dark:bg-[#232925] text-[#3E4E36] dark:text-[#94A3B8]'
+          }`}
+        >
+          {filter.charAt(0).toUpperCase() + filter.slice(1).replace(/([A-Z])/g, ' $1')}
+        </button>
+      ))}
+    </div>
 
-                <div className="space-y-6">
-                    {shownConsultations?.map((consultation) => {
-                        const isUnread = !consultation.reply;
-                        return (
-                            <div
-                                key={consultation.conId}
-                                className={`rounded-2xl shadow-lg p-6 border transition-all duration-300
-                                ${isUnread
-                                        ? "bg-red-50 border-red-300 dark:bg-red-950"
-                                        : "bg-white dark:bg-[#1e293b] border-gray-100 dark:border-slate-700"
-                                    }`}
-                            >
-                                {/* Header */}
-                                <div className="flex items-center gap-3 mb-4">
-                                    {isUnread && (
-                                        <span className="px-3 py-1 text-xs font-bold bg-red-500 text-white rounded-full">
-                                            NEW
-                                        </span>
-                                    )}
-
-                                    <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-lg">
-                                        {consultation.userName
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                            consultation.userName
-                                                .charAt(1)
-                                                .toLowerCase()}
-                                    </div>
-
-                                    <div>
-                                        <h2 className="font-semibold text-lg text-gray-800 dark:text-white">
-                                            {consultation.userName}
-                                        </h2>
-                                        <p className="text-sm text-gray-500">
-                                            Patient Consultation
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Question */}
-                                <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 mb-4">
-                                    <p className="font-medium text-gray-700 dark:text-gray-200">
-                                        Question:
-                                    </p>
-
-                                    <p onClick={() => { setQuestionExpanded(consultation.conId === questionexpanded ? null : consultation.conId) }} className={`mt-2 text-gray-600 dark:text-gray-300 w-full! ${consultation.conId === questionexpanded ? 'whitespace-pre-wrap break-all' : 'truncate cursor-pointer'}`}>
-                                        {consultation.message}
-                                    </p>
-                                </div>
-
-                                {/* Reply if exists */}
-                                {consultation.reply && (
-                                    <div className="bg-green-50 border-l-4 border-green-500 rounded-lg p-4 mb-4">
-                                        <p className="font-semibold text-green-700">
-                                            Doctor Reply
-                                        </p>
-
-                                        <p onClick={() => { setReplyExpanded(consultation.conId === replyExpanded ? null : consultation.conId) }} className={`text-green-800 mt-1 w-full! ${consultation.conId === replyExpanded ? 'whitespace-pre-wrap break-all' : 'truncate cursor-pointer'}`}>
-                                            {consultation.reply}
-                                        </p>
-                                    </div>
-                                )}
-
-                                {/* Reply input */}
-                                <textarea
-                                    value={
-                                        replies[consultation.conId] || ""
-                                    }
-                                    onChange={(e) =>
-                                        setReplies({
-                                            ...replies,
-                                            [consultation.conId]:
-                                                e.target.value,
-                                        })
-                                    }
-                                    placeholder="Write your reply..."
-                                    className="w-full border border-gray-300 dark:border-slate-600 rounded-xl p-3 outline-none focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:text-white resize-none"
-                                    rows="4"
-                                />
-
-                                <button
-                                    onClick={() =>
-                                        sendReply(consultation.conId)
-                                    }
-                                    className="mt-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition"
-                                >
-                                    Send Reply
-                                </button>
-                            </div>
-                        );
-                    })}
-                </div>
+    {/* CONSULTATION LIST */}
+    <div className="space-y-6">
+      {shownConsultations?.map((consultation) => {
+        const isUnread = !consultation.reply;
+        return (
+          <div
+            key={consultation.conId}
+            className={`rounded-2xl shadow-sm p-6 border transition-all duration-300 ${
+              isUnread
+                ? "bg-[#E8F3EE]/50 border-[#94C973] dark:bg-[#232925] dark:border-[#528B63]"
+                : "bg-white dark:bg-[#232925] border-gray-100 dark:border-[#2C3530]"
+            }`}
+          >
+            {/* Header */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-[#E8F3EE] dark:bg-[#2C3530] text-[#446C4F] dark:text-[#528B63] flex items-center justify-center font-bold text-lg">
+                {consultation.userName.slice(0, 2).toUpperCase()}
+              </div>
+              <div className="flex-1">
+                <h2 className="font-bold text-lg text-[#3E4E36] dark:text-[#E2E8F0]">
+                  {consultation.userName}
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-[#94A3B8]">Patient Consultation</p>
+              </div>
+              {isUnread && (
+                <span className="px-3 py-1 text-xs font-bold bg-[#446C4F] text-white rounded-full">
+                  NEW
+                </span>
+              )}
             </div>
-        </div>
-    );
+
+            {/* Question */}
+            <div className="bg-[#F5F7F3] dark:bg-[#1A1F1C] rounded-xl p-4 mb-4">
+              <p className="font-bold text-[#446C4F] dark:text-[#94C973] text-sm mb-1 uppercase">Question:</p>
+              <p 
+                onClick={() => setQuestionExpanded(consultation.conId === questionexpanded ? null : consultation.conId)}
+                className={`text-[#3E4E36] dark:text-[#E2E8F0] cursor-pointer ${consultation.conId === questionexpanded ? 'whitespace-pre-wrap' : 'truncate'}`}
+              >
+                {consultation.message}
+              </p>
+            </div>
+
+            {/* Reply if exists */}
+            {consultation.reply && (
+              <div className="bg-[#E8F3EE] dark:bg-[#2C3530] border-l-4 border-[#446C4F] dark:border-[#528B63] rounded-r-lg p-4 mb-4">
+                <p className="font-bold text-[#446C4F] dark:text-[#94C973] text-sm mb-1 uppercase">Doctor Reply</p>
+                <p 
+                  onClick={() => setReplyExpanded(consultation.conId === replyExpanded ? null : consultation.conId)}
+                  className={`text-[#3E4E36] dark:text-[#E2E8F0] cursor-pointer ${consultation.conId === replyExpanded ? 'whitespace-pre-wrap' : 'truncate'}`}
+                >
+                  {consultation.reply}
+                </p>
+              </div>
+            )}
+
+            {/* Reply input */}
+            <textarea
+              value={replies[consultation.conId] || ""}
+              onChange={(e) => setReplies({...replies, [consultation.conId]: e.target.value})}
+              placeholder="Write your reply..."
+              className="w-full border border-gray-200 dark:border-[#2C3530] rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#446C4F] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] resize-none"
+              rows="4"
+            />
+
+            <button
+              onClick={() => sendReply(consultation.conId)}
+              className="mt-4 px-6 py-2 bg-[#446C4F] dark:bg-[#528B63] hover:opacity-90 text-white rounded-xl font-bold transition"
+            >
+              Send Reply
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+);
 }
