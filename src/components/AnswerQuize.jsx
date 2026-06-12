@@ -85,7 +85,7 @@ export default function QuizPlay({ quizId, onExit }) {
       try {
         const result = await submitQuizAnswers(quizId, { answers: formattedAnswers });
         
-        const earnedPoints = result?.data?.totalPoints || result?.data?.score || result?.data?.data?.totalPoints || 0;
+        const earnedPoints = result?.data?.score || 0;
 
         toast.success(`Successfully Submitted! 🎉 You earned ${earnedPoints} points!`);
         
@@ -93,7 +93,7 @@ export default function QuizPlay({ quizId, onExit }) {
           onExit({
             quizId: quizId,
             answers: formattedAnswers,
-            totalPoints: earnedPoints
+            score: earnedPoints
           });
         }
       } catch (err) {

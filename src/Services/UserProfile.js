@@ -6,7 +6,7 @@ export const getProfileDataAPI = async () => {
   const token = localStorage.getItem("loginToken");
   try {
     const { data } = await axios.get(
-      "https://herbs.runasp.net/api/User/profile",
+      "http://herbs.runasp.net/api/User/profile",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,7 +24,7 @@ export const updateUserData = async (formattedData) => {
   try {
     const token = localStorage.getItem("loginToken");
 
-    const { data } = await axios.put('https://herbs.runasp.net/api/User/profile', formattedData, {
+    const { data } = await axios.put('http://herbs.runasp.net/api/User/profile', formattedData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
