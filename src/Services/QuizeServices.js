@@ -53,6 +53,8 @@ export const submitQuizAnswers = async (id, payload) => {
     const { data } = await axios.post(`http://herbs.runasp.net/api/Quiz/${id}/submit`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(data);
+    
     return data;
   } catch (err) {
     console.error(`Error submitting quiz ${id}:`, err);
