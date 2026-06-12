@@ -6,7 +6,6 @@ export default function QuizessStates({ onStartQuiz, completedQuizzes = [] }) {
   const [quizes, setQuizes] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // جلب الكويزات المتاحة من الـ API
   const getQuizes = async () => {
     setLoading(true);
     try {
@@ -45,7 +44,6 @@ export default function QuizessStates({ onStartQuiz, completedQuizzes = [] }) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {quizes.map((quiz) => {
-            // الفحص الذهبي: التحقق إذا كان الـ quizId الخاص بهذا الكارت موجود في قائمة المكتملين
             const isCompleted = completedQuizzes.some(
               (cq) => cq.quizId === quiz.quizId || cq.quizId == quiz.quizId
             );
@@ -89,10 +87,9 @@ export default function QuizessStates({ onStartQuiz, completedQuizzes = [] }) {
                   </div>
                 </div>
                 
-                {/* قسم الزر السفلي مع التعطيل التلقائي والديناميكي */}
                 <div className="pt-2 border-t border-gray-55 dark:border-gray-700">
                   <button 
-                    disabled={isCompleted} // تعطيل الضغط ومنع فتح الكويز نهائياً
+                    disabled={isCompleted} 
                     onClick={() => onStartQuiz(quiz.quizId)}
                     className={`px-6 py-2.5 w-full rounded-xl font-semibold text-sm transition-all text-center block ${
                       isCompleted

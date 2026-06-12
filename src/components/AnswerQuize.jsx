@@ -6,21 +6,19 @@ export default function QuizPlay({ quizId, onExit }) {
   const [questions, setQuestions] = useState([]);
   const [quizTitle, setQuizTitle] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState({}); 
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuizDetails = async () => {
       try {
+        setLoading(true);
         const res = await getQuizById(quizId);
-        
-        // التحقق أولاً: إذا كان الـ API يعيد الكويز مباشرة كـ Object أو مصفوفة تحتاج بحث
         let currentQuiz = null;
-        
+
         if (Array.isArray(res?.data)) {
-          // استخدام == بدلاً من === لتجنب مشاكل اختلاف نوع البيانات (String vs Number)
-          currentQuiz = res.data.find(q => q.quizId == quizId);
+          currentQuiz = res.data.find((q) => q.quizId == quizId);
         } else if (res?.data && res.data.quizId == quizId) {
           currentQuiz = res.data;
         }
@@ -41,8 +39,21 @@ export default function QuizPlay({ quizId, onExit }) {
     fetchQuizDetails();
   }, [quizId]);
 
-  if (loading) return <div className="text-center py-10 text-gray-500 dark:text-emerald-400 font-medium animate-pulse">Loading Question...</div>;
-  if (questions.length === 0) return <div className="text-center text-gray-600 dark:text-gray-200 py-10 font-medium">No questions available in this quiz.</div>;
+  if (loading) {
+    return (
+      <div className="text-center py-10 text-gray-500 dark:text-emerald-400 font-medium animate-pulse">
+        Loading Question...
+      </div>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="text-center text-gray-600 dark:text-gray-200 py-10 font-medium">
+        No questions available in this quiz.
+      </div>
+    );
+  }
 
   const currentQuestion = questions[currentIndex];
 
@@ -51,7 +62,7 @@ export default function QuizPlay({ quizId, onExit }) {
     { key: "B", text: currentQuestion?.optionB },
     { key: "C", text: currentQuestion?.optionC },
     { key: "D", text: currentQuestion?.optionD },
-  ].filter(opt => opt.text);
+  ].filter((opt) => opt.text);
 
   const handleSelectAnswer = (questionId, optionKey) => {
     setSelectedAnswers({
@@ -60,25 +71,31 @@ export default function QuizPlay({ quizId, onExit }) {
     });
   };
 
-const handleNext = async () => {
+  const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setSubmitting(true);
-      
-      // 1. تجهيز المصفوفة الداخلية مع الحفاظ على التسمية السليمة لكل عنصر
+
       const formattedAnswers = Object.keys(selectedAnswers).map((qId) => ({
         questionId: parseInt(qId),
-        selectedAnswer: selectedAnswers[qId], 
+        selectedAnswer: selectedAnswers[qId],
       }));
 
       try {
-        // 2. الحل الذهبي: تغليف المصفوفة داخل كائن يحمل اسم الخاصية "answers" بحرف صغير أو كبير 
-        // الـ .NET Core سيعمل لها Mapping تلقائياً مع حقل الـ Answers المشتكي في السيرفر
         const result = await submitQuizAnswers(quizId, { answers: formattedAnswers });
         
-        toast.success("Successfully Submitted! 🎉");
-        onExit(); 
+        const earnedPoints = result?.data?.totalPoints || result?.data?.score || result?.data?.data?.totalPoints || 0;
+
+        toast.success(`Successfully Submitted! 🎉 You earned ${earnedPoints} points!`);
+        
+        if (onExit) {
+          onExit({
+            quizId: quizId,
+            answers: formattedAnswers,
+            totalPoints: earnedPoints
+          });
+        }
       } catch (err) {
         toast.error("Failed to submit answers. Please check your data.");
         console.error("Submission error details:", err);
@@ -89,23 +106,26 @@ const handleNext = async () => {
   };
 
   return (
-    // دعم الـ Dark Mode للخلفية والحدود الخارجية للمكون بالكامل
     <div className="p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 max-w-4xl mx-auto transition-colors duration-200">
       
       {/* Header */}
       <div className="flex justify-between items-center mb-12">
-        <button onClick={onExit} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 font-medium flex items-center gap-1 cursor-pointer transition-colors">
+        <button
+          onClick={() => onExit && onExit(null)}
+          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 font-medium flex items-center gap-1 cursor-pointer transition-colors"
+        >
           ← Exit
         </button>
         <div className="text-center hidden sm:block">
-          <h2 className="font-bold text-gray-400 dark:text-zinc-500 text-sm uppercase tracking-wider">{quizTitle}</h2>
+          <h2 className="font-bold text-gray-400 dark:text-zinc-500 text-sm uppercase tracking-wider">
+            {quizTitle}
+          </h2>
         </div>
         <span className="bg-emerald-50 text-[#4E7355] dark:bg-emerald-950/50 dark:text-[#64bb74] px-4 py-1 rounded-full text-sm font-semibold">
           Question {currentIndex + 1}/{questions.length}
         </span>
       </div>
 
-      {/* Question Text - مع تحسين الرؤية في الـ Dark Mode ليكون باللون الأبيض الناصع */}
       <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-zinc-100 mb-12 leading-snug max-w-2xl mx-auto">
         {currentQuestion?.text}
       </h2>
@@ -113,7 +133,7 @@ const handleNext = async () => {
       {/* Dynamic Answers Options Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
         {options.map((option) => {
-          const isSelected = selectedAnswers[currentQuestion.questionId] === option.key;
+          const isSelected = selectedAnswers[currentQuestion?.questionId] === option.key;
           return (
             <button
               key={option.key}
@@ -133,12 +153,14 @@ const handleNext = async () => {
       {/* Progress Bar & Next Button */}
       <div className="space-y-4">
         <div className="w-full h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#4E7355] dark:bg-[#64bb74] transition-all duration-300" 
-            style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+          <div
+            className="h-full bg-[#4E7355] dark:bg-[#64bb74] transition-all duration-300"
+            style={{
+              width: `${((currentIndex + 1) / questions.length) * 100}%`,
+            }}
           ></div>
         </div>
-        
+
         <div className="flex justify-end">
           <button
             disabled={!selectedAnswers[currentQuestion?.questionId] || submitting}
@@ -149,7 +171,11 @@ const handleNext = async () => {
                 : "bg-gray-300 dark:bg-zinc-700 text-gray-500 dark:text-zinc-500 cursor-not-allowed"
             }`}
           >
-            {currentIndex === questions.length - 1 ? (submitting ? "Submitting..." : "Submit Quiz") : "Next Question →"}
+            {currentIndex === questions.length - 1
+              ? submitting
+                ? "Submitting..."
+                : "Submit Quiz"
+              : "Next Question →"}
           </button>
         </div>
       </div>
