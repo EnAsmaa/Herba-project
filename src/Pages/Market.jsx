@@ -7,7 +7,9 @@ import {
 } from "react-icons/fa6";
 import Search from "../components/Search";
 import { getProductsAPI, getStoresAPI } from "../Services/MarketServices";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { sendAddToCart } from "../Services/CartServices";
+import toast from "react-hot-toast";
 
 export default function Market() {
   const [stores, setStores] = useState([]);
@@ -15,6 +17,7 @@ export default function Market() {
   const [loadingStores, setLoadingStores] = useState(true);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   // get store data
   const getStores = async () => {
@@ -51,7 +54,14 @@ export default function Market() {
     getProducts();
   }, []);
 
-  console.log(products)
+
+  const addToCart = async (id) => {
+    const response = await sendAddToCart(id);
+    if (response && response.success) {
+      toast.success('Item Added Suuccessfully To Cart')
+      navigate('/cart')
+    }
+  };
 
   // filterd stores
   const filteredStores = useMemo(() => {
@@ -157,11 +167,11 @@ export default function Market() {
             <span class="loader"></span>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {filteredProducts.map((product) => (
+          <div className="grid gap-6 grid-cols-12">
+            {filteredProducts.map((product, index) => (
               <div
                 key={product.productId}
-                className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700"
+                className={`group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700 col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 ${index == 1 && 'col-span-12! sm:col-span-5!'} ${index == 0 && 'col-span-12! sm:col-span-7!'}`}
               >
                 <div className="overflow-hidden">
                   <img
@@ -179,12 +189,12 @@ export default function Market() {
                     {product.name}
                   </h3>
 
-                  <div className="flex justify-between items-center mt-4">
+                  <div className=" mt-2">
                     <span className="text-green-700 dark:text-green-400 font-bold text-lg">
                       {product.price} EGP
                     </span>
 
-                    <button className="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-xl transition">
+                    <button onClick={() => { addToCart(product.productId) }} className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-xl transition w-full mt-2">
                       <FaCartShopping />
                       Cart
                     </button>

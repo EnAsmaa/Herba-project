@@ -132,7 +132,7 @@ export default function OrderSuccess() {
                   </Link>
 
                   <Link
-                    to="/herbas"
+                    to="/market"
                     className="flex-1 text-center py-3 rounded-xl bg-green-700 text-white hover:bg-green-800"
                   >
                     Continue Shopping

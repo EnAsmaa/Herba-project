@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getMarketProductsAPI } from '../Services/MarketServices';
 import toast from 'react-hot-toast';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
 import { sendAddToCart } from '../Services/CartServices';
 
@@ -10,6 +10,7 @@ export default function SpecificMarketProducts() {
     const [products, setProducts] = useState([]);
     const [loadingProducts, setLoadingProducts] = useState(true);
     const { storeId } = useParams()
+    const navigate = useNavigate()
 
     // get products
     const getMarketProducts = async () => {
@@ -34,7 +35,8 @@ export default function SpecificMarketProducts() {
     const addToCart = async (id) => {
         const response = await sendAddToCart(id);
         if (response && response.success) {
-            Navigate("/cart");
+            toast.success('Item Added Suuccessfully To Cart')
+            navigate('/cart')
         }
     };
 
@@ -73,7 +75,7 @@ export default function SpecificMarketProducts() {
                         {products?.map((product, index) => (
                             <div
                                 key={product.productId}
-                                className={`group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700 col-span-12 sm:col-span-4 md:col-span-3 ${index == 1 && 'col-span-12! sm:col-span-5!'} ${index == 0 && 'col-span-12! sm:col-span-7!'}`}
+                                className={`group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700 col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 ${index == 1 && 'col-span-12! sm:col-span-5!'} ${index == 0 && 'col-span-12! sm:col-span-7!'}`}
                             >
                                 <div className="overflow-hidden">
                                     <img

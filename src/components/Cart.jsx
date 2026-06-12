@@ -6,6 +6,7 @@ import {
 } from "../Services/CartServices";
 import { useNavigate } from "react-router-dom";
 import { sendCheckout } from "../Services/OrderServices";
+import toast from "react-hot-toast";
 
 
 export default function Cart() {
@@ -64,6 +65,7 @@ export default function Cart() {
     const res = await sendAddToCart(productId, amount);
     if (res?.success) {
       await getCartItems();
+      toast.success('Quantity Updated Successfully')
     }
   };
 
@@ -72,6 +74,7 @@ export default function Cart() {
     const res = await sendRemoveFromCart(productId);
     if (res?.success) {
       getCartItems();
+      toast.success('Quantity Removed Successfully')
     }
   };
 
@@ -89,12 +92,11 @@ export default function Cart() {
         paymentMethod,
       );
 
-      console.log('checkout response is - ', res)
-
       if (res.success) {
         navigate(`/order-success`);
+        toast.success('Checkout Successfully')
       } else {
-        alert(res.message);
+        toast.error(res.message);
       }
     } catch (err) {
       console.log(err)
@@ -110,8 +112,8 @@ export default function Cart() {
 
   if (isLoading && cartItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-transparent">
-        <div className="size-8 border-2 border-neutral-300 dark:border-neutral-700 border-t-[#14532D] dark:border-t-green-500 rounded-full animate-spin"></div>
+      <div className="min-h-150 w-full flex items-center justify-center">
+        <span className="loader"></span>
       </div>
     );
   }
@@ -136,7 +138,7 @@ export default function Cart() {
             <h3 className="text-xl font-medium text-[#14532D] dark:text-green-500">Your shopping cart is empty</h3>
             <p className="text-neutral-500 dark:text-neutral-400 mt-2 text-sm">Add some of our amazing herbs and products to start shopping.</p>
             <button
-              onClick={() => navigate('/herbas')}
+              onClick={() => navigate('/market')}
               className="mt-6 cursor-pointer inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-[#14532D] dark:bg-green-600 hover:bg-green-800 dark:hover:bg-green-700 transition-colors duration-200 rounded-md shadow-sm"
             >
               Continue Shopping

@@ -49,6 +49,8 @@ export default function Login() {
     }
     else {
       setApiError(response.message);
+      toast.error(response.message)
+
     }
   };
   return (
