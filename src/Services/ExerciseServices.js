@@ -34,8 +34,8 @@ export const getMyExercise = async () => {
 // post an exercise
 export const postExercise = async (userData) => {
     try {
-        const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Exercise/my-exercises",userData,
+        const { data } = await axios.post(
+            "http://herbs.runasp.net/api/Exercise/assign",userData,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
