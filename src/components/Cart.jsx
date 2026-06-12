@@ -99,7 +99,7 @@ export default function Cart() {
         toast.error(res.message);
       }
     } catch (err) {
-      console.log(err)
+      toast.error(err)
     } finally {
       setIsCheckoutLoading(false);
     }

@@ -8,6 +8,7 @@ import { schema } from "../Schema/RegisterSchema";
 import { registerRequest } from "../Services/Authentication";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [loading, setIsLoading] = useState(false);
@@ -44,11 +45,12 @@ export default function Register() {
     };
 
     const response = await registerRequest(formattedData);
-    console.log(response);
     if (response.isSuccess) {
       navigate("/login");
+      toast.success('Registeration Succeessfully')
     } else {
       setApiError(response.message);
+      toast.error(response.message)
     }
     setIsLoading(false);
   };

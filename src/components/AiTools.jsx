@@ -25,17 +25,10 @@ export default function AiTools() {
             </h2>
 
             <p className="text-gray-600 text-sm line-clamp-2">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Libero, et a? Ea.
+              helps you quickly estimate the nutritional value of foods and meals, including calories, protein, carbohydrates, fats, and essential nutrients to support healthier eating decisions.
             </p>
 
-            <textarea
-              rows={3}
-              className="w-full border border-secondary-100 rounded p-2 resize-none text-sm"
-              placeholder="e.g. 100g chicken breast, 100g white rice"
-            />
-
-            <button className="aiAsistBtn w-full " onClick={()=>navigate('/nutrition')}>
+            <button className="aiAsistBtn w-full mt-10" onClick={()=>navigate('/nutrition')}>
               <MdCalculate />
               Calculate
             </button>
@@ -56,11 +49,10 @@ export default function AiTools() {
             </h2>
 
             <p className="text-gray-600 text-sm line-clamp-2">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Libero, et a? Ea.
+              helps users identify herbs by analyzing uploaded images and providing information about the herb’s name, benefits, characteristics, and common uses.
             </p>
 
-            <button className="aiAsistBtn w-full mt-23" onClick={()=>navigate("/image-analysis")}>
+            <button className="aiAsistBtn w-full mt-10" onClick={()=>navigate("/image-analysis")}>
               <FaCamera />
               Analyze
             </button>

@@ -8,10 +8,9 @@ export default function OrderSuccess() {
   
   const handleGetOrders = async () => {
     const response = await getAllOrders();
-    console.log(response);
 
-    if (response && response.success && Array.isArray(response.data)) {
-      setOrders(response.data); 
+    if (response && response.success && Array.isArray(response?.data)) {
+      setOrders(response?.data); 
     }
   };
 
@@ -19,10 +18,9 @@ export default function OrderSuccess() {
     handleGetOrders();
   }, []);
 
-  console.log(orders);
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto space-y-5">
         {orders != null &&
           orders.map((order) => {
             return (

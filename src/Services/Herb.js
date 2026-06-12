@@ -1,22 +1,23 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const getAllHerbas = async () => {
   try {
-    const { data } = await axios.get("http://herbs.runasp.net/api/Herb", {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Herb`, {
       headers: {
         token: localStorage.getItem("loginToken"),
       },
     });
     return data.data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };
 
 export const getAllCategory = async () => {
   try {
     const { data } = await axios.get(
-      "http://herbs.runasp.net/api/Herb/categories",
+      `${import.meta.env.VITE_BASEURL}/Herb/categories`,
       {
         headers: {
           token: localStorage.getItem("loginToken"),
@@ -25,14 +26,14 @@ export const getAllCategory = async () => {
     );
     return data.data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };
 
 export const getHerbId = async (herbId) => {
   try {
     const { data } = await axios.get(
-      `http://herbs.runasp.net/api/Herb/${herbId}`,
+      `${import.meta.env.VITE_BASEURL}/Herb/${herbId}`,
       {
         headers: {
           token: localStorage.getItem("loginToken"),
@@ -41,7 +42,7 @@ export const getHerbId = async (herbId) => {
     );
     return data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };
 
@@ -50,14 +51,14 @@ export const getHerbId = async (herbId) => {
 export const getFavHerbas = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Favorite", {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Favorite`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };
 
@@ -65,7 +66,7 @@ export const PostFavHerbas = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/Favorite",
+      `${import.meta.env.VITE_BASEURL}/Favorite`,
       { herbId },
       {
         headers: {
@@ -75,7 +76,7 @@ export const PostFavHerbas = async (herbId) => {
     );
     return data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };
 
@@ -83,7 +84,7 @@ export const DeleteFavHerb = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.delete(
-      `http://herbs.runasp.net/api/Favorite/${herbId}`,
+      `${import.meta.env.VITE_BASEURL}/Favorite/${herbId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,6 +93,6 @@ export const DeleteFavHerb = async (herbId) => {
     );
     return data;
   } catch (err) {
-    console.log("error", err);
+    toast.error(err?.message)
   }
 };

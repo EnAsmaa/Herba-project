@@ -13,14 +13,14 @@ export default function FavoritePage() {
   const getAllFavorites = async () => {
     const response = await getFavHerbas();
     if (response?.success) {
-      setFavorites(response.data);
+      setFavorites(response?.data);
     }
   };
 
   const deleteFavHerb = async (herbId) => {
     const response = await DeleteFavHerb(herbId);
     if (response.success) {
-      setFavorites(response.data);
+      setFavorites(response?.data);
     }
   };
 

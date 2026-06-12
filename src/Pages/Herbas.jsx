@@ -19,7 +19,7 @@ export default function Herbas() {
 
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const {herbas}= useContext(HerbasContext);
+  const { herbas } = useContext(HerbasContext);
 
 
   // get cats
@@ -32,7 +32,7 @@ export default function Herbas() {
   const getFav = async () => {
     const response = await getFavHerbas()
     if (response.success) {
-      setFavoritHerb(response.data)
+      setFavoritHerb(response?.data)
     }
   }
 
@@ -45,7 +45,7 @@ export default function Herbas() {
   const addToFav = async (herbId) => {
     const response = await PostFavHerbas(herbId)
     if (response.success) {
-      setFavoritHerb(response.data)
+      setFavoritHerb(response?.data)
     }
   }
 
@@ -53,7 +53,7 @@ export default function Herbas() {
   const removeFromFav = async (herbId) => {
     const response = await DeleteFavHerb(herbId)
     if (response.success) {
-      setFavoritHerb(response.data)
+      setFavoritHerb(response?.data)
     }
   }
 

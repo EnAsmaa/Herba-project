@@ -1,9 +1,10 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 // get exercises
 export const getAllExercise = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Exercise",
+            `${import.meta.env.VITE_BASEURL}/Exercise`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
@@ -12,14 +13,14 @@ export const getAllExercise = async () => {
         );
         return data;
     } catch (error) {
-        console.log(error.response.data);
+        toast.error(error?.message);
     }
 };
 // get my exercise
 export const getMyExercise = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Exercise/my-exercises",
+            `${import.meta.env.VITE_BASEURL}/Exercise/my-exercises`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
@@ -28,14 +29,14 @@ export const getMyExercise = async () => {
         );
         return data;
     } catch (error) {
-        console.log(error.response.data);
+        toast.error(error?.message);
     }
 };
 // post an exercise
 export const postExercise = async (userData) => {
     try {
-        const { data } = await axios.post(
-            "http://herbs.runasp.net/api/Exercise/assign",userData,
+        const { data } = await axios.get(
+            `${import.meta.env.VITE_BASEURL}/Exercise/my-exercises`, userData,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
@@ -44,7 +45,7 @@ export const postExercise = async (userData) => {
         );
         return data;
     } catch (error) {
-        console.log(error.response.data);
+        toast.error(error?.message);
     }
 };
 

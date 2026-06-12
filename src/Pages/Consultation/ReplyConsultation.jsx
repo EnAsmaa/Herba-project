@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { getQuestionsAPI, sendReplyAPI } from "../../Services/ConsultationServices";
 
 export default function ReplyConsultation() {
     const [token] = useState(localStorage.getItem("loginToken") || null);
@@ -10,26 +12,17 @@ export default function ReplyConsultation() {
     const [shownConsultationslabel, setShownConsultationslabel] = useState('all')
     const [shownConsultations, setShownConsultations] = useState([])
 
-
     // get doctor consultations
     const getConsultations = async () => {
         try {
-            const { data } = await axios.get(
-                "http://herbs.runasp.net/api/Consultation/my-consultations",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            if (data.success) {
-                setConsultations(data.data);
+            const response = await getQuestionsAPI()
+            if (response.success) {
+                setConsultations(response.data)
             }
         } catch (err) {
-            console.log(err);
+            toast.error(err?.message)
         }
-    };
+    }
 
     useEffect(() => {
         getConsultations();
@@ -48,22 +41,10 @@ export default function ReplyConsultation() {
     }, [shownConsultationslabel, consultations]);
 
     // send reply
-    const replyQuestion = async (conId) => {
+    const sendReply = async (conId) => {
         try {
-            const { data } = await axios.post(
-                "http://herbs.runasp.net/api/Consultation/reply",
-                {
-                    conId,
-                    reply: replies[conId], // fixed field name
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            if (data.success) {
+            const response = await sendReplyAPI(conId, replies)
+            if (response.success) {
                 await getConsultations();
 
                 setReplies((prev) => ({
@@ -72,9 +53,10 @@ export default function ReplyConsultation() {
                 }));
             }
         } catch (err) {
-            console.log(err.response?.data || err);
+            toast.error(err?.message)
         }
-    };
+    }
+
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] p-6">
@@ -186,7 +168,7 @@ export default function ReplyConsultation() {
 
                                 <button
                                     onClick={() =>
-                                        replyQuestion(consultation.conId)
+                                        sendReply(consultation.conId)
                                     }
                                     className="mt-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition"
                                 >

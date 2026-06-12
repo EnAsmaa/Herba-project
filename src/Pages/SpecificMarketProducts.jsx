@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { getMarketProductsAPI } from '../Services/MarketServices';
 import toast from 'react-hot-toast';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
 import { sendAddToCart } from '../Services/CartServices';
+import { FaSearch } from 'react-icons/fa';
 
 
 export default function SpecificMarketProducts() {
@@ -11,17 +12,17 @@ export default function SpecificMarketProducts() {
     const [loadingProducts, setLoadingProducts] = useState(true);
     const { storeId } = useParams()
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState("");
 
     // get products
     const getMarketProducts = async () => {
         try {
             const response = await getMarketProductsAPI(storeId)
-            console.log(response)
             if (response.success) {
-                setProducts(response.data)
+                setProducts(response?.data)
             }
         } catch (error) {
-            console.log(error);
+            toast.error(error?.message);
         } finally {
             setLoadingProducts(false);
         }
@@ -40,24 +41,39 @@ export default function SpecificMarketProducts() {
         }
     };
 
+    // filterd stores
+
+    // filterd products
+    const filteredProducts = useMemo(() => {
+        return products?.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [products, searchTerm]);
+
 
     return (
         <section className="container mx-auto px-4 lg:px-8 py-8">
             {/* Hero */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-700 to-emerald-500 p-8 md:p-12 text-white mb-10">
-                <div className="max-w-3xl">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <div className="">
+                <div className="">
+                    <h1 className="text-4xl md:text-4xl font-bold mb-10 text-center text-green-800">
                         Welcome To Our Store
                     </h1>
-
-                    <p className="text-lg opacity-90">
-                        Explore trusted herbal stores and premium natural products all in
-                        one place.
-                    </p>
                 </div>
+            </div>
 
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full"></div>
-                <div className="absolute right-20 bottom-0 w-24 h-24 bg-white/10 rounded-full"></div>
+            {/* Search */}
+            <div className='search-wrapper bg-green-800/10 py-8 rounded-lg mb-7'>
+                <div className='search-box relative mx-auto w-2xs sm:w-sm md:w-md lg:w-lg'>
+                    <FaSearch className='absolute text-gray-500 -translate-y-1/2 top-1/2 left-3 cursor-pointer fs-4' />
+                    <input
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        type="search"
+                        className='placeholder:text-gray-500 dark:placeholder:text-[#8696A0] placeholder:italic bg-gray-50 text-gray-900 border border-gray-300 dark:border-[#2E3B42] dark:bg-[#1F2C32] dark:text-white focus:outline-0 rounded-lg py-2 px-8 w-full '
+                        placeholder={`Search stores or products...`}
+                    />
+                </div>
             </div>
 
             {/* products */}
@@ -72,7 +88,7 @@ export default function SpecificMarketProducts() {
                     </div>
                 ) : (
                     <div className="grid gap-6 grid-cols-12">
-                        {products?.map((product, index) => (
+                        {filteredProducts?.map((product, index) => (
                             <div
                                 key={product.productId}
                                 className={`group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-700 col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 ${index == 1 && 'col-span-12! sm:col-span-5!'} ${index == 0 && 'col-span-12! sm:col-span-7!'}`}

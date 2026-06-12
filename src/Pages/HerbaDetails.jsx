@@ -21,7 +21,7 @@ export default function HerbaDetails() {
   const getHerbDetails = async () => {
     const response = await getHerbId(id);
     if (response.success) {
-      setHerb(response.data);
+      setHerb(response?.data);
     }
   };
 

@@ -1,223 +1,339 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { GoZap } from "react-icons/go";
-import { FaRegStar } from "react-icons/fa";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { FaRegFileImage } from "react-icons/fa";
 import { LuBookOpenCheck } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
 import { FaHistory } from "react-icons/fa";
+import toast from "react-hot-toast";
 
-const analysisResult = {
-  herbName: 'Mint',
-  scientificName: 'Mentha × piperita',
-  matchPercentage: 94,
-  imageThumb: 'https://images.unsplash.com/photo-1594191376049-74e64f0b2f1e?q=80&w=200', // Example Mint thumb
-  healthBenefits: [
-    'Relieves digestive issues',
-    'Reduces stress and anxiety',
-    'Helps with respiratory problems',
-    'Natural pain reliever',
-    'Rich in antioxidants'
-  ],
-  usageMethods: [
-    'Brew fresh leaves in hot water',
-    'Add to salads and desserts',
-    'Use essential oil for aromatherapy',
-    'Apply topically for pain relief'
-  ],
-  sideEffects: [
-    { text: 'May cause heartburn', icon: '©' },
-    { text: 'Can interfere with medications', icon: '©' },
-    { text: 'Not recommended during pregnancy', icon: '©' },
-    { text: 'May trigger allergies', icon: '©' }
-  ],
-  precautions: [
-    'Consult doctor if pregnant',
-    'May interact with blood pressure medications',
-    'Start with small amounts',
-    'Store in cool, dry place'
-  ]
-};
-const ImageAnalysis = () => {
+const GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY1;
 
-  const [activeView, setActiveView] = useState('upload'); // 'upload' | 'analyzing' | 'result'
-  const [selectedFileName, setSelectedFileName] = useState('');
+// const analysisResultFallback = {
+//   herbName: "Mint",
+//   scientificName: "Mentha × piperita",
+//   matchPercentage: 94,
+//   healthBenefits: [
+//     "Relieves digestive issues",
+//     "Reduces stress and anxiety",
+//     "Helps with respiratory problems",
+//     "Natural pain reliever",
+//     "Rich in antioxidants",
+//   ],
+//   usageMethods: [
+//     "Brew fresh leaves in hot water",
+//     "Add to salads and desserts",
+//     "Use essential oil for aromatherapy",
+//     "Apply topically for pain relief",
+//   ],
+//   sideEffects: [
+//     "May cause heartburn",
+//     "Can interfere with medications",
+//     "Not recommended during pregnancy",
+//     "May trigger allergies",
+//   ],
+//   precautions: [
+//     "Consult doctor if pregnant",
+//     "May interact with blood pressure medications",
+//     "Start with small amounts",
+//     "Store in cool, dry place",
+//   ],
+// };
 
+export default function ImageAnalysis() {
+  const [activeView, setActiveView] = useState("upload");
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
+  const [result, setResult] = useState(null);
 
-  // --- LOGIC FOR INPUT SIMULATION ---
-  const handleFileChange = (event) => {
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+    });
+
+  const analyzeWithGemini = async (base64Image) => {
+    const prompt = `
+You are a botanical expert.
+
+Analyze this herb image and return ONLY valid JSON.
+
+{
+  "herbName": "",
+  "scientificName": "",
+  "matchPercentage": 0,
+  "healthBenefits": [],
+  "usageMethods": [],
+  "sideEffects": [],
+  "precautions": []
+}
+`;
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: prompt },
+                {
+                  inline_data: {
+                    mime_type: "image/jpeg",
+                    data: base64Image,
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    let text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    text = text.replace(/```json|```/g, "");
+
+    return JSON.parse(text);
+  };
+
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setSelectedFileName(file.name);
-      setActiveView('analyzing');
-      // Simulate analysis delay
-      setTimeout(() => {
-        setActiveView('result');
-      }, 1500);
+
+    if (!file) return;
+
+    setSelectedFileName(file.name);
+    setPreviewImage(URL.createObjectURL(file));
+    setActiveView("analyzing");
+
+    try {
+      const base64 = await toBase64(file);
+
+      const aiResult = await analyzeWithGemini(base64);
+
+      setResult(aiResult);
+      setActiveView("result");
+    } catch (error) {
+      toast.error(error);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-[#F0F2F1] p-6 lg:p-10 font-sans text-slate-800">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* LEFT COLUMN: SIDEBAR STATS & UPLOADER */}
-        <div className="lg:col-span-4 space-y-6">
-          {/* General Info Sidebar Card */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-[#4E7355] font-bold text-xl mb-6">General Info</h2>
-            <div className="space-y-4 text-gray-500 text-sm">
-              <div className="flex justify-between items-center">
-                <span>Total Herbas Found</span>
-                <span className="font-bold text-[#4E7355]">19</span>
-              </div>
-              <div className="flex justify-between items-center border-t pt-4">
-                <span>Analysis Points</span>
-                <span className="font-bold text-amber-600 font-mono">15,050</span>
-              </div>
-            </div>
-          </div>
+  const data = result;
 
-          {/* Uploader Card (Persistent on Left) */}
-          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-            <div className="inline-block p-4 bg-[#4E7355] rounded-full mb-6">
-              <IoCameraOutline className="text-white" size={32} strokeWidth={2.5}/>
-            </div>
-            <h3 className="text-xl font-bold text-slate-700 mb-2">Herb Image Analysis</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              Upload or take a photo. Our AI will analyze the image and tell you about the herb.
-            </p>
-            <label className="w-full inline-block cursor-pointer">
-              <span className="flex items-center justify-center gap-2 bg-[#4E7355] text-white py-3 cursor-pointer my-3 px-6 rounded-xl font-bold transition-all hover:bg-[#3d5a42]">
-                <FaRegFileImage size={20} /> Choose Image
-              </span>
-              <input type="file" onChange={handleFileChange} className="sr-only" />
-            </label>
-            {selectedFileName && <p className="text-xs text-gray-400 mt-2">{selectedFileName}</p>}
-          </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F7F5] via-[#EDF4EE] to-[#E4EFE6] dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 py-10 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* HERO */}
+        <div className="bg-gradient-to-r from-green-700 to-emerald-500 rounded-3xl p-10 text-white shadow-xl mb-8">
+          <h1 className="text-4xl font-bold mb-3">
+            AI Herb Identifier
+          </h1>
+
+          <p className="text-lg text-green-100 max-w-2xl">
+            Upload a herb image and let AI identify the plant,
+            provide health benefits, usage methods, precautions,
+            and possible side effects.
+          </p>
         </div>
 
-        {/* RIGHT COLUMN: RESULTS DASHBOARD (Dynamic Area) */}
-        <div className="lg:col-span-8 space-y-6 min-h-[500px]">
-          {/* 1. UPLOAD STATE (Screen 1 Equivalent) */}
-          {activeView === 'upload' && (
-            <div className="h-full border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center text-center p-10 text-gray-300">
-              <FaRegFileImage size={64} className="mb-4 opacity-20"/>
-              <p className="font-medium text-lg">Input your Herb image on the left to see <br/> detailed botanical analysis.</p>
-            </div>
-          )}
-
-          {/* 2. ANALYZING STATE (Transition equivalent) */}
-          {activeView === 'analyzing' && (
-            <div className="h-full bg-white rounded-xl flex flex-col items-center justify-center text-center p-10 shadow-sm">
-                <div className="relative w-16 h-16 mb-4">
-                    <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
-                    <div className="absolute inset-0 border-4 border-[#4E7355] border-t-transparent rounded-full animate-spin"></div>
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* LEFT PANEL */}
+          <div className="lg:col-span-4">
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg p-8">
+              <div className="flex justify-center">
+                <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                  <IoCameraOutline
+                    size={45}
+                    className="text-green-700"
+                  />
                 </div>
-                <p className="font-bold text-[#4E7355]">Analyzing image...</p>
-                <p className="text-sm text-gray-400">Verifying botanical features</p>
-            </div>
-          )}
+              </div>
 
-          {/* 3. RESULT STATE (Screens 2 & 3 Equivalent) */}
-          {activeView === 'result' && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-              
-              {/* Herb Header & Match Card (Screen 2 Top) */}
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 shadow-inner">
-                        <img src={analysisResult.imageThumb} className="object-cover w-full h-full" alt="Detected Herb" />
+              <h2 className="text-center text-2xl font-bold mt-5 dark:text-white">
+                Upload Herb Image
+              </h2>
+
+              <p className="text-center text-slate-500 mt-3">
+                Choose a clear herb image for accurate AI analysis.
+              </p>
+
+              <label className="block mt-6 cursor-pointer">
+                <div className="bg-green-700 hover:bg-green-800 transition text-white rounded-2xl py-4 flex justify-center items-center gap-3">
+                  <FaRegFileImage />
+                  Choose Image
+                </div>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+
+              {(selectedFileName) && (
+                <p className="text-center text-sm pt-3 dark:text-gray-300">
+                  {selectedFileName}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* RIGHT PANEL */}
+          <div className="lg:col-span-8">
+            {activeView === "upload" && (
+              <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg p-12 text-center">
+                <IoCameraOutline
+                  size={70}
+                  className="mx-auto text-green-600"
+                />
+
+                <h2 className="text-3xl font-bold mt-4 dark:text-white">
+                  Ready For Analysis
+                </h2>
+
+                <p className="text-slate-500 mt-4">
+                  Upload a herb image to begin.
+                </p>
+              </div>
+            )}
+
+            {activeView === "analyzing" && (
+              <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg p-16 text-center">
+                <div className="w-24 h-24 border-4 border-green-200 border-t-green-700 rounded-full animate-spin mx-auto"></div>
+
+                <h2 className="text-3xl font-bold mt-6 dark:text-white">
+                  Analyzing Herb...
+                </h2>
+
+                <p className="text-slate-500 mt-3">
+                  AI is identifying your herb.
+                </p>
+              </div>
+            )}
+
+            {activeView === "result" && (
+              <div className="space-y-6">
+                {/* RESULT HEADER */}
+                <div className="bg-gradient-to-r from-green-700 to-emerald-500 rounded-3xl p-8 text-white shadow-xl">
+                  <div className="flex flex-col md:flex-row gap-8 items-center">
+                    {previewImage && (
+                      <img
+                        src={previewImage}
+                        alt=""
+                        className="w-60 h-60 object-cover rounded-3xl shadow-lg"
+                      />
+                    )}
+
+                    <div className="flex-1">
+                      <div className="flex items-center gap-5 flex-wrap">
+                        <div className="w-24 h-24 rounded-full bg-white text-green-700 flex items-center justify-center font-bold text-2xl">
+                          {data.matchPercentage}%
+                        </div>
+
+                        <div>
+                          <h2 className="text-4xl font-bold">
+                            {data.herbName}
+                          </h2>
+
+                          <p className="italic text-green-100 mt-2">
+                            {data.scientificName}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                        <h4 className="font-black text-2xl text-slate-800">{analysisResult.herbName}</h4>
-                        <p className="text-gray-400 italic font-medium">{analysisResult.scientificName}</p>
-                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5 bg-[#D1F7D6] text-[#4E7355] px-4 py-1 rounded-full text-xs font-bold whitespace-nowrap">
-                   <IoShieldCheckmarkOutline size={14}/> {analysisResult.matchPercentage}% Match
+
+                {/* BENEFITS + USAGE */}
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-lg">
+                    <h3 className="font-bold text-xl flex items-center gap-2 text-green-600">
+                      <GoZap />
+                      Health Benefits
+                    </h3>
+
+                    <ul className="mt-4 space-y-3">
+                      {data.healthBenefits.map((item, index) => (
+                        <li key={index} className="flex gap-2 dark:text-white">
+                          <IoShieldCheckmarkOutline className="text-green-600 mt-1" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-lg">
+                    <h3 className="font-bold text-xl flex items-center gap-2 text-blue-600">
+                      <LuBookOpenCheck />
+                      Usage Methods
+                    </h3>
+
+                    <ul className="mt-4 space-y-3 dark:text-white">
+                      {data.usageMethods.map((item, index) => (
+                        <li key={index}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* SIDE EFFECTS + PRECAUTIONS */}
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="bg-red-50 dark:bg-red-950/30 rounded-3xl p-6 border border-red-200 dark:border-red-800">
+                    <h3 className="font-bold text-red-600 flex items-center gap-2 text-xl">
+                      <FiAlertTriangle />
+                      Side Effects
+                    </h3>
+
+                    <ul className="mt-4 space-y-3">
+                      {data.sideEffects.map((item, index) => (
+                        <li key={index}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-amber-50 dark:bg-amber-950/30 rounded-3xl p-6 border border-amber-200 dark:border-amber-800">
+                    <h3 className="font-bold text-amber-700 text-xl flex items-center gap-2">
+                      <IoShieldCheckmarkOutline />
+                      Precautions
+                    </h3>
+
+                    <ul className="mt-4 space-y-3">
+                      {data.precautions.map((item, index) => (
+                        <li key={index}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      setResult(null);
+                      setPreviewImage(null);
+                      setSelectedFileName("");
+                      setActiveView("upload");
+                    }}
+                    className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-2xl flex items-center gap-3 mx-auto transition"
+                  >
+                    <FaHistory />
+                    Analyze Another Herb
+                  </button>
                 </div>
               </div>
-
-              {/* Grid for Benefits and Use Cases (Web-Specific Multicolumn) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Health Benefits (Screen 2 List) */}
-                  <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                    <h5 className="font-bold text-slate-700 flex items-center gap-2 mb-6">
-                        <GoZap className="text-[#4E7355]"/> Health Benefits
-                    </h5>
-                    <ul className="space-y-3.5">
-                      {analysisResult.healthBenefits.map((benefit) => (
-                        <li key={benefit} className="flex items-start gap-2 text-sm text-gray-600">
-                           <IoShieldCheckmarkOutline size={16} className="text-[#4E7355] mt-0.5 shrink-0"/> {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* How to Use (Screen 3 List) */}
-                  <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                    <h5 className="font-bold text-slate-700 flex items-center gap-2 mb-6">
-                        <LuBookOpenCheck className="text-[#4E7355]"/> How to Use
-                    </h5>
-                    <ul className="space-y-3.5">
-                      {analysisResult.usageMethods.map((method) => (
-                        <li key={method} className="flex items-start gap-2 text-sm text-gray-600">
-                           <span className="text-[#4E7355] font-bold">•</span> {method}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-              </div>
-
-              {/* Grid for Warnings and Precautions (Screen 3 Warnings) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Side Effects */}
-                  <div className="bg-[#FFF1F1] p-8 rounded-xl border border-[#FFE1E1]">
-                    <h5 className="font-bold text-red-900 flex items-center gap-2 mb-6">
-                        <FiAlertTriangle className="text-red-700"/> Side Effects
-                    </h5>
-                    <ul className="space-y-3.5">
-                      {analysisResult.sideEffects.map((effect) => (
-                        <li key={effect.text} className="flex items-start gap-2.5 text-sm text-red-800">
-                           <span className="opacity-60 text-lg">©</span> {effect.text}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Precautions */}
-                  <div className="bg-[#FFF9E5] p-8 rounded-xl border border-[#FFF0CB]">
-                    <h5 className="font-bold text-amber-900 flex items-center gap-2 mb-6">
-                        <IoShieldCheckmarkOutline className="text-amber-700"/> Precautions
-                    </h5>
-                    <ul className="space-y-3.5">
-                      {analysisResult.precautions.map((precaution) => (
-                        <li key={precaution} className="flex items-start gap-2 text-sm text-amber-800">
-                           <span className="opacity-60 text-lg">•</span> {precaution}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-              </div>
-
-              {/* Final Analyze New Button (Web Positioned) */}
-              <div className="text-center pt-8">
-                <button 
-                    onClick={() => {setActiveView('upload'); setSelectedFileName('');}}
-                    className="flex items-center cursor-pointer gap-2 mx-auto bg-[#F3F5F4] text-[#4E7355] py-3 px-10 rounded-xl font-bold hover:bg-gray-200 transition-colors"
-                >
-                    <FaHistory size={18}/> Analyze New Image
-                </button>
-              </div>
-
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
-  )
-
+  );
 }
-export default ImageAnalysis;

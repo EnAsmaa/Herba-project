@@ -4,13 +4,13 @@ import axios from "axios";
 export const loginRequest = async (userData) => {
   try {
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/Auth/login",
+      `${import.meta.env.VITE_BASEURL}/Auth/login`,
       userData
     );
     return data.data;
 
   } catch (err) {
-    return err.response.data;
+    return err.response?.data;
   }
 };
 
@@ -18,12 +18,12 @@ export const loginRequest = async (userData) => {
 export const registerRequest = async (userData) => {
   try {
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/Auth/register",
+      `${import.meta.env.VITE_BASEURL}/Auth/register`,
       userData,
     );
     return data.data;
   } catch (err) {
-    return err.response.data
+    return err.response?.data
   }
 };
 

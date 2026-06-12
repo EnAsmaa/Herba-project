@@ -21,7 +21,6 @@ export default function IdealWeightWeb() {
     if (res && res.success) {
       setbmiData(res.data);
     }
-    console.log(res?.data);
   };
 
   // idealweight
