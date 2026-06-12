@@ -4,7 +4,7 @@ import axios from "axios";
 export const sendCheckout = async (cartId, location, paymentMethod) => {
     try {
         const { data } = await axios.post(
-            "http://herbs.runasp.net/api/Order/checkout",
+            "https://herbs.runasp.net/api/Order/checkout",
             {
                 cartId,
                 location,
@@ -28,7 +28,7 @@ export const sendCheckout = async (cartId, location, paymentMethod) => {
 export const getAllOrders = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Order",
+            "https://herbs.runasp.net/api/Order",
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,

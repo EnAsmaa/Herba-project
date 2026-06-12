@@ -15,7 +15,7 @@ export default function ReplyConsultation() {
     const getConsultations = async () => {
         try {
             const { data } = await axios.get(
-                "http://herbs.runasp.net/api/Consultation/my-consultations",
+                "https://herbs.runasp.net/api/Consultation/my-consultations",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ export default function ReplyConsultation() {
     const replyQuestion = async (conId) => {
         try {
             const { data } = await axios.post(
-                "http://herbs.runasp.net/api/Consultation/reply",
+                "https://herbs.runasp.net/api/Consultation/reply",
                 {
                     conId,
                     reply: replies[conId], // fixed field name

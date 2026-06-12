@@ -10,7 +10,7 @@ export const getAllQuizes = async () => {
     });
 
     return data;
-    
+
 
   } catch (err) {
     console.log(err);
@@ -26,7 +26,7 @@ export const getMyQuizResults = async () => {
     });
 
     return data;
-    
+
 
   } catch (err) {
     console.log(err);

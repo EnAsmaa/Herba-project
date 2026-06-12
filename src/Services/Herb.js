@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllHerbas = async () => {
   try {
-    const { data } = await axios.get("http://herbs.runasp.net/api/Herb", {
+    const { data } = await axios.get("https://herbs.runasp.net/api/Herb", {
       headers: {
         token: localStorage.getItem("loginToken"),
       },
@@ -16,7 +16,7 @@ export const getAllHerbas = async () => {
 export const getAllCategory = async () => {
   try {
     const { data } = await axios.get(
-      "http://herbs.runasp.net/api/Herb/categories",
+      "https://herbs.runasp.net/api/Herb/categories",
       {
         headers: {
           token: localStorage.getItem("loginToken"),
@@ -32,7 +32,7 @@ export const getAllCategory = async () => {
 export const getHerbId = async (herbId) => {
   try {
     const { data } = await axios.get(
-      `http://herbs.runasp.net/api/Herb/${herbId}`,
+      `https://herbs.runasp.net/api/Herb/${herbId}`,
       {
         headers: {
           token: localStorage.getItem("loginToken"),
@@ -50,7 +50,7 @@ export const getHerbId = async (herbId) => {
 export const getFavHerbas = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Favorite", {
+    const { data } = await axios.get("https://herbs.runasp.net/api/Favorite", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -65,7 +65,7 @@ export const getFavHerbas = async () => {
 export const PostFavHerbas = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.post("http://herbs.runasp.net/api/Favorite",{herbId}, {
+    const { data } = await axios.post("https://herbs.runasp.net/api/Favorite", { herbId }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -79,7 +79,7 @@ export const PostFavHerbas = async (herbId) => {
 export const DeleteFavHerb = async (herbId) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.delete(`http://herbs.runasp.net/api/Favorite/${herbId}`, {
+    const { data } = await axios.delete(`https://herbs.runasp.net/api/Favorite/${herbId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
