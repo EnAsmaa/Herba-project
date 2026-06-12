@@ -150,7 +150,7 @@ export default function Cart() {
 
             {/* Left Side: Cart Items List (8 Columns) */}
             <div className="lg:col-span-8 divide-y divide-neutral-100 dark:divide-neutral-800">
-              {cartItems.map((item, idx) => (
+              {cartItems?.map((item, idx) => (
                 <div
                   key={item.productId || idx}
                   className="py-6 first:pt-0 last:pb-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"

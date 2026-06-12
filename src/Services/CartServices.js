@@ -42,8 +42,7 @@ export const sendRemoveFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.delete(
-      `${import.meta.env.VITE_BASEURL}Cart/remove/${productId}`,
-
+      `${import.meta.env.VITE_BASEURL}/Cart/remove/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

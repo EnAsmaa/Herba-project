@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import herbImage from "../assets/Dashboard_835_Herbs_9_23.jpeg";
 import Search from "./../components/Search";
@@ -20,6 +20,8 @@ export default function Herbas() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const { herbas } = useContext(HerbasContext);
+
+
 
 
   // get cats
@@ -92,6 +94,7 @@ export default function Herbas() {
   useEffect(() => {
     localStorage.setItem("favHerbs", JSON.stringify(favoriteHerb));
   }, [favoriteHerb]);
+
 
   return (
     <section className="container mx-auto px-4 lg:px-10 py-10">

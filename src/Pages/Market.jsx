@@ -110,7 +110,7 @@ export default function Market() {
 
         {loadingStores ? (
           <div className="min-h-70 w-full flex items-center justify-center">
-            <span class="loader"></span>
+            <span className="loader"></span>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
