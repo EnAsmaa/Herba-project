@@ -3,7 +3,7 @@ import axios from "axios";
 export const getAllQuizes = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("https://herbs.runasp.net/api/Quiz", {
+    const { data } = await axios.get("http://herbs.runasp.net/api/Quiz", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -19,7 +19,7 @@ export const getAllQuizes = async () => {
 export const getMyQuizResults = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("https://herbs.runasp.net/api/Quiz/my-results", {
+    const { data } = await axios.get("http://herbs.runasp.net/api/Quiz/my-results", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -36,7 +36,7 @@ export const getMyQuizResults = async () => {
 export const getQuizById = async (id) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get(`https://herbs.runasp.net/api/Quiz/${id}`, {
+    const { data } = await axios.get(`http://herbs.runasp.net/api/Quiz/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
@@ -50,7 +50,7 @@ export const getQuizById = async (id) => {
 export const submitQuizAnswers = async (id, payload) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.post(`https://herbs.runasp.net/api/Quiz/${id}/submit`, payload, {
+    const { data } = await axios.post(`http://herbs.runasp.net/api/Quiz/${id}/submit`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
