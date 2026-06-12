@@ -10,6 +10,7 @@ import { getProductsAPI, getStoresAPI } from "../Services/MarketServices";
 import { Link, useNavigate } from "react-router-dom";
 import { sendAddToCart } from "../Services/CartServices";
 import toast from "react-hot-toast";
+import { FaSearch } from "react-icons/fa";
 
 export default function Market() {
   const [stores, setStores] = useState([]);
@@ -23,12 +24,11 @@ export default function Market() {
   const getStores = async () => {
     try {
       const response = await getStoresAPI()
-      console.log(response)
       if (response.success) {
-        setStores(response.data)
+        setStores(response?.data)
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
     } finally {
       setLoadingStores(false);
     }
@@ -38,12 +38,11 @@ export default function Market() {
   const getProducts = async () => {
     try {
       const response = await getProductsAPI()
-      console.log(response)
       if (response.success) {
-        setProducts(response.data)
+        setProducts(response?.data)
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
     } finally {
       setLoadingProducts(false);
     }
@@ -77,37 +76,29 @@ export default function Market() {
     );
   }, [products, searchTerm]);
 
-  console.log(filteredProducts)
-
-
   return (
     <section className="container mx-auto px-4 lg:px-8 py-8">
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-700 to-emerald-500 p-8 md:p-12 text-white mb-10">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <div className="">
+        <div className="">
+          <h1 className="text-4xl md:text-4xl font-bold mb-10 text-center text-green-800">
             Discover Natural Herbs & Stores
           </h1>
-
-          <p className="text-lg opacity-90">
-            Explore trusted herbal stores and premium natural products all in
-            one place.
-          </p>
         </div>
-
-        <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full"></div>
-        <div className="absolute right-20 bottom-0 w-24 h-24 bg-white/10 rounded-full"></div>
       </div>
 
       {/* Search */}
-      <div className="mb-8">
-        <input
-          type="text"
-          placeholder="Search stores or products..."
-          className="w-full p-4 rounded-2xl border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-green-500"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className='search-wrapper bg-green-800/10 py-8 rounded-lg mb-7'>
+        <div className='search-box relative mx-auto w-2xs sm:w-sm md:w-md lg:w-lg'>
+          <FaSearch className='absolute text-gray-500 -translate-y-1/2 top-1/2 left-3 cursor-pointer fs-4' />
+          <input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            type="search"
+            className='placeholder:text-gray-500 dark:placeholder:text-[#8696A0] placeholder:italic bg-gray-50 text-gray-900 border border-gray-300 dark:border-[#2E3B42] dark:bg-[#1F2C32] dark:text-white focus:outline-0 rounded-lg py-2 px-8 w-full '
+            placeholder={`Search stores or products...`}
+          />
+        </div>
       </div>
 
       {/* Stores */}

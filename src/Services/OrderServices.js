@@ -1,10 +1,11 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // send checkout
 export const sendCheckout = async (cartId, location, paymentMethod) => {
     try {
         const { data } = await axios.post(
-            "http://herbs.runasp.net/api/Order/checkout",
+            `${import.meta.env.VITE_BASEURL}/Order/checkout`,
             {
                 cartId,
                 location,
@@ -19,7 +20,7 @@ export const sendCheckout = async (cartId, location, paymentMethod) => {
 
         return data;
     } catch (error) {
-        console.log(error.response.data);
+        toast.error(error?.message)
     }
 };
 
@@ -28,7 +29,7 @@ export const sendCheckout = async (cartId, location, paymentMethod) => {
 export const getAllOrders = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Order",
+            `${import.meta.env.VITE_BASEURL}/Order`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
@@ -37,6 +38,6 @@ export const getAllOrders = async () => {
         );
         return data;
     } catch (error) {
-        console.log(error.response.data);
+        toast.error(error?.message)
     }
 };

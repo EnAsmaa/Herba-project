@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { getDoctorDataAPI, sendQuestionAPI } from "../../Services/ConsultationServices";
 
 export default function AskConsultation() {
 
@@ -14,12 +16,12 @@ export default function AskConsultation() {
     // get doctor data
     const getDoctorData = async () => {
         try {
-            const { data } = await axios.get(`http://herbs.runasp.net/api/User/doctor/${id}`)
-            if (data.success) {
-                setDoctor(data.data)
+            const response = await getDoctorDataAPI(id)
+            if (response.success) {
+                setDoctor(response.data)
             }
         } catch (err) {
-            console.log(err)
+            toast.error(err?.message)
         }
     }
 
@@ -30,23 +32,13 @@ export default function AskConsultation() {
     // ask question
     const sendQuestion = async (message) => {
         try {
-            const { data } = await axios.post('http://herbs.runasp.net/api/Consultation', {
-                doctorId: id,
-                message
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            console.log(data)
-
-            if (data?.success) {
-                console.log(data.data)
+            const response = await sendQuestionAPI(message, id)
+            if (response?.success) {
+                toast.success('Consultation Sent Successfully')
                 question.current.value = ''
             }
         } catch (err) {
-            console.log(err)
+            toast.error(err?.message)
         }
     }
 

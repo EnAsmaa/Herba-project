@@ -1,16 +1,17 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const sendGetCartData = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Cart", {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Cart`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return data;
   } catch (error) {
-    console.log(error.response.data);
+    toast.error(error?.message);
   }
 };
 
@@ -19,7 +20,7 @@ export const sendAddToCart = async (productId, quantity) => {
     const token = localStorage.getItem("loginToken");
     quantity = 1;
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/Cart/add",
+      `${import.meta.env.VITE_BASEURL}/Cart/add`,
       {
         productId,
         quantity,
@@ -30,11 +31,10 @@ export const sendAddToCart = async (productId, quantity) => {
         },
       },
     );
-    console.log(data);
 
     return data;
   } catch (error) {
-    console.log(error.response.data);
+    toast.error(error?.message);
   }
 };
 
@@ -42,7 +42,7 @@ export const sendRemoveFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.delete(
-      `http://herbs.runasp.net/api/Cart/remove/${productId}`,
+      `${import.meta.env.VITE_BASEURL}Cart/remove/${productId}`,
 
       {
         headers: {
@@ -52,6 +52,6 @@ export const sendRemoveFromCart = async (productId) => {
     );
     return data;
   } catch (error) {
-    console.log(error.response.data);
+    toast.error(error?.message);
   }
 };

@@ -1,9 +1,10 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const getAllQuizes = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Quiz", {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Quiz`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -13,13 +14,13 @@ export const getAllQuizes = async () => {
 
 
   } catch (err) {
-    console.log(err);
+    toast.error(err?.message)
   }
 };
 export const getMyQuizResults = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Quiz/my-results", {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Quiz/my-results`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -29,14 +30,14 @@ export const getMyQuizResults = async () => {
 
 
   } catch (err) {
-    console.log(err);
+    toast.error(err?.message)
   }
 };
 
 export const getQuizById = async (id) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get(`http://herbs.runasp.net/api/Quiz/${id}`, {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Quiz/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
@@ -50,11 +51,10 @@ export const getQuizById = async (id) => {
 export const submitQuizAnswers = async (id, payload) => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.post(`http://herbs.runasp.net/api/Quiz/${id}/submit`, payload, {
+    const { data } = await axios.post(`${import.meta.env.VITE_BASEURL}/Quiz/${id}/submit`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data);
-    
+
     return data;
   } catch (err) {
     console.error(`Error submitting quiz ${id}:`, err);

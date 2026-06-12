@@ -9,6 +9,8 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import { FaRegStar } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { getDoctorsAPI } from "../../Services/ConsultationServices";
 
 const doctorTypes = [
   { id: 1, name: 'All' },
@@ -24,13 +26,12 @@ export default function Consultation() {
 
   const getDoctors = async () => {
     try {
-      const { data } = await axios.get('http://herbs.runasp.net/api/User/doctors')
-      if (data.success) {
-        setDoctors(data.data)
-        console.log(data.data)
+      const response = await getDoctorsAPI()
+      if (response.success) {
+        setDoctors(response.data)
       }
     } catch (err) {
-      console.log(err)
+      toast.error(err?.message)
     }
   }
 

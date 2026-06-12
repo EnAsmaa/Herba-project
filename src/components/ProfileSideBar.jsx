@@ -17,7 +17,7 @@ export default function ProfileSideBar(props) {
   const { profileToggle, setProfileToggle } = props;
   const { setIslogin } = useContext(AuthContext);
   const { setRole } = useContext(AuthContext);
-  const {userProfileData,setuserProfileData}=useContext(UserContext);
+  const { userProfileData, setuserProfileData } = useContext(UserContext);
 
   const logOut = () => {
     localStorage.removeItem("loginToken");
@@ -51,7 +51,7 @@ export default function ProfileSideBar(props) {
         </div>
         <div className="content w-75 p-5 m-2 flex items-center gap-5 shadow bg-white rounded-xl">
           <div className="aspect-square w-15 rounded-full bg-green-900 flex items-center justify-center text-white font-semibold ">
-              {userProfileData?.firstName.charAt(0).toUpperCase() + userProfileData?.lastName.charAt(0).toUpperCase()}
+            {userProfileData?.firstName.charAt(0).toUpperCase() + userProfileData?.lastName.charAt(0).toUpperCase()}
           </div>
           <div className="user-info">
             <p className="text-black whitespace-nowrap">{userProfileData?.firstName.toUpperCase() + ' ' + userProfileData?.lastName.toUpperCase()}</p>

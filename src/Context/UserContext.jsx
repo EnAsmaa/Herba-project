@@ -10,7 +10,7 @@ export default function UserContexProvider({ children }) {
   const getUserData = async () => {
     const response = await getProfileDataAPI();
     if (response && response.success) {
-      setUserProfileData(response.data);
+      setUserProfileData(response?.data);
     }
   };
   useEffect(() => {

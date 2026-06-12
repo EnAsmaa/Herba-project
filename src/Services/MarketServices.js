@@ -5,12 +5,11 @@ import toast from "react-hot-toast";
 export const getStoresAPI = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Store"
+            `${import.meta.env.VITE_BASEURL}/Store`
         );
         return data
     } catch (error) {
-        console.log(error);
-        toast.error(error.message)
+        toast.error(error?.message)
     }
 };
 
@@ -18,12 +17,11 @@ export const getStoresAPI = async () => {
 export const getProductsAPI = async () => {
     try {
         const { data } = await axios.get(
-            "http://herbs.runasp.net/api/Store/products"
+            `${import.meta.env.VITE_BASEURL}/Store/products`
         );
         return data
     } catch (error) {
-        console.log(error);
-        toast.error(error.message)
+        toast.error(error?.message)
     }
 };
 
@@ -31,11 +29,10 @@ export const getProductsAPI = async () => {
 export const getMarketProductsAPI = async (storeId) => {
     try {
         const { data } = await axios.get(
-            `http://herbs.runasp.net/api/Store/${storeId}/products`
+            `${import.meta.env.VITE_BASEURL}/Store/${storeId}/products`
         );
         return data
     } catch (error) {
-        console.log(error);
-        toast.error(error.message)
+        toast.error(error?.message)
     }
 };

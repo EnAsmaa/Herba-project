@@ -1,10 +1,11 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const getWeightBmi = async (wValue, hValue) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.get(
-      `http://herbs.runasp.net/api/IdealWeight/bmi`,
+      `${import.meta.env.VITE_BASEURL}/IdealWeight/bmi`,
       {
         params: {
           weight: parseFloat(wValue),
@@ -17,7 +18,7 @@ export const getWeightBmi = async (wValue, hValue) => {
     );
     return data;
   } catch (err) {
-    console.log(err);
+    toast.error(err?.message)
   }
 };
 
@@ -25,7 +26,7 @@ export const postWeightCalc = async (userdata) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/IdealWeight/calculate", userdata,
+      `${import.meta.env.VITE_BASEURL}/IdealWeight/calculate`, userdata,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,6 +35,6 @@ export const postWeightCalc = async (userdata) => {
     );
     return data;
   } catch (err) {
-    console.log(err);
+    toast.error(err?.message)
   }
 };

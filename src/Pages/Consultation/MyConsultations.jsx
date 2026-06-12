@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { getQuestionsAPI } from '../../Services/ConsultationServices'
 
 export default function MyConsultations() {
 
-    const [token, setToken] = useState(localStorage.getItem("loginToken") || null)
     const [questions, setQuestions] = useState([])
     const [questionexpanded, setQuestionExpanded] = useState(null)
     const [replyExpanded, setReplyExpanded] = useState(null)
@@ -13,16 +14,12 @@ export default function MyConsultations() {
     // get questions
     const getQuestions = async () => {
         try {
-            const { data } = await axios.get('http://herbs.runasp.net/api/Consultation/my-consultations', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            if (data.success) {
-                setQuestions(data.data)
+            const response = await getQuestionsAPI()
+            if (response.success) {
+                setQuestions(response.data)
             }
         } catch (err) {
-            console.log(err)
+            toast.error(err?.message)
         }
     }
 
