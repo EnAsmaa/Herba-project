@@ -20,8 +20,28 @@ export default function NavbarComponent({
   const { t } = useTranslation("home");
   const { isLogin, role } = useContext(AuthContext);
   const [menuToggle, setMenuToggle] = useState(false);
+  const [isRead, setIsRead] = useState(false);
 
-  console.log(role)
+  useEffect(() => {
+    const syncReadStatus = () => {
+      const value = localStorage.getItem("dailyTipRead") === "true";
+      setIsRead(value);
+    };
+
+    // initial sync
+    syncReadStatus();
+
+    // listen to custom event
+    window.addEventListener("notification-read", syncReadStatus);
+
+    // backup sync (important fix)
+    const interval = setInterval(syncReadStatus, 500);
+
+    return () => {
+      window.removeEventListener("notification-read", syncReadStatus);
+      clearInterval(interval);
+    };
+  }, []);
 
   const navigate = useNavigate();
   return (
@@ -29,10 +49,10 @@ export default function NavbarComponent({
       <nav className=" shadow-lg bg-[#F7F7F7] text-[#1A242A] dark:bg-[#1A242A] dark:text-[#F7F7F7] relative">
         <div className="container lg:px-7 p-4 mx-auto">
           <div className="flex justify-between items-center mt-2 lg:mt-0">
-            <div className="flex gap-1 items-center">
+            <Link to={'/'} className="flex gap-1 items-center">
               <FaLeaf className="text-2xl text-[#335D39] dark:text-[#6bb683]" />
               <span className="text-2xl font-medium">HerbalCare</span>
-            </div>
+            </Link>
             <div className="navLinks order-first lg:order-0">
               <ul className="hidden lg:flex items-center gap-6 font-medium">
                 <li>
@@ -96,7 +116,9 @@ export default function NavbarComponent({
                   <NavLink to="notification">
                     <IoNotifications className="text-xl cursor-pointer" />
                   </NavLink>
-                  <div className="rounded-full size-1.5 bg-green-800 absolute -top-1 left-0 animate-blink"></div>
+                  {!isRead &&
+                    <div className='rounded-full size-1.5 bg-green-800 absolute -top-1 left-0 animate-blink'></div>
+                  }
                 </div>
 
                 {/* cart */}

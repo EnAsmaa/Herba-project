@@ -3,7 +3,7 @@ import axios from "axios";
 export const sendGetCartData = async () => {
   try {
     const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get("http://herbs.runasp.net/api/Cart", {
+    const { data } = await axios.get("https://herbs.runasp.net/api/Cart", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -19,7 +19,7 @@ export const sendAddToCart = async (productId, quantity) => {
     const token = localStorage.getItem("loginToken");
     quantity = 1;
     const { data } = await axios.post(
-      "http://herbs.runasp.net/api/Cart/add",
+      "https://herbs.runasp.net/api/Cart/add",
       {
         productId,
         quantity,
@@ -42,7 +42,7 @@ export const sendRemoveFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("loginToken");
     const { data } = await axios.delete(
-      `http://herbs.runasp.net/api/Cart/remove/${productId}`,
+      `https://herbs.runasp.net/api/Cart/remove/${productId}`,
 
       {
         headers: {
