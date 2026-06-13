@@ -38,15 +38,15 @@ export default function Login() {
     setIsLoading(true);
     const response = await loginRequest(userData);
     setIsLoading(false);
-    if (response.isSuccess) {
+    if (response?.isSuccess) {
       // token
-      localStorage.setItem('loginToken', response.token);
+      localStorage.setItem('loginToken', response?.token);
       setIslogin(true);
       // user id
-      localStorage.setItem('userId', response.userId);
+      localStorage.setItem('userId', response?.userId);
       setIslogin(true);
       // role
-      const role = response.userType === 0 ? 'user' : 'doctor'
+      const role = response?.userType === 0 ? 'user' : 'doctor'
       localStorage.setItem('role', role);
       setRole(role);
       
@@ -54,8 +54,8 @@ export default function Login() {
       navigate("/");
     }
     else {
-      setApiError(response.message);
-      toast.error(response.message)
+      setApiError(response?.message);
+      toast.error(response?.message)
 
     }
   };return (

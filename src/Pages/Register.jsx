@@ -45,12 +45,12 @@ export default function Register() {
     };
 
     const response = await registerRequest(formattedData);
-    if (response.isSuccess) {
+    if (response?.isSuccess) {
       navigate("/login");
       toast.success('Registeration Succeessfully')
     } else {
-      setApiError(response.message);
-      toast.error(response.message)
+      setApiError(response?.message);
+      toast.error(response?.message)
     }
     setIsLoading(false);
   };
