@@ -1,40 +1,30 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance.js";
 import toast from "react-hot-toast";
 
 export const getWeightBmi = async (wValue, hValue) => {
   try {
-    const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_BASEURL}/IdealWeight/bmi`,
-      {
-        params: {
-          weight: parseFloat(wValue),
-          height: parseFloat(hValue)
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const { data } = await axiosInstance.get("/IdealWeight/bmi", {
+      params: {
+        weight: parseFloat(wValue),
+        height: parseFloat(hValue),
       },
-    );
+    });
+
     return data;
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.response?.data?.message || err.message);
   }
 };
 
 export const postWeightCalc = async (userdata) => {
   try {
-    const token = localStorage.getItem("loginToken");
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_BASEURL}/IdealWeight/calculate`, userdata,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    const { data } = await axiosInstance.post(
+      "/IdealWeight/calculate",
+      userdata
     );
+
     return data;
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.response?.data?.message || err.message);
   }
 };

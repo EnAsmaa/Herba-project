@@ -39,11 +39,17 @@ export default function Login() {
     const response = await loginRequest(userData);
     setIsLoading(false);
     if (response.isSuccess) {
+      // token
       localStorage.setItem('loginToken', response.token);
       setIslogin(true);
+      // user id
+      localStorage.setItem('userId', response.userId);
+      setIslogin(true);
+      // role
       const role = response.userType === 0 ? 'user' : 'doctor'
       localStorage.setItem('role', role);
       setRole(role);
+      
       toast.success("Login Successfully")
       navigate("/");
     }

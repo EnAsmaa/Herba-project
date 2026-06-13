@@ -2,17 +2,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Input, SelectItem, Select,Button } from "@heroui/react";
+import { Input, SelectItem, Select, Button } from "@heroui/react";
 import axios from "axios";
 import { getProfileDataAPI, updateUserData } from "../Services/UserProfile";
 import { profileSchema } from "../Schema/UserProfileSchema";
 import { UserContext } from "../Context/UserContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 export default function Profile() {
   const [isloading, setIsLoading] = useState(false);
-  const {setUserProfileData}= useContext(UserContext);
+  const { setUserProfileData } = useContext(UserContext);
   const navigate = useNavigate();
 
   const {
@@ -27,7 +28,7 @@ export default function Profile() {
       gender: "male",
       userType: "",
       address: "",
-      idealWeight:0
+      idealWeight: 0
     },
     resolver: zodResolver(profileSchema),
     mode: "onBlur",
@@ -40,19 +41,28 @@ export default function Profile() {
       ...userData,
       birthDate: new Date(userData.birthDate).toISOString(),
     };
-    const res = await updateUserData(formattedData);
-    setIsLoading(false);
-    const getuserData = await getProfileDataAPI();
-    setUserProfileData(getuserData.data);
-    navigate('/');
-    
+    try {
+      const res = await updateUserData(formattedData);
+      console.log(res)
+      if (res.success) {
+        const getuserData = await getProfileDataAPI();
+        setUserProfileData(getuserData.data);
+        toast.success(res.message)
+        navigate('/');
+      }
+    } catch (err) {
+      toast.error(err?.message)
+    } finally {
+
+      setIsLoading(false);
+    }
   };
 
 
- return (
+  return (
     <div className="min-h-screen bg-gray-50 text-[#3E4E36] dark:bg-[#1A1F1C] dark:text-[#E2E8F0] py-12 px-4 font-sans transition-colors duration-200">
       <div className="w-full max-w-3xl mx-auto">
-        
+
         {/* Page Title */}
         <h1 className="text-2xl md:text-3xl font-black text-center text-[#3E4E36] dark:text-[#E2E8F0] mb-8">
           Profile Settings
