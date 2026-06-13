@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Label, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Label, ResponsiveContainer, Cell } from "recharts";
 
 export default function ProgressStates({
   completedCount = 0,
