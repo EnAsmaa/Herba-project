@@ -1,78 +1,66 @@
-import axios from "axios"
-import toast from "react-hot-toast"
+import axiosInstance from "./axiosInstance.js";
+import toast from "react-hot-toast";
 
+// get doctors
 export const getDoctorsAPI = async () => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/User/doctors`)
-        return data
+        const { data } = await axiosInstance.get("/User/doctors");
+        return data;
     } catch (err) {
-        toast.error(err?.message)
+        toast.error(err?.response?.data?.message || err.message);
     }
-}
+};
 
 // get doctor data
 export const getDoctorDataAPI = async (id) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/User/doctor/${id}`)
-        return data
+        const { data } = await axiosInstance.get(`/User/doctor/${id}`);
+        return data;
     } catch (err) {
-        toast.error(err?.message)
+        toast.error(err?.response?.data?.message || err.message);
     }
-}
+};
 
 // ask question
 export const sendQuestionAPI = async (message, id) => {
-    const token = localStorage.getItem("loginToken") || null
     try {
-        const { data } = await axios.post(`${import.meta.env.VITE_BASEURL}/Consultation`, {
+        const { data } = await axiosInstance.post("/Consultation", {
             doctorId: id,
-            message
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        console.log(data)
-        return data
-    } catch (err) {
-        toast.error(err?.message)
-    }
-}
+            message,
+        });
 
+        return data;
+    } catch (err) {
+        toast.error(err?.response?.data?.message || err.message);
+    }
+};
+
+// get my questions
 export const getQuestionsAPI = async () => {
-    const token = localStorage.getItem("loginToken") || null
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Consultation/my-consultations`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return data
+        const { data } = await axiosInstance.get(
+            "/Consultation/my-consultations"
+        );
+
+        return data;
     } catch (err) {
-        toast.error(err?.message)
+        toast.error(err?.response?.data?.message || err.message);
     }
-}
+};
 
-
+// reply to consultation
 export const sendReplyAPI = async (conId, replies) => {
     try {
-        const token = localStorage.getItem("loginToken") || null
-        const { data } = await axios.post(
-            `${import.meta.env.VITE_BASEURL}/Consultation/reply`,
+        const { data } = await axiosInstance.post(
+            "/Consultation/reply",
             {
                 conId,
-                reply: replies[conId], // fixed field name
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                reply: replies[conId],
             }
         );
 
-        return data
-
+        return data;
     } catch (err) {
-        toast.error(err?.message);
+        toast.error(err?.response?.data?.message || err.message);
     }
 };

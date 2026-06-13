@@ -1,51 +1,36 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance.js";
 import toast from "react-hot-toast";
+
 // get exercises
 export const getAllExercise = async () => {
     try {
-        const { data } = await axios.get(
-            `${import.meta.env.VITE_BASEURL}/Exercise`,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
-                },
-            }
-        );
+        const { data } = await axiosInstance.get("/Exercise");
         return data;
     } catch (error) {
-        toast.error(error?.message);
-    }
-};
-// get my exercise
-export const getMyExercise = async () => {
-    try {
-        const { data } = await axios.get(
-            `${import.meta.env.VITE_BASEURL}/Exercise/my-exercises`,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
-                },
-            }
-        );
-        return data;
-    } catch (error) {
-        toast.error(error?.message);
-    }
-};
-// post an exercise
-export const postExercise = async (userData) => {
-    try {
-        const { data } = await axios.get(
-            `${import.meta.env.VITE_BASEURL}/Exercise/my-exercises`, userData,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("loginToken")}`,
-                },
-            }
-        );
-        return data;
-    } catch (error) {
-        toast.error(error?.message);
+        toast.error(error?.response?.data?.message || error.message);
     }
 };
 
+// get my exercise
+export const getMyExercise = async () => {
+    try {
+        const { data } = await axiosInstance.get("/Exercise/my-exercises");
+        return data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error.message);
+    }
+};
+
+// post an exercise
+export const postExercise = async (userData) => {
+    try {
+        const { data } = await axiosInstance.post(
+            "/Exercise/my-exercises",
+            userData
+        );
+
+        return data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error.message);
+    }
+};

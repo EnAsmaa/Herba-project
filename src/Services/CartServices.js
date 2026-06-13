@@ -1,56 +1,39 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance.js";
 import toast from "react-hot-toast";
 
+// get cart data
 export const sendGetCartData = async () => {
   try {
-    const token = localStorage.getItem("loginToken");
-    const { data } = await axios.get(`${import.meta.env.VITE_BASEURL}/Cart`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axiosInstance.get("/Cart");
     return data;
   } catch (error) {
-    toast.error(error?.message);
+    toast.error(error?.response?.data?.message || error.message);
   }
 };
 
-export const sendAddToCart = async (productId, quantity) => {
+// add to cart
+export const sendAddToCart = async (productId, quantity = 1) => {
   try {
-    const token = localStorage.getItem("loginToken");
-    quantity = 1;
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_BASEURL}/Cart/add`,
-      {
-        productId,
-        quantity,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const { data } = await axiosInstance.post("/Cart/add", {
+      productId,
+      quantity,
+    });
 
     return data;
   } catch (error) {
-    toast.error(error?.message);
+    toast.error(error?.response?.data?.message || error.message);
   }
 };
 
+// remove from cart
 export const sendRemoveFromCart = async (productId) => {
   try {
-    const token = localStorage.getItem("loginToken");
-    const { data } = await axios.delete(
-      `${import.meta.env.VITE_BASEURL}/Cart/remove/${productId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+    const { data } = await axiosInstance.delete(
+      `/Cart/remove/${productId}`
     );
+
     return data;
   } catch (error) {
-    toast.error(error?.message);
+    toast.error(error?.response?.data?.message || error.message);
   }
 };

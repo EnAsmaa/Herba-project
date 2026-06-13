@@ -9,6 +9,7 @@ export default function UserContexProvider({ children }) {
 
   const getUserData = async () => {
     const response = await getProfileDataAPI();
+    console.log('response is', response)
     if (response && response.success) {
       setUserProfileData(response?.data);
     }

@@ -1,38 +1,26 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import axiosInstance from "./axiosInstance";
 
 // get profile data
 export const getProfileDataAPI = async () => {
-  const token = localStorage.getItem("loginToken");
   try {
-    if (token) {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_BASEURL}/User/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return data;
-    }
-
+    const { data } = await axiosInstance.get("/User/profile");
+    return data;
   } catch (err) {
-    return err.response?.data;
+    toast.error(err?.response?.data?.message || err.message);
   }
 };
+
 // update data
 export const updateUserData = async (formattedData) => {
   try {
-    const token = localStorage.getItem("loginToken");
+    const { data } = await axiosInstance.put(
+      "/User/profile",
+      formattedData
+    );
 
-    const { data } = await axios.put(`${import.meta.env.VITE_BASEURL}/User/profile`, formattedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
     return data;
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.response?.data?.message || err.message);
   }
-}
+};
