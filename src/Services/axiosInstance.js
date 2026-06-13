@@ -20,6 +20,7 @@ axiosInstance.interceptors.request.use(
 
 // Handle expired token
 let isLoggingOut = false;
+console.log(isLoggingOut);
 
 axiosInstance.interceptors.response.use(
   (response) => response,
@@ -30,7 +31,7 @@ axiosInstance.interceptors.response.use(
 
         localStorage.removeItem("loginToken");
         localStorage.removeItem("role");
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
     }
 
