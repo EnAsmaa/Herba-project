@@ -19,18 +19,22 @@ axiosInstance.interceptors.request.use(
 );
 
 // Handle expired token
+let isLoggingOut = false;
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("loginToken");
-      localStorage.removeItem("userType");
+      if (!isLoggingOut) {
+        isLoggingOut = true;
 
-      // window.location.href = "/login";
+        localStorage.removeItem("loginToken");
+        localStorage.removeItem("role");
+        window.location.href = "/login";
+      }
     }
 
     return Promise.reject(error);
   }
 );
-
 export default axiosInstance;

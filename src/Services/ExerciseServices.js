@@ -22,11 +22,14 @@ export const getMyExercise = async () => {
 };
 
 // post an exercise
-export const postExercise = async (userData) => {
+export const postExercise = async (exerciseId, userId) => {
     try {
         const { data } = await axiosInstance.post(
-            "/Exercise/my-exercises",
-            userData
+            "/Exercise/assign",
+            {
+                exerciseId,
+                userId
+            }
         );
 
         return data;

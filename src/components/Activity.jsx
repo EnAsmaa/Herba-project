@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -14,6 +14,7 @@ import {
   postExercise,
 } from "../Services/ExerciseServices";
 import toast from "react-hot-toast";
+import { AuthContext } from "../Context/AuthContext";
 
 const ActivityPage = () => {
   const [activeTab, setActiveTab] = useState("Weekly Progress");
@@ -31,10 +32,13 @@ const ActivityPage = () => {
 
   const [instantPoints, setInstantPoints] = useState(0);
 
+  const {userId} = useContext(AuthContext)
+
   const TOTAL_QUIZZES_COUNT = 10;
   const MAX_POINTS_PER_QUIZ = 10;
   const MAX_POSSIBLE_POINTS = TOTAL_QUIZZES_COUNT * MAX_POINTS_PER_QUIZ;
 
+  // get quizes
   const fetchQuizStats = async () => {
     try {
       setLoadingStats(true);
@@ -55,6 +59,7 @@ const ActivityPage = () => {
     }
   };
 
+  // get exercices
   const fetchExerciseStats = async () => {
     try {
       setLoadingExercises(true);
@@ -95,6 +100,7 @@ const ActivityPage = () => {
     }
   }, [completedQuizzesList]);
 
+  // quize state update
   const handleQuizStatsUpdate = (quizSummaryData) => {
     setActiveQuizId(null);
     fetchQuizStats();
@@ -108,10 +114,11 @@ const ActivityPage = () => {
     }
   };
 
+  // complet exercise
   const handleCompleteExercise = async (exerciseId) => {
     try {
       setSubmittingExercise(true);
-      await postExercise({ exerciseId: exerciseId });
+      await postExercise( exerciseId, userId );
       toast.success("Exercise progress saved successfully! 🎉");
       setSelectedExercise(null);
       fetchExerciseStats();

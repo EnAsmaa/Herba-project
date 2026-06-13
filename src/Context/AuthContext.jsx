@@ -11,7 +11,11 @@ export default function AuthContextProvider({ children }) {
         localStorage.getItem('role') || null
     )
 
-    return <AuthContext.Provider value={{ isLogin, setIslogin, role, setRole }}>
+    const [userId, setUserId] = useState(
+        localStorage.getItem('userId') || null
+    )
+
+    return <AuthContext.Provider value={{ isLogin, setIslogin, role, setRole, userId }}>
         {children}
     </AuthContext.Provider>
 }
