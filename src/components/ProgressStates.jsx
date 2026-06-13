@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Label, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Label, ResponsiveContainer, Cell } from "recharts";
 
 export default function ProgressStates({
   completedCount = 0,
@@ -13,7 +13,6 @@ export default function ProgressStates({
     { name: "Remaining", value: remainingQuizzes, fill: "#6BB68333" },
   ];
 
-  // حساب النسبة المئوية بدقة
   const total = completedCount + remainingQuizzes;
   const percentage =
     total > 0 ? ((completedCount / total) * 100).toFixed(0) : 0;
@@ -37,7 +36,7 @@ export default function ProgressStates({
               {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={index === 0 ? "#446C4F" : "#E8F3EE"} // استخدام الأخضر والترابي
+                  fill={index === 0 ? "#446C4F" : "#E8F3EE"} 
                 />
               ))}
             </Pie>
